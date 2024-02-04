@@ -35,23 +35,23 @@ unsafe fn pacman_attack_air_n_game(fighter: &mut L2CAgentBase) {
 unsafe fn pacman_attack_air_n_effect(fighter: &mut L2CAgentBase) {
     let lua_state = fighter.lua_state_agent;
     let boma = fighter.boma();
-    frame(lua_state, 5.0);
+    frame(lua_state, 4.0);
     if is_excute(fighter) {
-        EFFECT_FOLLOW_NO_STOP(fighter, Hash40::new("pacman_change_start"), Hash40::new("pizzapacman"), 0, 0, 0, 0, 0, 0, 1, true);
+        EFFECT_FOLLOW_NO_STOP(fighter, Hash40::new("pacman_change_start"), Hash40::new("pizzapacman"), 0, 0.5, 0.5, 0, 0, 0, 0.8, true);
     }
     frame(lua_state, 6.0);
     if is_excute(fighter) {
-        EFFECT_FOLLOW_FLIP_ALPHA(fighter, Hash40::new("sys_spin_wind"), Hash40::new("sys_spin_wind"), Hash40::new("top"), 0, 5.9, 0.8, 0, 0, 90, 0.75, true, *EF_FLIP_YZ, 0.4);
+        EFFECT_FOLLOW_FLIP_ALPHA(fighter, Hash40::new("sys_spin_wind"), Hash40::new("sys_spin_wind"), Hash40::new("top"), 0, 6.0, 0.8, 0, 0, 90, 0.7, true, *EF_FLIP_YZ, 0.4);
         EFFECT_FOLLOW(fighter, Hash40::new("pacman_wind"), Hash40::new("rot"), 0, 0, 0, 0, 0, 0, 1, true);
         LAST_EFFECT_SET_ALPHA(fighter, 0.7);
     }
     frame(lua_state, 19.0);
     if is_excute(fighter) {
-        EFFECT_FOLLOW_FLIP_ALPHA(fighter, Hash40::new("sys_spin_wind"), Hash40::new("sys_spin_wind"), Hash40::new("top"), 0, 5.9, 0.7, 0, 0, 90, 0.7, true, *EF_FLIP_YZ, 0.4);
+        EFFECT_FOLLOW_FLIP_ALPHA(fighter, Hash40::new("sys_spin_wind"), Hash40::new("sys_spin_wind"), Hash40::new("top"), 0, 5.9, 0.7, 0, 0, 90, 0.6, true, *EF_FLIP_YZ, 0.4);
     }
     frame(lua_state, 23.0);
     if is_excute(fighter) {
-        EFFECT_FOLLOW(fighter, Hash40::new("pacman_change_end"), Hash40::new("pizzapacman"), 0, 4, -1.0, 0, 0, 0, 1, true);
+        EFFECT_FOLLOW(fighter, Hash40::new("pacman_change_end"), Hash40::new("pizzapacman"), 0, 4, -1.3, 0, 0, 0, 0.8, true);
         EFFECT_OFF_KIND(fighter, Hash40::new("sys_spin_wind"), true, true);
         EFFECT_OFF_KIND(fighter, Hash40::new("pacman_wind"), true, true);
     }
@@ -160,13 +160,13 @@ unsafe fn pacman_attack_air_b_game(fighter: &mut L2CAgentBase) {
     frame(lua_state, 9.0);
     if is_excute(fighter) {
         WorkModule::on_flag(boma, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
-        ATTACK(fighter, 0, 0, Hash40::new("kneer"), 12.0, 361, 105, 0, 30, 4.5, 4.8, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 2.0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-        ATTACK(fighter, 1, 0, Hash40::new("legr"), 14.0, 361, 105, 0, 30, 5.9, 1.6, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 1.0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        ATTACK(fighter, 0, 0, Hash40::new("kneer"), 14.0, 361, 105, 0, 30, 4.5, 4.8, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 2.0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        ATTACK(fighter, 1, 0, Hash40::new("legr"), 12.0, 361, 105, 0, 30, 5.9, 1.6, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 1.0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
     }
     wait(lua_state, 3.0);
     if is_excute(fighter) {
-        ATTACK(fighter, 0, 0, Hash40::new("kneer"), 10.0, 361, 78, 0, 25, 4.5, 4.5, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-        ATTACK(fighter, 1, 0, Hash40::new("legr"), 12.0, 361, 78, 0, 25, 5.9, 1.3, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        ATTACK(fighter, 0, 0, Hash40::new("kneer"), 12.0, 361, 78, 0, 25, 4.5, 4.5, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        ATTACK(fighter, 1, 0, Hash40::new("legr"), 10.0, 361, 78, 0, 25, 5.9, 1.3, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
     }
     wait(lua_state, 7.0);
     if is_excute(fighter) {
@@ -183,8 +183,8 @@ unsafe fn pacman_attack_air_b_effect(fighter: &mut L2CAgentBase) {
     let lua_state = fighter.lua_state_agent;
     let boma = fighter.boma();
     if is_excute(fighter) {
-        EFFECT_FOLLOW(fighter, Hash40::new("sys_smash_flash"), Hash40::new("top"), 0, 4, -3, 0, 0, 0, 0.85, true);
-        LAST_EFFECT_SET_RATE(fighter, 1.5);
+        EFFECT_FOLLOW(fighter, Hash40::new("sys_smash_flash"), Hash40::new("top"), 0, 8.0, -4.5, 0, 0, 0, 0.85, true);
+        LAST_EFFECT_SET_RATE(fighter, 1.7);
     } 
     frame(lua_state, 8.0);
     if is_excute(fighter) {
@@ -321,9 +321,9 @@ unsafe fn pacman_attack_air_lw_effect(fighter: &mut L2CAgentBase) {
     if is_excute(fighter) {
         EFFECT_FLIP(fighter, Hash40::new("sys_attack_impact"), Hash40::new("sys_attack_impact"), Hash40::new("top"), 0, -1, 2, 0, 0, 0, 1.15, 0, 0, 0, 0, 0, 0, true, *EF_FLIP_YZ);
     }
-    frame(lua_state, 23.0);
+    frame(lua_state, 22.0);
     if is_excute(fighter) {
-        EFFECT_FOLLOW(fighter, Hash40::new("sys_smash_flash"), Hash40::new("top"), 0, 6, 5.5, 0, 0, 0, 0.85, true);
+        EFFECT_FOLLOW(fighter, Hash40::new("sys_smash_flash"), Hash40::new("top"), 0, 9, 7, 0, 0, 0, 0.75, true);
         LAST_EFFECT_SET_RATE(fighter, 1.5);
     }
     frame(lua_state, 26.0);
