@@ -125,6 +125,26 @@ unsafe fn expression_specialairsreturn(fighter: &mut L2CAgentBase) {
         HIT_NODE(fighter, Hash40::new("pizzapacman"), *HIT_STATUS_NORMAL);
     }
 }
+#[acmd_script( agent = "pacman", script = "game_specialairhiloop", category = ACMD_GAME, low_priority )]
+unsafe fn pacman_special_air_hi_loop_game(fighter: &mut L2CAgentBase) {
+    let lua_state = fighter.lua_state_agent;
+    let boma = fighter.boma();
+    if is_excute(fighter) {
+        ATTACK(fighter, 0, 0, Hash40::new("pizzapacman"), 5.0, 92, 50, 0, 70, 5.0, -0.5, 2.0, -2.0, Some(0.5), Some(2.0), Some(2.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_BODY);
+    }
+    wait(lua_state, 9.0);
+    if is_excute(fighter) {
+        ATTACK(fighter, 0, 0, Hash40::new("pizzapacman"), 7.0, 86, 95, 0, 40, 4.4, -0.5, 2.0, 0.0, Some(0.5), Some(2.0), Some(0.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_BODY);
+    }
+    frame(lua_state, 14.0);
+    if is_excute(fighter) {
+        ATTACK(fighter, 0, 0, Hash40::new("pizzapacman"), 8.0, 60, 100, 0, 40, 3.8, -0.5, 2.0, 0.0, Some(0.5), Some(2.0), Some(0.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_BODY);
+    }
+    frame(lua_state, 19.0);
+    if is_excute(fighter) {
+        AttackModule::clear_all(boma);
+    }
+}
 
 #[acmd_script( agent = "pacman", script = "game_specialairhiend" , category = ACMD_GAME , low_priority)]
 unsafe fn pacman_special_air_hi_end_game(fighter: &mut L2CAgentBase) {
@@ -132,6 +152,16 @@ unsafe fn pacman_special_air_hi_end_game(fighter: &mut L2CAgentBase) {
     let boma = fighter.boma();
     if is_excute(fighter) {
         boma.select_cliff_hangdata_from_name("special_hi");
+    }
+}
+
+//hydrant
+#[acmd_script( agent = "pacman_firehydrant", script = "game_fly" , category = ACMD_GAME , low_priority)]
+unsafe fn pacman_fly_game(fighter: &mut L2CAgentBase) {
+    let lua_state = fighter.lua_state_agent;
+    let boma = fighter.boma();
+    if is_excute(fighter) {
+        ATTACK(fighter, 0, 0, Hash40::new("rot2"), 9.0, 45, 90, 0, 30, 5.0, 0.0, -1.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_SPEED, false, 3.0, 0.0, 0, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
     }
 }
 
@@ -189,8 +219,10 @@ pub fn install() {
         //pacman_special_air_n_shoot_game,
         expression_specialairsreturn,
         pacman_special_air_hi_end_game,
+        pacman_fly_game,
         pacman_special_lw_failure_game,
         pacman_special_air_lw_failure_game,
+        pacman_special_air_hi_loop_game,
     );
 }
 
