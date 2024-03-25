@@ -66,7 +66,7 @@ unsafe fn dtilt_bounce(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectMo
     && fighter.motion_frame() > 1.0 {
         let mut speed = -0.2;
         if fighter.motion_frame() < 18.0 { 
-            speed = -0.05;
+            speed = -0.1;
         }
         if AttackModule::is_infliction(fighter.module_accessor, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_SHIELD) {
             MotionModule::change_motion(fighter.module_accessor, Hash40::new("attack_air_lw2"), 0.0, 1.0, false, 0.0, false, false);
@@ -152,6 +152,17 @@ pub extern "C" fn richter_frame_wrapper(fighter: &mut smash::lua2cpp::L2CFighter
     }
 }
 
+pub extern "C" fn knife_despawn(weapon: &mut smash::lua2cpp::L2CFighterBase) {
+    unsafe { 
+    if weapon.kind() == *WEAPON_KIND_RICHTER_AXE {
+        if weapon.is_status( *WEAPON_SIMON_AXE_STATUS_KIND_FLY ) && AttackModule::is_infliction_status(weapon.module_accessor, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_ATTACK) {
+            weapon.change_status(WEAPON_SIMON_AXE_STATUS_KIND_NUM.into(), false.into());
+            WorkModule::set_int(weapon.module_accessor, 1, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
+        }
+    }
+}
+}
+
 pub unsafe fn richter_frame(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
     if let Some(info) = FrameInfo::update_and_get(fighter) {
         moveset(fighter, &mut *info.boma, info.id, info.cat, info.status_kind, info.situation_kind, info.motion_kind.hash, info.stick_x, info.stick_y, info.facing, info.frame);
@@ -160,5 +171,8 @@ pub unsafe fn richter_frame(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
 pub fn install() {
     smashline::Agent::new("richter")
         .on_line(Main, richter_frame_wrapper)
+        .install();
+    smashline::Agent::new("richter_axe")
+        .on_line(Main, knife_despawn)
         .install();
 }
