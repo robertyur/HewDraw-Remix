@@ -136,7 +136,7 @@ unsafe extern "C" fn richter_attack_squat_s3_effect(fighter: &mut L2CAgentBase) 
     }
     frame(lua_state, 12.0);
     if is_excute(fighter) {
-        EFFECT_FOLLOW(fighter, Hash40::new("richter_whip_straight"), Hash40::new("haver"), 0, 0, 0, 4, 30, 4, 0.98, true);
+        EFFECT_FOLLOW(fighter, Hash40::new("richter_whip_straight"), Hash40::new("haver"), 0, 0, 0, 4, 30, 4, 0.9, true);
     }
 }
 
