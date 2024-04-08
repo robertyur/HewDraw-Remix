@@ -271,16 +271,16 @@ unsafe extern "C" fn game_attacklw3(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn effect_attacklw3(agent: &mut L2CAgentBase) {
     let lua_state = agent.lua_state_agent;
     let boma = agent.boma();
-    frame(lua_state, 10.0);
+    frame(lua_state, 8.0);
     if is_excute(agent) {
         LANDING_EFFECT(agent, Hash40::new("sys_atk_smoke"), Hash40::new("top"), 8, 0, 0, 0, 0, 0, 0.6, 0, 0, 0, 0, 0, 0, false);
         LAST_EFFECT_SET_RATE(agent, 0.7);
     }
-    frame(lua_state, 16.0);
+    frame(lua_state, 12.0);
     if is_excute(agent) {
         LANDING_EFFECT(agent, Hash40::new("sys_sliding_smoke"), Hash40::new("top"), 7, 0, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 0, 0, false);
     }
-    frame(lua_state, 20.0);
+    frame(lua_state, 16.0);
     if is_excute(agent) {
         FOOT_EFFECT(agent, Hash40::new("sys_turn_smoke"), Hash40::new("top"), 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
     }
@@ -289,7 +289,7 @@ unsafe extern "C" fn effect_attacklw3(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn sound_attacklw3(agent: &mut L2CAgentBase) {
     let lua_state = agent.lua_state_agent;
     let boma = agent.boma();
-    frame(lua_state, 10.0);
+    frame(lua_state, 8.0);
     if is_excute(agent) {
         PLAY_SE(agent, Hash40::new("se_richter_attackhard_l01"));
     }
