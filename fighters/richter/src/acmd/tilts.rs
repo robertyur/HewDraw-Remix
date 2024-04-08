@@ -249,6 +249,7 @@ unsafe extern "C" fn sound_attackhi3(agent: &mut L2CAgentBase) {
 
 unsafe extern "C" fn game_attacklw3(agent: &mut L2CAgentBase) {
     let lua_state = agent.lua_state_agent;
+    let boma = agent.boma();
     frame(lua_state, 1.0);
     if is_excute(agent) {
         WorkModule::on_flag(boma, *FIGHTER_SIMON_STATUS_ATTACK_FLAG_ENABLE_COMBO);
