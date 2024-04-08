@@ -423,6 +423,22 @@ unsafe extern "C" fn game_attackairlw(agent: &mut L2CAgentBase) {
     }
 }
 
+unsafe extern "C" fn game_attackairlw2(agent: &mut L2CAgentBase) {
+    let lua_state = agent.lua_state_agent;
+    let boma = agent.boma();
+    if is_excute(agent) {
+        FT_MOTION_RATE(agent, 1.0);
+        AttackModule::clear_all(boma);
+        SET_SPEED_EX(agent, 0.0, 2.6, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        WorkModule::off_flag(boma, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_GRAVITY_STABLE_UNABLE);
+        KineticModule::resume_energy(boma, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    }
+    frame(lua_state, 39.0);
+    if is_excute(agent) {
+        notify_event_msc_cmd!(agent, Hash40::new_raw(0x2127e37c07), *GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES);
+    }
+}
+
 unsafe extern "C" fn effect_attackairlw2(agent: &mut L2CAgentBase) {
     let lua_state = agent.lua_state_agent;
     let boma = agent.boma();
@@ -477,5 +493,6 @@ pub fn install(agent: &mut Agent) {
     agent.acmd("expression_attackairhi", expression_attackairhi);
 
     agent.acmd("game_attackairlw", game_attackairlw);
+    agent.acmd("game_attackairlw2", game_attackairlw2);
     agent.acmd("effect_attackairlw2", effect_attackairlw2);
 }
