@@ -4,6 +4,43 @@ use super::*;
 use globals::*;
 use skyline_smash::app::lua_bind::ControlModule::clear_command_one;
 
+//dtilt1 crossup prevention
+unsafe fn dtilt1_crossup_prevention(fighter: &mut L2CFighterCommon) {
+    if fighter.is_motion(Hash40::new("attack_lw3"))
+    && AttackModule::is_infliction(fighter.module_accessor, *COLLISION_KIND_MASK_SHIELD) {
+        sv_kinetic_energy!(set_speed_mul, fighter, FIGHTER_KINETIC_ENERGY_ID_MOTION, 0.4);
+    }
+}
+
+// dtilt bounce
+unsafe fn dtilt_bounce(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectModuleAccessor){
+    if fighter.is_motion(Hash40::new("attack_lw32")) && fighter.motion_frame() > 1.0 {
+        let mut speed = -0.2;
+        if fighter.motion_frame() < 18.0 { 
+            speed = -0.1;
+        }
+        if AttackModule::is_infliction(fighter.module_accessor, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_SHIELD) {
+            MotionModule::change_motion(fighter.module_accessor, Hash40::new("attack_air_lw2"), 0.0, 1.0, false, 0.0, false, false);
+            KineticModule::clear_speed_energy_id(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+            KineticModule::add_speed(fighter.module_accessor, &Vector3f::new(0.0, speed, 0.0));
+            KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_FALL);
+            sv_kinetic_energy!(controller_set_accel_x_mul, fighter, 0.02/*Base Air Acceleration*/); //Set to half of Richter's base acceleration
+            sv_kinetic_energy!(controller_set_accel_x_add, fighter, 0.01/*Additional Air Acceleration*/);
+            sv_kinetic_energy!(set_limit_speed, fighter, *FIGHTER_KINETIC_ENERGY_ID_CONTROL, 0.9/*Maximum Horizontal Air Speed*/, 0.0); //Set to slightly less than vanilla air speed
+            WorkModule::off_flag(boma, *FIGHTER_SIMON_STATUS_ATTACK_LW32_WORK_ID_FLAG_LANDING_AIR);
+        }
+    }
+}
+
+// dair bounce height and accel
+unsafe fn dair_bounce(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectModuleAccessor){
+    if fighter.is_motion(Hash40::new("attack_air_lw2")) && fighter.motion_frame() > 1.0 {
+            sv_kinetic_energy!(controller_set_accel_x_mul, fighter, 0.02/*Base Air Acceleration*/); //Set to half of Richter's base acceleration
+            sv_kinetic_energy!(controller_set_accel_x_add, fighter, 0.01/*Additional Air Acceleration*/);
+            sv_kinetic_energy!(set_limit_speed, fighter, *FIGHTER_KINETIC_ENERGY_ID_CONTROL, 0.9/*Maximum Horizontal Air Speed*/, 0.0); //Set to slightly less than vanilla air speed
+    }
+}
+
 // knife drift
 unsafe fn knife_drift(boma: &mut BattleObjectModuleAccessor) {
     if boma.is_status(*FIGHTER_STATUS_KIND_SPECIAL_N)
@@ -13,26 +50,26 @@ unsafe fn knife_drift(boma: &mut BattleObjectModuleAccessor) {
 }
 
 // knife land cancel
-unsafe fn knife_lc(boma: &mut BattleObjectModuleAccessor) {
-    if StatusModule::is_changing(boma) {
-        return;
-    }
-    if boma.is_status(*FIGHTER_STATUS_KIND_SPECIAL_N)
-    && VarModule::is_flag(boma.object(), vars::richter::instance::SPECIAL_N_LAND_CANCEL)
-    && boma.is_situation(*SITUATION_KIND_GROUND) {
-        // remove the unthrown knife from richter's hand
-        if (2.0..13.0).contains(&boma.motion_frame())
-        && ArticleModule::is_exist(boma, *FIGHTER_SIMON_GENERATE_ARTICLE_AXE){
-            ArticleModule::remove_exist(boma, *FIGHTER_SIMON_GENERATE_ARTICLE_AXE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-        }
-
-        let landing_lag = 10.0; // amount of frames until richter can act when landing
-        let rate = 27.0 / landing_lag;
-        MotionModule::change_motion(boma, Hash40::new("landing_fall_special"), 0.0, rate, false, 0.0, false, false);
-        VarModule::off_flag(boma.object(), vars::richter::instance::SPECIAL_N_LAND_CANCEL);
-        EffectModule::kill_kind(boma, Hash40::new("sys_sp_flash"), true, true);
-    }
-}
+//unsafe fn knife_lc(boma: &mut BattleObjectModuleAccessor) {
+//    if StatusModule::is_changing(boma) {
+//        return;
+//    }
+//    if boma.is_status(*FIGHTER_STATUS_KIND_SPECIAL_N)
+//    && VarModule::is_flag(boma.object(), vars::richter::instance::SPECIAL_N_LAND_CANCEL)
+//    && boma.is_situation(*SITUATION_KIND_GROUND) {
+//        // remove the unthrown knife from richter's hand
+//        if (2.0..13.0).contains(&boma.motion_frame())
+//        && ArticleModule::is_exist(boma, *FIGHTER_SIMON_GENERATE_ARTICLE_AXE){
+//            ArticleModule::remove_exist(boma, *FIGHTER_SIMON_GENERATE_ARTICLE_AXE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+//        }
+//
+//        let landing_lag = 10.0; // amount of frames until richter can act when landing
+//        let rate = 27.0 / landing_lag;
+//        MotionModule::change_motion(boma, Hash40::new("landing_fall_special"), 0.0, rate, false, 0.0, false, false);
+//        VarModule::off_flag(boma.object(), vars::richter::instance::SPECIAL_N_LAND_CANCEL);
+//        EffectModule::kill_kind(boma, Hash40::new("sys_sp_flash"), true, true);
+//    }
+//}
 
 // allow fair and bair to transition into their angled variants when the stick is angled up/down
 unsafe fn whip_angling(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectModuleAccessor, frame: f32, stick_y: f32) {
@@ -92,8 +129,11 @@ unsafe fn fastfall_specials(fighter: &mut L2CFighterCommon) {
 }
 
 pub unsafe fn moveset(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectModuleAccessor, id: usize, cat: [i32 ; 4], status_kind: i32, situation_kind: i32, motion_kind: u64, stick_x: f32, stick_y: f32, facing: f32, frame: f32) {
+    dtilt1_crossup_prevention(fighter);
+    dtilt_bounce(fighter, boma);
+    dair_bounce(fighter, boma);
     knife_drift(boma);
-    knife_lc(boma);
+//    knife_lc(boma);
     whip_angling(fighter, boma, frame, stick_y);
     fastfall_specials(fighter);
 }
