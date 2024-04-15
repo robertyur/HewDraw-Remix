@@ -240,15 +240,12 @@ unsafe extern "C" fn effect_attackhi4(agent: &mut L2CAgentBase) {
     if is_excute(agent) {
         EFFECT(agent, Hash40::new("sys_smash_flash"), Hash40::new("top"), 0, 17, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
     }
-    frame(lua_state, 15.0);
+    frame(lua_state, 17.0);
     if is_excute(agent) {
         EFFECT_FOLLOW(agent, Hash40::new("sys_whirlwind_l"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.8, false);
         LAST_EFFECT_SET_RATE(agent, 1.0);
         LAST_EFFECT_SET_ALPHA(agent, 1.0);
-    }
-    frame(lua_state, 16.0);
-    if is_excute(agent) {
-        EFFECT(agent, Hash40::new("richter_whip_hi3"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1.025, 0, 0, 0, 0, 0, 0, true);
+        EFFECT(agent, Hash40::new("richter_whip_hi3"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1.0, 0, 0, 0, 0, 0, 0, true);
         LAST_EFFECT_SET_COLOR(agent, 1.0, 1.0, 1.0);
     }
 }
@@ -259,11 +256,11 @@ unsafe extern "C" fn sound_attackhi4(agent: &mut L2CAgentBase) {
     if is_excute(agent) {
         PLAY_SE(agent, Hash40::new("se_richter_whip_holding"));
     }
-    frame(lua_state, 14.0);
+    frame(lua_state, 16.0);
     if is_excute(agent) {
         PLAY_SE(agent, Hash40::new("se_richter_attackhard_h01"));
     }
-    frame(lua_state, 16.0);
+    frame(lua_state, 17.0);
     if is_excute(agent) {
         PLAY_SE(agent, Hash40::new("vc_richter_attack05"));
         PLAY_SE(agent, Hash40::new("se_richter_attackhard_s01"));

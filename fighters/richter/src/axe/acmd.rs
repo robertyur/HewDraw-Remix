@@ -5,14 +5,22 @@ unsafe extern "C" fn richter_axe_game(fighter: &mut L2CAgentBase) {
     let boma = fighter.boma();
     let lr = PostureModule::lr(fighter.module_accessor);
     let axe_owner = &mut *sv_battle_object::module_accessor((WorkModule::get_int(boma, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-    let offset = &Vector2f::new(0.0 * lr, if axe_owner.kind() == *FIGHTER_KIND_KIRBY { -12.2 } else { -4.2 });
+    let offset = &Vector2f::new(0.0 * lr, if axe_owner.kind() == *FIGHTER_KIND_KIRBY { -13.2 } else { -5.2 });
     PostureModule::set_rot(boma, &Vector3f::new(0.0, 0.0, if axe_owner.is_situation(*SITUATION_KIND_AIR) { -128.0 } else { -90.0 } * lr), 0);
     PostureModule::set_scale(boma, 1.12, false);
     PostureModule::add_pos_2d(boma, offset);
     frame(lua_state, 1.0);
-    if is_excute(fighter) {
-        ATTACK(fighter, 0, 0, Hash40::new("axe"), 3.5, 50, 80, 0, 32, 2.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_SPEED, false, 0, 0.0, 0, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_OBJECT);
-        AttackModule::enable_safe_pos(boma);
+    if axe_owner.is_situation(*SITUATION_KIND_AIR){
+        if is_excute(fighter) {
+            ATTACK(fighter, 0, 0, Hash40::new("axe"), 3.5, 50, 80, 0, 32, 2.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_SPEED, false, 0, 0.0, 0, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_OBJECT);
+            AttackModule::enable_safe_pos(boma);
+        }
+    } else
+    if axe_owner.is_situation(*SITUATION_KIND_GROUND){
+        if is_excute(fighter) {
+            ATTACK(fighter, 0, 0, Hash40::new("axe"), 4.5, 77, 82, 0, 32, 2.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_SPEED, false, 0, 0.0, 0, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_OBJECT);
+            AttackModule::enable_safe_pos(boma);
+        }
     }
 }
 

@@ -24,9 +24,9 @@ unsafe fn dtilt_bounce(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectMo
             KineticModule::clear_speed_energy_id(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
             KineticModule::add_speed(fighter.module_accessor, &Vector3f::new(0.0, speed, 0.0));
             KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_FALL);
-            sv_kinetic_energy!(controller_set_accel_x_mul, fighter, 0.02/*Base Air Acceleration*/); //Set to half of Richter's base acceleration
+            sv_kinetic_energy!(controller_set_accel_x_mul, fighter, 0.02/*Base Air Acceleration*/); 
             sv_kinetic_energy!(controller_set_accel_x_add, fighter, 0.01/*Additional Air Acceleration*/);
-            sv_kinetic_energy!(set_limit_speed, fighter, *FIGHTER_KINETIC_ENERGY_ID_CONTROL, 0.9/*Maximum Horizontal Air Speed*/, 0.0); //Set to slightly less than vanilla air speed
+            sv_kinetic_energy!(set_limit_speed, fighter, *FIGHTER_KINETIC_ENERGY_ID_CONTROL, 0.9/*Maximum Horizontal Air Speed*/, 0.0); 
             WorkModule::off_flag(boma, *FIGHTER_SIMON_STATUS_ATTACK_LW32_WORK_ID_FLAG_LANDING_AIR);
         }
     }
@@ -35,9 +35,9 @@ unsafe fn dtilt_bounce(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectMo
 // dair bounce height and accel
 unsafe fn dair_bounce(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectModuleAccessor){
     if fighter.is_motion(Hash40::new("attack_air_lw2")) && fighter.motion_frame() > 1.0 {
-            sv_kinetic_energy!(controller_set_accel_x_mul, fighter, 0.02/*Base Air Acceleration*/); //Set to half of Richter's base acceleration
+            sv_kinetic_energy!(controller_set_accel_x_mul, fighter, 0.02/*Base Air Acceleration*/); 
             sv_kinetic_energy!(controller_set_accel_x_add, fighter, 0.01/*Additional Air Acceleration*/);
-            sv_kinetic_energy!(set_limit_speed, fighter, *FIGHTER_KINETIC_ENERGY_ID_CONTROL, 0.9/*Maximum Horizontal Air Speed*/, 0.0); //Set to slightly less than vanilla air speed
+            sv_kinetic_energy!(set_limit_speed, fighter, *FIGHTER_KINETIC_ENERGY_ID_CONTROL, 0.9/*Maximum Horizontal Air Speed*/, 0.0);
     }
 }
 
