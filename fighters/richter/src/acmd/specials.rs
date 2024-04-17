@@ -106,6 +106,7 @@ unsafe extern "C" fn game_specials1(agent: &mut L2CAgentBase) {
         if agent.is_situation(*SITUATION_KIND_AIR) {
             KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
             KineticModule::change_kinetic(agent.module_accessor, *FIGHTER_KINETIC_TYPE_FALL);
+            VarModule::on_flag(agent.object(), vars::common::instance::SIDE_SPECIAL_CANCEL_NO_HIT);
         }
     }
     frame(lua_state, 40.0);

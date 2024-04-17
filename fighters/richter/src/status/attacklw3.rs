@@ -9,11 +9,19 @@ unsafe extern "C" fn attack_lw3_main(fighter: &mut L2CFighterCommon) -> L2CValue
 
 unsafe extern "C" fn attack_lw3_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     if !StatusModule::is_changing(fighter.module_accessor) {
-        if fighter.status_frame() == 15 && ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) {
-            fighter.change_status(FIGHTER_SIMON_STATUS_KIND_ATTACK_LW32.into(), true.into());
-            return 1.into()
+    if (8..=15).contains(&fighter.status_frame()) {
+        if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) {
+            VarModule::on_flag(fighter.battle_object, vars::richter::status::D_TILT_JUMP_BUFFER);
+        }
+        else if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) {
+            VarModule::on_flag(fighter.battle_object, vars::richter::status::D_TILT_JUMP_BUFFER);
         }
     }
+    if fighter.status_frame() == 15 && VarModule::is_flag(fighter.battle_object, vars::richter::status::D_TILT_JUMP_BUFFER) {
+        fighter.change_status(FIGHTER_SIMON_STATUS_KIND_ATTACK_LW32.into(), true.into());
+        return 1.into()
+    }
+}
     fighter.status_AttackLw3_Main();
     return 0.into()
 }

@@ -8,7 +8,7 @@ use skyline_smash::app::lua_bind::ControlModule::clear_command_one;
 unsafe fn dtilt1_crossup_prevention(fighter: &mut L2CFighterCommon) {
     if fighter.is_motion(Hash40::new("attack_lw3"))
     && AttackModule::is_infliction(fighter.module_accessor, *COLLISION_KIND_MASK_SHIELD) {
-        sv_kinetic_energy!(set_speed_mul, fighter, FIGHTER_KINETIC_ENERGY_ID_MOTION, 0.4);
+        sv_kinetic_energy!(set_speed_mul, fighter, FIGHTER_KINETIC_ENERGY_ID_MOTION, 0.0);
     }
 }
 
