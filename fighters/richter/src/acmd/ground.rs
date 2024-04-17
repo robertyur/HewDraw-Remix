@@ -60,8 +60,6 @@ unsafe extern "C" fn game_attack12(agent: &mut L2CAgentBase) {
         ATTACK(agent, 3, 0, Hash40::new("top"), 3.0, 361, 25, 0, 25, 3.0, 0.0, 5.0, 1.5, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
         ATTACK(agent, 4, 0, Hash40::new("top"), 3.0, 361, 25, 0, 25, 3.25, 0.0, 4.0, 5.5, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
         ATTACK(agent, 5, 0, Hash40::new("top"), 3.0, 361, 25, 0, 25, 3.5, 0.0, 3.0, 10.5, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-        ATTACK(agent, 6, 0, Hash40::new("top"), 3.0, 361, 25, 0, 25, 2.0, 0.0, 6.5, 3.0, Some(0.0), Some(6.5), Some(10.5), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-
         AttackModule::set_down_only(boma, 3, false);
         AttackModule::set_down_only(boma, 4, false);
         AttackModule::set_down_only(boma, 5, false);
@@ -245,7 +243,7 @@ unsafe extern "C" fn effect_attackdash(agent: &mut L2CAgentBase) {
     if is_excute(agent) {
         COL_NORMAL(agent);
     }
-    frame(lua_state, 29.0);
+    frame(lua_state, 28.0);
     if is_excute(agent) {
         EFFECT_FOLLOW(agent, Hash40::new("sys_whirlwind_r"), Hash40::new("top"), 0, 0, -0.5, 0, 0, 0, 0.8, false);
         LAST_EFFECT_SET_RATE(agent, 1.3);
@@ -265,7 +263,7 @@ unsafe extern "C" fn sound_attackdash(agent: &mut L2CAgentBase) {
         PLAY_SE(agent, Hash40::new("se_common_punch_kick_swing_l"));
     }
 
-    frame(lua_state, 29.0);
+    frame(lua_state, 28.0);
     if is_excute(agent) {
         PLAY_SE(agent, Hash40::new("se_richter_landing01"));
     }
