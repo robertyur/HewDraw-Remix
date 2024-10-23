@@ -1228,6 +1228,25 @@ unsafe fn packun_ptooie_scale(boma: &mut BattleObjectModuleAccessor) {
     }
 }
 
+unsafe extern "C" fn plant_meter(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
+    unsafe {
+        if !sv_information::is_ready_go() && fighter.status_frame() < 1 {
+            return;
+        }
+
+        if WorkModule::get_int(fighter.module_accessor, *FIGHTER_KIRBY_INSTANCE_WORK_ID_INT_COPY_CHARA) != FIGHTER_KIND_PACKUN {
+            utils::ui::UiManager::set_plant_meter_enable(fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as u32, false);
+            return;
+        }
+
+        utils::ui::UiManager::set_plant_meter_enable(fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as u32, true);
+        utils::ui::UiManager::set_plant_meter_info(
+            fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as u32,
+            VarModule::get_int(fighter.object(), vars::packun::instance::CURRENT_STANCE)
+        );
+    }
+}
+
 unsafe fn ken_hado_landcancel(boma: &mut BattleObjectModuleAccessor, frame: f32) {
     if !boma.is_status_one_of(&[
         *FIGHTER_KIRBY_STATUS_KIND_RYU_SPECIAL_N,
@@ -1379,4 +1398,8 @@ pub unsafe fn kirby_copy_handler(fighter: &mut L2CFighterCommon, boma: &mut Batt
         0x56 => master_nspecial_cancels(boma, status_kind, situation_kind),
         _ => {}
     }
+}
+
+pub fn install(agent: &mut Agent) {
+    agent.on_line(Main, plant_meter);
 }

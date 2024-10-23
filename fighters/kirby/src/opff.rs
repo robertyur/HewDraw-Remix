@@ -143,5 +143,6 @@ pub unsafe fn kirby_frame(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
 }
 
 pub fn install(agent: &mut Agent) {
+    copy::install(agent);
     agent.on_line(Main, kirby_frame_wrapper);
 }
