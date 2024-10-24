@@ -37,7 +37,7 @@ unsafe fn check_swap_macro(controller_id: u32) -> bool {
         };
 
         let swap_button = match controller.controller_style {
-            ControllerStyle::LeftJoycon => Buttons::LEFT,
+            ControllerStyle::LeftJoycon => Buttons::RIGHT,
             ControllerStyle::RightJoycon => Buttons::Y,
             _ => Buttons::X
         };
