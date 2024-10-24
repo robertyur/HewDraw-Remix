@@ -22,17 +22,37 @@ static mut ACTION: &str = "right";
 // returns true/false depending on if the specified controller is performing the defined button macro
 unsafe fn check_swap_macro(controller_id: u32) -> bool {
     if let Some(controller) = Controller::get_from_id(controller_id) {
-        if controller.buttons.contains(Buttons::R) 
-        && controller.pressed_buttons.contains(Buttons::X) {
+        if !controller.is_supported_controller() { return false };
+
+        let left_button = match controller.controller_style {
+            ControllerStyle::LeftJoycon => Buttons::LEFT_SL,
+            ControllerStyle::RightJoycon => Buttons::RIGHT_SL,
+            _ => Buttons::L
+        };
+
+        let right_button = match controller.controller_style {
+            ControllerStyle::LeftJoycon => Buttons::LEFT_SR,
+            ControllerStyle::RightJoycon => Buttons::RIGHT_SR,
+            _ => Buttons::R
+        };
+
+        let swap_button = match controller.controller_style {
+            ControllerStyle::LeftJoycon => Buttons::LEFT,
+            ControllerStyle::RightJoycon => Buttons::Y,
+            _ => Buttons::X
+        };
+
+        if controller.buttons.contains(right_button) 
+        && controller.pressed_buttons.contains(swap_button) {
             ACTION = "right"; // port will swap forwards
             return true;
         }
-        else if controller.buttons.contains(Buttons::L) 
-        && controller.pressed_buttons.contains(Buttons::X) {
+        else if controller.buttons.contains(left_button) 
+        && controller.pressed_buttons.contains(swap_button) {
             ACTION = "left"; // port will swap backwards
             return true;
         }
-        else if controller.pressed_buttons.contains(Buttons::X) {
+        else if controller.pressed_buttons.contains(swap_button) {
             ACTION = "out"; // port will disconnect without rejoining
             return true;
         }
