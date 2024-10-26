@@ -21,6 +21,7 @@ mod ridley;
 mod roy;
 mod shizue;
 mod sonic;
+mod trail;
 mod wolf;
 
 pub fn install(agent: &mut Agent) {
@@ -45,5 +46,6 @@ pub fn install(agent: &mut Agent) {
     roy::install(agent);
     shizue::install(agent);
     sonic::install(agent);
+    trail::install(agent);
     wolf::install(agent);
 }
