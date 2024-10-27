@@ -16,11 +16,13 @@ unsafe extern "C" fn game_specialnshoot(agent: &mut L2CAgentBase) {
     let lua_state = agent.lua_state_agent;
     let boma = agent.boma();
     if is_excute(agent) {
-        if !VarModule::is_flag(agent.battle_object, vars::lucario::instance::METER_BURNOUT)
-        && agent.is_flag(*FIGHTER_LUCARIO_SPECIAL_N_STATUS_WORK_ID_FLAG_CHARGE_MAX) {
-            let bonus_aurapower = ParamModule::get_float(agent.battle_object, ParamType::Agent, "aura.bonus_aurapower");
-            VarModule::set_float(agent.battle_object, vars::lucario::status::AURA_OVERRIDE, bonus_aurapower);
-            VarModule::on_flag(agent.battle_object, vars::lucario::instance::IS_POWERED_UP);
+        if agent.kind() != *FIGHTER_KIND_KIRBY {
+            if !VarModule::is_flag(agent.battle_object, vars::lucario::instance::METER_BURNOUT)
+            && agent.is_flag(*FIGHTER_LUCARIO_SPECIAL_N_STATUS_WORK_ID_FLAG_CHARGE_MAX) {
+                let bonus_aurapower = ParamModule::get_float(agent.battle_object, ParamType::Agent, "aura.bonus_aurapower");
+                VarModule::set_float(agent.battle_object, vars::lucario::status::AURA_OVERRIDE, bonus_aurapower);
+                VarModule::on_flag(agent.battle_object, vars::lucario::instance::IS_POWERED_UP);
+            }
         }
     }
     frame(lua_state, 9.0);
