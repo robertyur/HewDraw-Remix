@@ -639,7 +639,8 @@ pub unsafe fn sub_update_damage_fly_effect(fighter: &mut L2CFighterCommon, arg2:
     let mut new_generate_smoke = generate_smoke.clone();
     if arg4.clone().get_u64() == 0x1154cb72bf
     && generate_smoke.get_bool() {
-        if fighter.global_table[CURRENT_FRAME].get_i32() % 2 == 1 {
+        if fighter.global_table[CURRENT_FRAME].get_i32() > 1
+        && fighter.global_table[CURRENT_FRAME].get_i32() % 2 == 0 {
             new_generate_smoke = L2CValue::Bool(false);
         }
     }

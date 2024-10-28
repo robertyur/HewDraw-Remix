@@ -311,7 +311,7 @@ unsafe fn req_follow(effect_module: u64, effHash: smash::phx::Hash40, boneHash: 
     // Shrink knockback smoke effect by 25%
     let mut is_kb_smoke = false;
     if effHash.hash == hash40("sys_flyroll_smoke") as u64 {  // hash for kb smoke
-        eff_size = size * 0.7;
+        eff_size = size * 0.8;
         is_kb_smoke = true;
     }
 
@@ -369,7 +369,7 @@ unsafe fn preset_lifetime_rate_partial_hook(boma: &mut BattleObjectModuleAccesso
         *FIGHTER_STATUS_KIND_DAMAGE_FLY_REFLECT_U,
         *FIGHTER_STATUS_KIND_DAMAGE_FLY_REFLECT_LR])
     {
-        rate = 0.35;
+        rate = 0.4;
     }
     original!()(boma, rate)
 }
