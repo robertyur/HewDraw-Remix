@@ -311,7 +311,7 @@ unsafe fn req_follow(effect_module: u64, effHash: smash::phx::Hash40, boneHash: 
     // Shrink knockback smoke effect by 25%
     let mut is_kb_smoke = false;
     if effHash.hash == hash40("sys_flyroll_smoke") as u64 {  // hash for kb smoke
-        eff_size = size * 0.8;
+        eff_size = size * 0.7;
         is_kb_smoke = true;
     }
 
@@ -345,7 +345,7 @@ unsafe fn req_follow(effect_module: u64, effHash: smash::phx::Hash40, boneHash: 
         let min_alpha = 0.0;
         let max_alpha = 1.0;
 
-        let alpha = (min_alpha + ((speed - 2.25) / 1.75)).clamp(min_alpha, max_alpha);
+        let alpha = (min_alpha + ((speed - 2.5) / 1.5)).clamp(min_alpha, max_alpha);
         EffectModule::set_alpha(boma, handle as u32, alpha);
     }
 

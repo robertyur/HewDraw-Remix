@@ -623,10 +623,20 @@ pub unsafe fn FighterStatusDamage__is_enable_damage_fly_effect_hook(fighter: &mu
 
     let fly_effect_smoke_speed = WorkModule::get_param_float(fighter.module_accessor, hash40("common"), hash40("fly_effect_smoke_speed"));
 
-    if ret.get_bool()
-    && (WorkModule::get_float(fighter.module_accessor, *FIGHTER_STATUS_DAMAGE_WORK_FLOAT_FLY_DIST) < 3.0
-        || speed < fly_effect_smoke_speed) {
-        return L2CValue::Bool(false);
+    if ret.get_bool() {
+        if WorkModule::get_int(fighter.module_accessor, *FIGHTER_STATUS_DAMAGE_WORK_INT_FRAME) < 3 {
+            // Prevents knockback smoke "farts"
+            // when only 1 or 2 smoke puffs would result from the knockback curve
+            if speed > 0.0
+            && speed < fly_effect_smoke_speed + 1.0 {
+                WorkModule::on_flag(fighter.module_accessor, *FIGHTER_STATUS_DAMAGE_FLAG_NO_SMOKE);
+            }
+
+            return L2CValue::Bool(false);
+        }
+        else if speed < fly_effect_smoke_speed {
+            return L2CValue::Bool(false);
+        }
     }
 
     ret
@@ -637,10 +647,15 @@ pub unsafe fn sub_update_damage_fly_effect(fighter: &mut L2CFighterCommon, arg2:
     // This allows us to generate kb smoke as separate puffs every frame
     let generate_smoke = arg2.clone();
     let mut new_generate_smoke = generate_smoke.clone();
+    let hitlag_frames_remaining = FighterStopModuleImpl::get_damage_stop_frame(fighter.module_accessor);
+    let fly_frame = WorkModule::get_int(fighter.module_accessor, *FIGHTER_STATUS_DAMAGE_WORK_INT_FRAME);
+
     if arg4.clone().get_u64() == 0x1154cb72bf
     && generate_smoke.get_bool() {
-        if fighter.global_table[CURRENT_FRAME].get_i32() > 1
-        && fighter.global_table[CURRENT_FRAME].get_i32() % 2 == 0 {
+        if hitlag_frames_remaining != 0
+        || (fly_frame > 3
+            && fly_frame % 2 == 1)
+        {
             new_generate_smoke = L2CValue::Bool(false);
         }
     }
@@ -648,6 +663,7 @@ pub unsafe fn sub_update_damage_fly_effect(fighter: &mut L2CFighterCommon, arg2:
 
     if arg4.get_u64() == 0x1154cb72bf
     && generate_smoke.get_bool()
+    && hitlag_frames_remaining == 0
     && !new_generate_smoke.get_bool() {
         return call_original!(fighter, generate_smoke, arg3, arg4, arg5, arg6, arg7, arg8);
     }
