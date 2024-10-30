@@ -627,23 +627,7 @@ unsafe fn status_Damage_Main(fighter: &mut L2CFighterCommon) -> L2CValue {
     if MotionModule::frame(fighter.module_accessor) + 0.0001 >= cancel_frame - 1.0
     && MotionModule::prev_frame(fighter.module_accessor) + 0.0001 < cancel_frame - 1.0 {
         // Prevent buffering out of non-tumble kb
-        for cat in 0..5 {
-            // Do not remove taunts from buffer
-            if cat == 1 {
-                InputModule::clear_commands(
-                    fighter.battle_object,
-                    cat,
-                    -1 & !0x1F  // 0x1F = AppealAll
-                );
-            }
-            else {
-                InputModule::clear_commands(
-                    fighter.battle_object,
-                    cat,
-                    -1
-                );
-            }
-        }
+        ControlModule::clear_command(fighter.module_accessor, false);
     }
 
     original!()(fighter)
@@ -657,23 +641,7 @@ unsafe fn status_DamageAir_Main(fighter: &mut L2CFighterCommon) -> L2CValue {
     if MotionModule::frame(fighter.module_accessor) + 0.0001 >= cancel_frame - 1.0
     && MotionModule::prev_frame(fighter.module_accessor) + 0.0001 < cancel_frame - 1.0 {
         // Prevent buffering out of non-tumble kb
-        for cat in 0..5 {
-            // Do not remove taunts from buffer
-            if cat == 1 {
-                InputModule::clear_commands(
-                    fighter.battle_object,
-                    cat,
-                    -1 & !0x1F  // 0x1F = AppealAll
-                );
-            }
-            else {
-                InputModule::clear_commands(
-                    fighter.battle_object,
-                    cat,
-                    -1
-                );
-            }
-        }
+        ControlModule::clear_command(fighter.module_accessor, false);
     }
 
     original!()(fighter)

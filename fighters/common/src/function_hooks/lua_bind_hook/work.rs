@@ -41,6 +41,10 @@ unsafe fn is_flag_hook(boma: &mut BattleObjectModuleAccessor, flag: i32) -> bool
                 return false;
             }
         }
+        else if boma.is_status_one_of(&[*FIGHTER_STATUS_KIND_DAMAGE, *FIGHTER_STATUS_KIND_DAMAGE_AIR])
+        && flag == *FIGHTER_STATUS_DAMAGE_FLAG_REACTION_CANCEL {
+            return true;
+        }
     }
     original!()(boma, flag)
 }
