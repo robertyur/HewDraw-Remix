@@ -299,8 +299,7 @@ unsafe fn can_entry_cliff_hook(boma: &mut BattleObjectModuleAccessor) -> u64 {
                           || (fighter_kind == *FIGHTER_KIND_TANTAN      && (status_kind == *FIGHTER_STATUS_KIND_SPECIAL_HI || status_kind == *FIGHTER_TANTAN_STATUS_KIND_SPECIAL_HI_AIR))
                           || (fighter_kind == *FIGHTER_KIND_MASTER      && status_kind == *FIGHTER_STATUS_KIND_SPECIAL_HI)
                           || (fighter_kind == *FIGHTER_KIND_JACK        && status_kind == *FIGHTER_STATUS_KIND_SPECIAL_HI)
-                          || (fighter_kind == *FIGHTER_KIND_PFUSHIGISOU && status_kind == *FIGHTER_STATUS_KIND_SPECIAL_HI)
-                          || ([*FIGHTER_KIND_ICE_CLIMBER, *FIGHTER_KIND_POPO, *FIGHTER_KIND_NANA].contains(&fighter_kind) && [*FIGHTER_POPO_STATUS_KIND_SPECIAL_HI_JUMP_PRE, *FIGHTER_POPO_STATUS_KIND_SPECIAL_HI_PARTNER, *FIGHTER_POPO_STATUS_KIND_SPECIAL_HI_JUMP_PARTNER, *FIGHTER_POPO_STATUS_KIND_SPECIAL_HI_JUMP, *FIGHTER_POPO_STATUS_KIND_SPECIAL_HI_CLIFF_COMP_PARTNER, *FIGHTER_POPO_STATUS_KIND_SPECIAL_HI_CLIFF_PULL_PARTNER, *FIGHTER_POPO_STATUS_KIND_SPECIAL_HI_CLIFF_COMP].contains(&status_kind) ) );
+                          || (fighter_kind == *FIGHTER_KIND_PFUSHIGISOU && status_kind == *FIGHTER_STATUS_KIND_SPECIAL_HI) );
 
     let tether_aerial = boma.is_fighter()
                         && ( (fighter_kind == *FIGHTER_KIND_SIMON   && status_kind == *FIGHTER_STATUS_KIND_ATTACK_AIR) );
