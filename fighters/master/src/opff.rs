@@ -33,6 +33,7 @@ unsafe fn up_special_freefall(fighter: &mut L2CFighterCommon) {
     if fighter.is_status(*FIGHTER_STATUS_KIND_SPECIAL_HI)
     && fighter.is_situation(*SITUATION_KIND_AIR)
     && !StatusModule::is_changing(fighter.module_accessor)
+    && !AttackModule::is_infliction_status(fighter.module_accessor, *COLLISION_KIND_MASK_HIT)
     && CancelModule::is_enable_cancel(fighter.module_accessor) {
         let accel_x_mul = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_special_hi.fall_special_accel_x_mul");
         let speed_x_max_mul = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_special_hi.fall_special_speed_x_max_mul");
