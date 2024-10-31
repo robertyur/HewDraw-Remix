@@ -47,6 +47,16 @@ unsafe fn up_special_freefall(fighter: &mut L2CFighterCommon) {
     }
 }
 
+// Allows Byleth to grab ledge after upB tether ledgegrab boxes have cleared
+unsafe fn up_special_whiff_ledgegrab(fighter: &mut L2CFighterCommon) {
+    if fighter.is_status(*FIGHTER_STATUS_KIND_SPECIAL_HI)
+    && fighter.is_situation(*SITUATION_KIND_AIR)
+    && WorkModule::is_flag(fighter.module_accessor, *FIGHTER_MASTER_STATUS_SPECIAL_HI_FLAG_AIR_LASSO_FAIL) {
+        WorkModule::enable_transition_term_group(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_GROUP_CHK_AIR_CLIFF);
+        fighter.sub_transition_group_check_air_cliff();
+    }
+}
+
 unsafe fn fastfall_specials(fighter: &mut L2CFighterCommon) {
     if !fighter.is_in_hitlag()
     && !StatusModule::is_changing(fighter.module_accessor)
@@ -94,6 +104,7 @@ pub unsafe fn moveset(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectMod
     aymr_slowdown(boma);
     specialhi_reset(fighter);
     up_special_freefall(fighter);
+    up_special_whiff_ledgegrab(fighter);
     fastfall_specials(fighter);
 }
 
