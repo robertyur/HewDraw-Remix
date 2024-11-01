@@ -19,6 +19,7 @@ fn nro_hook(info: &skyline::nro::NroInfo) {
             sub_DamageFlyCommon_hook,
             exec_damage_elec_hit_stop_hook,
             FighterStatusDamage__is_enable_damage_fly_effect_hook,
+            sub_update_damage_fly_effect,
             status_Damage_Main,
             status_DamageAir_Main
         );
@@ -612,11 +613,62 @@ pub unsafe fn exec_damage_elec_hit_stop_hook(fighter: &mut L2CFighterCommon) {
 pub unsafe fn FighterStatusDamage__is_enable_damage_fly_effect_hook(fighter: &mut L2CFighterCommon, arg2: L2CValue, arg3: L2CValue, arg4: L2CValue, arg5: L2CValue) -> L2CValue {
     let ret = call_original!(fighter, arg2, arg3, arg4, arg5);
 
-    if ret.get_bool() && WorkModule::get_float(fighter.module_accessor, *FIGHTER_STATUS_DAMAGE_WORK_FLOAT_FLY_DIST) < 3.0 {
-        return L2CValue::Bool(false);
+    let speed = sv_math::vec2_length(
+        KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN)
+            + KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_DAMAGE),
+
+        KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN)
+            + KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_DAMAGE)
+    );
+
+    let fly_effect_smoke_speed = WorkModule::get_param_float(fighter.module_accessor, hash40("common"), hash40("fly_effect_smoke_speed"));
+
+    if ret.get_bool() {
+        if WorkModule::get_int(fighter.module_accessor, *FIGHTER_STATUS_DAMAGE_WORK_INT_FRAME) < 3 {
+            // Prevents knockback smoke "farts"
+            // when only 1 or 2 smoke puffs would result from the knockback curve
+            if speed > 0.0
+            && speed < fly_effect_smoke_speed + 1.0 {
+                WorkModule::on_flag(fighter.module_accessor, *FIGHTER_STATUS_DAMAGE_FLAG_NO_SMOKE);
+            }
+
+            return L2CValue::Bool(false);
+        }
+        else if speed < fly_effect_smoke_speed {
+            return L2CValue::Bool(false);
+        }
     }
 
     ret
+}
+
+#[skyline::hook(replace = smash::lua2cpp::L2CFighterCommon_sub_update_damage_fly_effect)]
+pub unsafe fn sub_update_damage_fly_effect(fighter: &mut L2CFighterCommon, arg2: L2CValue, arg3: L2CValue, arg4: L2CValue, arg5: L2CValue, arg6: L2CValue, arg7: L2CValue, arg8: L2CValue) -> L2CValue {
+    // This allows us to generate kb smoke as separate puffs every frame
+    let generate_smoke = arg2.clone();
+    let mut new_generate_smoke = generate_smoke.clone();
+    let hitlag_frames_remaining = FighterStopModuleImpl::get_damage_stop_frame(fighter.module_accessor);
+    let fly_frame = WorkModule::get_int(fighter.module_accessor, *FIGHTER_STATUS_DAMAGE_WORK_INT_FRAME);
+
+    if arg4.clone().get_u64() == 0x1154cb72bf
+    && generate_smoke.get_bool() {
+        if hitlag_frames_remaining != 0
+        || (fly_frame > 3
+            && fly_frame % 2 == 1)
+        {
+            new_generate_smoke = L2CValue::Bool(false);
+        }
+    }
+    let handle = call_original!(fighter, new_generate_smoke.clone(), arg3.clone(), arg4.clone(), arg5.clone(), arg6.clone(), arg7.clone(), arg8.clone());
+
+    if arg4.get_u64() == 0x1154cb72bf
+    && generate_smoke.get_bool()
+    && hitlag_frames_remaining == 0
+    && !new_generate_smoke.get_bool() {
+        return call_original!(fighter, generate_smoke, arg3, arg4, arg5, arg6, arg7, arg8);
+    }
+
+    handle
 }
 
 #[skyline::hook(replace = L2CFighterCommon_status_Damage_Main)]
