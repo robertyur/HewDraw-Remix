@@ -98,7 +98,7 @@
   <int hash="cliff_catch_move_frame">0</int>
   <float hash="cliff_next_stick">0.2</float>
   <int hash="cliff_no_catch_frame">25</int>
-  <int hash="damage_cliff_no_catch_frame">0</int>
+  <int hash="damage_cliff_no_catch_frame">10</int>
   <int hash="cliff_wait_air_xlu_max_frame">0</int>
   <int hash="cliff_wait_damage_xlu_max_frame">0</int>
   <int hash="cliff_wait_xlu_min_frame">29</int>
