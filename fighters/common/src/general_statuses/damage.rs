@@ -343,7 +343,13 @@ unsafe extern "C" fn fighterstatusdamage_init_damage_speed_up_by_speed(
     let max_mul = 1.8;
     let power = 1.2;
     let ratio = ((speed - speed_start) / (speed_end - speed_start));
-    let speed_up_mul = util::nlerp(min_mul, max_mul, power, ratio);
+    let speed_up_mul = if speed <= speed_end {
+        util::nlerp(min_mul, max_mul, power, ratio)
+    } else {
+        let dif = (speed_end * max_mul) - speed_end;
+        let new_speed = speed + dif;
+        new_speed / speed
+    };
 
     WorkModule::on_flag(fighter.module_accessor, *FIGHTER_INSTANCE_WORK_ID_FLAG_DAMAGE_SPEED_UP);
     WorkModule::set_float(fighter.module_accessor, speed_up_mul, *FIGHTER_INSTANCE_WORK_ID_FLOAT_DAMAGE_SPEED_UP_MAX_MAG);
