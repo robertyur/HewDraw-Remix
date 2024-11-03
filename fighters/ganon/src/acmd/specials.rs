@@ -315,7 +315,7 @@ unsafe extern "C" fn effect_specialhi(agent: &mut L2CAgentBase) {
     frame(lua_state, 3.0);
     if is_excute(agent) {
         EFFECT_FOLLOW(agent, Hash40::new("ganon_majinken_start"), Hash40::new("haver"), 0, 0, 0, 0, 0, 0, 0.9, true);
-        EFFECT_FOLLOW(agent, Hash40::new("ganon_majinken_flash"), Hash40::new("top"), 0, 12, 11, 0, 0, 0, 1, true);
+        EFFECT_FOLLOW(agent, Hash40::new("ganon_majinken_flash"), Hash40::new("top"), 0, 12, 11, 0, 0, 0, 0.85, true);
         LAST_EFFECT_SET_RATE(agent, 2.0);
     }
     frame(lua_state, 12.0);
