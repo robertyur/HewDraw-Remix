@@ -314,11 +314,9 @@ unsafe extern "C" fn effect_specialhi(agent: &mut L2CAgentBase) {
     let boma = agent.boma();
     frame(lua_state, 3.0);
     if is_excute(agent) {
-        EFFECT_FOLLOW(agent, Hash40::new("ganon_raijin_hold"), Hash40::new("haver"), 2, 0, 0, 0, 0, 0, 1.0, true);
-        EffectModule::enable_sync_init_pos_last(boma);
-        EFFECT_FOLLOW(agent, Hash40::new("sys_smash_flash"), Hash40::new("top"), 0, 12, 11, 0, 0, 0, 1, true);
-        LAST_EFFECT_SET_COLOR(agent, 0.8, 0.2, 0.8);
-        LAST_EFFECT_SET_RATE(agent, 0.7);
+        EFFECT_FOLLOW(agent, Hash40::new("ganon_majinken_start"), Hash40::new("haver"), 0, 0, 0, 0, 0, 0, 0.9, true);
+        EFFECT_FOLLOW(agent, Hash40::new("ganon_majinken_flash"), Hash40::new("top"), 0, 12, 11, 0, 0, 0, 0.85, true);
+        LAST_EFFECT_SET_RATE(agent, 2.0);
     }
     frame(lua_state, 12.0);
     if is_excute(agent) {
@@ -333,11 +331,7 @@ unsafe extern "C" fn effect_specialhi(agent: &mut L2CAgentBase) {
         if is_excute(agent) {
             EFFECT(agent, Hash40::new("ganon_attack_elec"), Hash40::new("haver"), 0, 0, 0, 0, 0, 0, 1.3, 0, 0, 0, 0, 0, 0, true);
         }
-    }
-    wait(agent.lua_state_agent, 2.0);
-    frame(lua_state, 42.0);
-    if is_excute(agent) {
-        EFFECT_OFF_KIND(agent, Hash40::new("ganon_raijin_hold"), false, true);
+        wait(agent.lua_state_agent, 2.0);
     }
 }
 
