@@ -63,7 +63,7 @@
   <int hash="0x256ea4745d">-1</int>
   <float hash="0x2373146726">1</float>
   <int hash="0x29dae31932">-1</int>
-  <int hash="0x339a45c8eb">-1</int>
+  <int hash="0x339a45c8eb">999</int>
   <float hash="hit_stop_delay_auto_mul">2.5</float>
   <float hash="damage_reaction_mul_max">1</float>
   <list hash="pattern_power_mul">
