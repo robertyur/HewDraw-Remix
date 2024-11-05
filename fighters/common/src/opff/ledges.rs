@@ -96,7 +96,6 @@ unsafe fn tether_trump_landing(boma: &mut BattleObjectModuleAccessor, status_kin
     */
 }
 
-// Allow all aerials and special moves to grab ledge after their FAF
 // Allow all special moves to grab ledge after their FAF
 // rather than after their animation completes
 unsafe fn global_faf_ledgegrab(fighter: &mut L2CFighterCommon) {
@@ -113,6 +112,7 @@ unsafe fn global_faf_ledgegrab(fighter: &mut L2CFighterCommon) {
         fighter.sub_transition_group_check_air_cliff();
     }
 
+    // If an aerial has a defined FAF (!= 0)
     // then we allow it to grab ledge 5f after its FAF
     if fighter.is_status(*FIGHTER_STATUS_KIND_ATTACK_AIR)
     && fighter.is_situation(*SITUATION_KIND_AIR) {
