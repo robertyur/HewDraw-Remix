@@ -10,8 +10,8 @@ unsafe fn var_reset(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
         *FIGHTER_STATUS_KIND_ENTRY,
         *FIGHTER_STATUS_KIND_DEAD,
         *FIGHTER_STATUS_KIND_REBIRTH]) {
-        VarModule::set_float(fighter.battle_object, vars::krool::instance::STORED_DAMAGE, 0.0);
-        VarModule::off_flag(fighter.battle_object, vars::krool::instance::BLUNDERBUSS_GRAB);
+        VarModule::set_float(fighter.battle_object, vars::krool::instance::SPECIAL_LW_STORED_DAMAGE, 0.0);
+        VarModule::off_flag(fighter.battle_object, vars::krool::instance::SPECIAL_N_GRAB);
     }
 }
 
@@ -23,10 +23,9 @@ pub unsafe fn armored_charge(fighter: &mut L2CFighterCommon, motion_kind: u64) {
         Hash40::new("attack_hi3"),
         Hash40::new("attack_lw3") ]) {
         let is_hold = ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK);
-        let charge = VarModule::get_int(fighter.battle_object, vars::krool::status::CURRENT_CHARGE);
+        let charge = VarModule::get_int(fighter.battle_object, vars::krool::status::ATTACK_CHARGE);
         let mut charge_start_frame = 0.0;
         let mut charge_end_frame = 0.0;
-        let mut eff_offset = Vector3f::zero();
         // due to what I presume is internal rounding error, the current amount of 20.0 equates to 18 frames
         let max_charge_frames = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_waist.max_charge_frames");
 
@@ -34,30 +33,27 @@ pub unsafe fn armored_charge(fighter: &mut L2CFighterCommon, motion_kind: u64) {
             _ if [hash40("attack_s3_s"), hash40("attack_s3_hi"), hash40("attack_s3_lw")].contains(&motion_kind) => {
                 charge_start_frame = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_waist.attack_s3_charge_start");
                 charge_end_frame = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_waist.attack_s3_charge_end");
-                eff_offset = Vector3f::new(3.0, 0.0, 5.0);
             },
             _ if motion_kind == hash40("attack_hi3") => {
                 charge_start_frame = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_waist.attack_hi3_charge_start");
                 charge_end_frame = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_waist.attack_hi3_charge_end");
-                eff_offset = Vector3f::new(3.0, 0.0, 3.0);
             },
             _ if motion_kind == hash40("attack_lw3") => {
                 charge_start_frame = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_waist.attack_lw3_charge_start");
                 charge_end_frame = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_waist.attack_lw3_charge_end");
-                eff_offset = Vector3f::new(3.0, 0.0, 0.0);
             },
             _ => {}
         }
 
         if (charge_start_frame..charge_end_frame).contains(&fighter.motion_frame()) && charge < (max_charge_frames as i32) && is_hold {
             if fighter.motion_frame() == charge_start_frame {
-                let facing = eff_offset.z * PostureModule::lr(fighter.module_accessor);
-                EFFECT_FOLLOW(fighter, Hash40::new("sys_level_up"), Hash40::new("hip"), eff_offset.x, eff_offset.y, facing, 0, 0, 0, 0.55, true);
+                let facing = 0.0 * PostureModule::lr(fighter.module_accessor);
+                EFFECT_FOLLOW(fighter, Hash40::new("sys_level_up"), Hash40::new("waistswells"), 3.0, 0.0, facing, 0, 0, 0, 0.5, true);
                 PLAY_SEQUENCE(fighter, Hash40::new("seq_krool_rnd_attack"));
             }
             let motion_rate = (charge_end_frame - charge_start_frame)/max_charge_frames;
             MotionModule::set_rate(fighter.module_accessor, motion_rate);
-            VarModule::set_int(fighter.battle_object, vars::krool::status::CURRENT_CHARGE, charge + 1);
+            VarModule::set_int(fighter.battle_object, vars::krool::status::ATTACK_CHARGE, charge + 1);
         } else {
             MotionModule::set_rate(fighter.module_accessor, 1.0);
         }

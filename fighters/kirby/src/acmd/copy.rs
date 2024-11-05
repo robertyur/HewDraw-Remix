@@ -1,5 +1,6 @@
 use super::*;
 
+mod daisy;
 mod diddy;
 mod edge;
 mod falco;
@@ -14,6 +15,7 @@ mod mario;
 mod mariod;
 mod miigunner;
 mod palutena;
+mod purin;
 mod richter;
 mod ridley;
 mod roy;
@@ -22,6 +24,7 @@ mod sonic;
 mod wolf;
 
 pub fn install(agent: &mut Agent) {
+    daisy::install(agent);
     diddy::install(agent);
     edge::install(agent);
     falco::install(agent);
@@ -36,6 +39,7 @@ pub fn install(agent: &mut Agent) {
     mariod::install(agent);
     miigunner::install(agent);
     palutena::install(agent);
+    purin::install(agent);
     richter::install(agent);
     ridley::install(agent);
     roy::install(agent);

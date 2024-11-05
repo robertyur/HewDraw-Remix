@@ -22,12 +22,12 @@ unsafe extern "C" fn special_lw_main(fighter: &mut L2CFighterCommon) -> L2CValue
                 itemmanager, fighter.boma().battle_object_id, 
                 smash2::app::ItemKind::Barrel);
             if barrel_count == 0 {
-                VarModule::on_flag(fighter.object(), vars::donkey::instance::DID_SPAWN_BARREL);
+                VarModule::on_flag(fighter.object(), vars::donkey::instance::SPECIAL_LW_BARREL_GENERATED);
                 ItemModule::have_item(fighter.module_accessor, ItemKind(*ITEM_KIND_BARREL),0,0,false,false);
                 EFFECT(fighter, Hash40::new("donkey_handslap"), Hash40::new("top"), 6, 0, 0, 0, 0, 0, 0.3, 0, 0, 0, 0, 0, 0, false);
             }
         } else {
-            VarModule::off_flag(fighter.object(), vars::donkey::instance::DID_SPAWN_BARREL);
+            VarModule::off_flag(fighter.object(), vars::donkey::instance::SPECIAL_LW_BARREL_GENERATED);
         }
         
         // change into the heavy item pickup status either way
@@ -92,22 +92,29 @@ unsafe extern "C" fn special_lw_main_loop(fighter: &mut L2CFighterCommon) -> L2C
         }
     }
     if StatusModule::is_situation_changed(fighter.module_accessor) {
-        let status = if situation != *SITUATION_KIND_GROUND {
-            FIGHTER_STATUS_KIND_FALL
+        if fighter.is_situation(*SITUATION_KIND_GROUND) {
+            if fighter.status_frame() < 24 {
+                GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
+                KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
+                MotionModule::change_motion_inherit_frame(fighter.module_accessor, Hash40::new("special_air_lw_landing"), -1.0, 1.0, 0.0, false, false);
+            }
+            else {
+                WorkModule::set_float(fighter.module_accessor, 20.0, *FIGHTER_INSTANCE_WORK_ID_FLOAT_LANDING_FRAME);
+                fighter.change_status(FIGHTER_STATUS_KIND_LANDING_FALL_SPECIAL.into(), false.into());
+                return 1.into();
+            }
         }
         else {
-            WorkModule::set_float(fighter.module_accessor, 20.0, *FIGHTER_INSTANCE_WORK_ID_FLOAT_LANDING_FRAME);
-            FIGHTER_STATUS_KIND_LANDING_FALL_SPECIAL
-        };
-        fighter.change_status(status.into(), false.into());
-        return 1.into();
+            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+            return 1.into();
+        }
     }
     if MotionModule::is_end(fighter.module_accessor) {
         let status = if is_air {
             FIGHTER_STATUS_KIND_FALL_SPECIAL
         }
         else {
-            FIGHTER_DONKEY_STATUS_KIND_SPECIAL_LW_LOOP
+            FIGHTER_STATUS_KIND_WAIT
         };
         fighter.change_status(status.into(), false.into());
     }

@@ -5,25 +5,12 @@ unsafe extern "C" fn game_final(agent: &mut L2CAgentBase) {
     let boma = agent.boma();
     frame(lua_state, 1.0);
     if is_excute(agent) {
-        CHECK_VALID_FINAL_START_CAMERA(agent, 0, 7, 20, 0, 0, 0);
+        WHOLE_HIT(agent, *HIT_STATUS_XLU);
         SLOW_OPPONENT(agent, 80.0, 50.0);
     }
-    if !WorkModule::is_flag(boma, *FIGHTER_INSTANCE_WORK_ID_FLAG_DISABLE_FINAL_START_CAMERA) {
-        frame(lua_state, 10.0);
-        if is_excute(agent) {
-            FT_SET_FINAL_FEAR_FACE(agent, 40);
-            REQ_FINAL_START_CAMERA(agent, Hash40::new("d04final.nuanmb"), true);
-            FT_START_CUTIN(agent);
-        }
-    } else {
-        if is_excute(agent) {
-            CAM_ZOOM_IN_arg5(agent, 3.0, 0.0, 1.8, 0.0, 0.0);
-            FT_START_CUTIN(agent);
-        }
-        frame(lua_state, 28.0);
-        if is_excute(agent) {
-            CAM_ZOOM_OUT(agent);
-        }
+    frame(lua_state, 10.0);
+    if is_excute(agent) {
+        FT_START_CUTIN(agent);
     }
     frame(lua_state, 30.0);
     if is_excute(agent) {
@@ -63,6 +50,7 @@ unsafe extern "C" fn game_final(agent: &mut L2CAgentBase) {
     }
     wait(lua_state, 2.0);
     if is_excute(agent) {
+        WHOLE_HIT(agent, *HIT_STATUS_NORMAL);
         AttackModule::clear_all(boma);
     }
 }
@@ -120,10 +108,51 @@ unsafe extern "C" fn game_finalhit(agent: &mut L2CAgentBase) {
     }
 }
 
+unsafe extern "C" fn game_final2(agent: &mut L2CAgentBase) {
+    let lua_state = agent.lua_state_agent;
+    let boma = agent.boma();
+    if is_excute(agent) {
+        WHOLE_HIT(agent, *HIT_STATUS_XLU);
+        SLOW_OPPONENT(agent, 100.0, 60.0);
+    }
+    frame(lua_state, 10.0);
+    if is_excute(agent) {
+        FT_START_CUTIN(agent);
+        ATTACK(agent, 0, 0, Hash40::new("throw"), 0.5, 366, 100, 50, 0, 4.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, 0.0, 0.0, 5, true, false, false, true, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_NONE);
+        AttackModule::set_no_finish_camera(boma, 0, true, false);
+    }
+    frame(lua_state, 31.0);
+    if is_excute(agent) {
+        CAM_ZOOM_OUT(agent);
+    }
+    frame(lua_state, 65.0);
+    if is_excute(agent) {
+        ATTACK(agent, 0, 0, Hash40::new("throw"), 0.5, 368, 100, 50, 0, 4.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, 0.0, 0.0, 0, true, false, false, true, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_NONE);
+        AttackModule::set_vec_target_pos(boma, 0, Hash40::new("top"), &Vector2f{x: 16.0, y: 8.0}, 10, false);
+        AttackModule::set_no_finish_camera(boma, 0, true, false);
+    }
+    frame(lua_state, 70.0);
+    if is_excute(agent) {
+        AttackModule::clear_all(boma);
+        ArticleModule::generate_article(boma, *FIGHTER_RYU_GENERATE_ARTICLE_SHINKUHADOKEN, false, -1);
+    }
+    frame(lua_state, 71.0);
+    if is_excute(agent) {
+        WHOLE_HIT(agent, *HIT_STATUS_NORMAL);
+    }
+    frame(lua_state, 75.0);
+    if is_excute(agent) {
+        WorkModule::on_flag(boma, *FIGHTER_RYU_STATUS_WORK_ID_FINAL_FLAG_REMOVE_FINAL_AURA);
+    }
+}
+
 pub fn install(agent: &mut Agent) {
     agent.acmd("game_final", game_final, Priority::Low);
     agent.acmd("game_finalair", game_final, Priority::Low);
     
     agent.acmd("game_finalhit", game_finalhit, Priority::Low);
     agent.acmd("game_finalairhit", game_finalhit, Priority::Low);
+
+    agent.acmd("game_final2", game_final2, Priority::Low);
+    agent.acmd("game_finalair2", game_final2, Priority::Low);
 }

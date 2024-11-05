@@ -5,7 +5,7 @@ version = 3
 [[package]]
 name = "acmd-engine"
 version = "0.1.0"
-source = "git+https://github.com/HDR-Development/smashline#3c6ab6d3786284b59596142a000eda193afb2fdc"
+source = "git+https://github.com/HDR-Development/smashline#4916a30090d4f7a8f10f2f51c2ec1f589d7c1de9"
 dependencies = [
  "hash40 1.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "locks",
@@ -26,18 +26,18 @@ dependencies = [
 
 [[package]]
 name = "arcropolis-api"
-version = "0.1.0"
-source = "git+https://github.com/Raytwo/arcropolis_api#0daaf381ed022d72bb71706065621b5a0fa5a014"
+version = "0.1.1"
+source = "git+https://github.com/Raytwo/arcropolis_api#95f062e479648f5f7c0d112f825cef0e4785db6a"
 dependencies = [
  "arcropolis-api-macro",
  "crc32fast",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/Raytwo/skyline-rs?branch=preview)",
 ]
 
 [[package]]
 name = "arcropolis-api-macro"
 version = "0.1.0"
-source = "git+https://github.com/Raytwo/arcropolis_api#0daaf381ed022d72bb71706065621b5a0fa5a014"
+source = "git+https://github.com/Raytwo/arcropolis_api#95f062e479648f5f7c0d112f825cef0e4785db6a"
 dependencies = [
  "quote",
  "syn 1.0.109",
@@ -57,16 +57,16 @@ checksum = "23b62fc65de8e4e7f52534fb52b0f3ed04746ae267519eef2a83941e8085068b"
 
 [[package]]
 name = "autocfg"
-version = "1.2.0"
+version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f1fdabc7756949593fe60f30ec81974b613357de856987752631dea1e3394c80"
+checksum = "ace50bade8e6234aa140d9a2f552bbee1db4d353f69b8217bc503490fc1a9f26"
 
 [[package]]
 name = "bayonetta"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -116,16 +116,16 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 
 [[package]]
 name = "bitflags"
-version = "2.5.0"
+version = "2.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cf4b9d6a944f767f8e5e0db018570623c85f3d925ac718db4e06d0187adb21c1"
+checksum = "b048fb63fd8b5923fc5aa7b340d8e156aec7ec02f0c78fa8a6ddc2613f6f71de"
 
 [[package]]
 name = "brave"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash",
  "smash_script",
@@ -137,7 +137,7 @@ name = "buddy"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -145,9 +145,9 @@ dependencies = [
 
 [[package]]
 name = "bytemuck"
-version = "1.15.0"
+version = "1.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5d6d68c57235a3a081186990eca2867354726650f42f7516ca50c28d6281fd15"
+checksum = "8334215b81e418a0a7bdb8ef0849474f40bb10c8b71f1c4ed315cff49f32494d"
 
 [[package]]
 name = "byteorder"
@@ -160,7 +160,7 @@ name = "captain"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -183,7 +183,7 @@ name = "chrom"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -194,7 +194,7 @@ name = "cloud"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -217,7 +217,7 @@ dependencies = [
  "interpolation",
  "ninput",
  "rand 0.7.4",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash",
  "smash_script",
@@ -250,16 +250,16 @@ version = "0.1.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f9d839f2a20b0aee515dc581a6172f2321f96cab76c1a38a4c584a194955390e"
 dependencies = [
- "getrandom 0.2.14",
+ "getrandom 0.2.15",
  "once_cell",
  "tiny-keccak",
 ]
 
 [[package]]
 name = "crc32fast"
-version = "1.3.2"
+version = "1.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b540bd8bc810d3885c6ea91e2018302f68baba2129ab3e88f32389ee9370880d"
+checksum = "a97769d94ddab943e4510d138150169a2758b5ef3eb191a9ee688de3e23ef7b3"
 dependencies = [
  "cfg-if 1.0.0",
 ]
@@ -284,7 +284,7 @@ name = "daisy"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -295,7 +295,7 @@ name = "dedede"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -306,7 +306,7 @@ name = "demon"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash",
  "smash_script",
@@ -318,7 +318,7 @@ name = "diddy"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -350,7 +350,7 @@ name = "dolly"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -361,7 +361,7 @@ name = "donkey"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash",
  "smash_script",
@@ -373,7 +373,7 @@ name = "duckhunt"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -383,11 +383,11 @@ dependencies = [
 name = "dynamic"
 version = "0.1.0"
 dependencies = [
- "bitflags 2.5.0",
+ "bitflags 2.6.0",
  "hdr-macros",
  "modular-bitfield",
  "once_cell",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash",
  "smash_script",
@@ -399,7 +399,7 @@ version = "0.1.0"
 dependencies = [
  "dynamic",
  "interpolation",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -410,7 +410,7 @@ name = "eflame"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -418,16 +418,16 @@ dependencies = [
 
 [[package]]
 name = "either"
-version = "1.11.0"
+version = "1.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a47c1c47d2f5964e29c61246e81db715514cd532db6b5116a25ea3c03d6780a2"
+checksum = "60b1af1c220855b6ceac025d3f6ecdd2b7c4894bfe9cd9bda4fbb4bc7c0d4cf0"
 
 [[package]]
 name = "elight"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -444,7 +444,7 @@ name = "falco"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -461,7 +461,7 @@ name = "fox"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -472,7 +472,7 @@ name = "gamewatch"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -483,7 +483,7 @@ name = "ganon"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -494,7 +494,7 @@ name = "gaogaen"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -505,7 +505,7 @@ name = "gekkouga"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -522,9 +522,9 @@ dependencies = [
 
 [[package]]
 name = "getrandom"
-version = "0.2.14"
+version = "0.2.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "94b22e06ecb0110981051723910cbf0b5f5e09a2062dd7663334ee79a9d1286c"
+checksum = "c4567c8db10ae91089c99af84c68c38da3ec2f087c3f82960bcdbf3656b6f4d7"
 dependencies = [
  "cfg-if 1.0.0",
  "libc",
@@ -577,9 +577,9 @@ checksum = "8a9ee70c43aaf417c914396645a0fa852624801b24ebb7ae78fe8272889ac888"
 
 [[package]]
 name = "hashbrown"
-version = "0.14.3"
+version = "0.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "290f1a1d9242c78d09ce40a5e87e7554ee637af1351968159f4952f028f75604"
+checksum = "1e087f84d4f86bf4b218b927129862374b72199ae7d8657835f1e89000eea4fb"
 
 [[package]]
 name = "hdr"
@@ -672,7 +672,7 @@ dependencies = [
  "shizue",
  "shulk",
  "simon",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline-web",
  "skyline_smash",
  "smash-arc",
@@ -724,7 +724,7 @@ name = "iceclimber"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -735,7 +735,7 @@ name = "ike"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -754,12 +754,12 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
-version = "2.2.6"
+version = "2.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "168fb715dda47215e360912c096649d23d58bf392ac62f73919e831745e40f26"
+checksum = "707907fe3c25f5424cce2cb7e1cbcafee6bdbe735ca90ef77c29e84591e5b9da"
 dependencies = [
  "equivalent",
- "hashbrown 0.14.3",
+ "hashbrown 0.15.0",
 ]
 
 [[package]]
@@ -767,7 +767,7 @@ name = "inkling"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -775,9 +775,9 @@ dependencies = [
 
 [[package]]
 name = "instant"
-version = "0.1.12"
+version = "0.1.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7a5bbe824c507c5da5956355e86a746d82e0e1464f65d862cc5e71da70e94b2c"
+checksum = "e0242819d153cba4b4b05a5a8f2a7e9bbf97b6055b2a002b395c96b5ff3c0222"
 dependencies = [
  "cfg-if 1.0.0",
 ]
@@ -799,7 +799,7 @@ name = "jack"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -810,7 +810,8 @@ name = "kamui"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "interpolation",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -821,7 +822,7 @@ name = "ken"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -832,7 +833,7 @@ name = "kirby"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -844,7 +845,7 @@ version = "0.1.0"
 dependencies = [
  "dynamic",
  "interpolation",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -855,7 +856,7 @@ name = "koopag"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -866,7 +867,7 @@ name = "koopajr"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -877,7 +878,7 @@ name = "krool"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -885,15 +886,15 @@ dependencies = [
 
 [[package]]
 name = "lazy_static"
-version = "1.4.0"
+version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
+checksum = "bbd2bcb4c963f2ddae06a2efc7e9f3591312473c50c6685e1f298068316e66fe"
 
 [[package]]
 name = "libc"
-version = "0.2.153"
+version = "0.2.161"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9c198f91728a82281a64e1f4f9eeb25d82cb32a5de251c6bd1b5154d63a8e7bd"
+checksum = "8e9489c2807c139ffd9c1794f4af0ebe86a828db53ecdc7fea2111d0fed085d1"
 
 [[package]]
 name = "libc-nnsdk"
@@ -912,7 +913,7 @@ name = "link"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -923,7 +924,7 @@ name = "littlemac"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -931,9 +932,9 @@ dependencies = [
 
 [[package]]
 name = "lock_api"
-version = "0.4.11"
+version = "0.4.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3c168f8615b12bc01f9c17e2eb0cc07dcae1940121185446edc3744920e8ef45"
+checksum = "07af8b9cdd281b7915f413fa73f29ebd5d55d0d3f0155584dade1ff18cea1b17"
 dependencies = [
  "autocfg",
  "scopeguard",
@@ -941,10 +942,10 @@ dependencies = [
 
 [[package]]
 name = "locks"
-version = "1.3.0"
-source = "git+https://github.com/HDR-Development/smashline#3c6ab6d3786284b59596142a000eda193afb2fdc"
+version = "1.5.1"
+source = "git+https://github.com/HDR-Development/smashline#4916a30090d4f7a8f10f2f51c2ec1f589d7c1de9"
 dependencies = [
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
 ]
 
 [[package]]
@@ -982,7 +983,8 @@ name = "lucario"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "interpolation",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -993,7 +995,7 @@ name = "lucas"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1004,7 +1006,7 @@ name = "lucina"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1015,7 +1017,7 @@ name = "luigi"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1026,7 +1028,7 @@ name = "mario"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1037,7 +1039,7 @@ name = "mariod"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1048,7 +1050,7 @@ name = "marth"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1059,7 +1061,7 @@ name = "master"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1067,9 +1069,9 @@ dependencies = [
 
 [[package]]
 name = "memchr"
-version = "2.7.2"
+version = "2.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6c8640c5d730cb13ebd907d8d04b52f55ac9a2eec55b440c8892f40d56c76c1d"
+checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
 
 [[package]]
 name = "memoffset"
@@ -1085,7 +1087,7 @@ name = "metaknight"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1096,7 +1098,7 @@ name = "mewtwo"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1107,7 +1109,7 @@ name = "miifighter"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1118,7 +1120,7 @@ name = "miigunner"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1129,7 +1131,7 @@ name = "miiswordsman"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1187,7 +1189,7 @@ name = "murabito"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1198,7 +1200,7 @@ name = "ness"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1220,18 +1222,8 @@ dependencies = [
 
 [[package]]
 name = "nnsdk"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e0f4537c7470ba25f406d42c8cbfe26f64099af4b613e715c6bcb3d25856896c"
-dependencies = [
- "libc-nnsdk 0.2.0",
-]
-
-[[package]]
-name = "nnsdk"
 version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "df4385052e8e8252e9a6b87282f74e94fca6ab074cdc1415d4ad5c4cc3920fe3"
+source = "git+https://github.com/ultimate-research/nnsdk-rs#602e621750b8754a15c63ca729f13482aa36dfc9"
 dependencies = [
  "libc-nnsdk 0.3.0",
 ]
@@ -1259,9 +1251,9 @@ dependencies = [
 
 [[package]]
 name = "once_cell"
-version = "1.19.0"
+version = "1.20.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3fdb12b2476b595f9358c5161aa467c2438859caa136dec86c26fdd2efe17b92"
+checksum = "1261fe7e33c73b354eab43b1273a57c8f967d0391e80353e51f764ac02cf6775"
 
 [[package]]
 name = "owo-colors"
@@ -1274,7 +1266,7 @@ name = "packun"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1285,7 +1277,7 @@ name = "pacman"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1296,7 +1288,7 @@ name = "palutena"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1315,12 +1307,12 @@ dependencies = [
 
 [[package]]
 name = "parking_lot"
-version = "0.12.1"
+version = "0.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3742b2c103b9f06bc9fff0a37ff4912935851bee6d36f3c02bcc755bcfec228f"
+checksum = "f1bf18183cf54e8d6059647fc3063646a1801cf30896933ec2311622cc4b9a27"
 dependencies = [
  "lock_api",
- "parking_lot_core 0.9.9",
+ "parking_lot_core 0.9.10",
 ]
 
 [[package]]
@@ -1339,29 +1331,29 @@ dependencies = [
 
 [[package]]
 name = "parking_lot_core"
-version = "0.9.9"
+version = "0.9.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4c42a9226546d68acdd9c0a280d17ce19bfe27a46bf68784e4066115788d008e"
+checksum = "1e401f977ab385c9e4e3ab30627d6f26d00e2c73eef317493c4ec6d468726cf8"
 dependencies = [
  "cfg-if 1.0.0",
  "libc",
- "redox_syscall 0.4.1",
+ "redox_syscall 0.5.7",
  "smallvec",
- "windows-targets 0.48.5",
+ "windows-targets",
 ]
 
 [[package]]
 name = "paste"
-version = "1.0.14"
+version = "1.0.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "de3145af08024dea9fa9914f381a17b8fc6034dfb00f3a84013f7ff43f29ed4c"
+checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
 
 [[package]]
 name = "peach"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1372,7 +1364,7 @@ name = "pfushigisou"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1408,7 +1400,7 @@ dependencies = [
  "phf_shared",
  "proc-macro2",
  "quote",
- "syn 2.0.60",
+ "syn 2.0.86",
 ]
 
 [[package]]
@@ -1425,7 +1417,7 @@ name = "pichu"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1436,7 +1428,7 @@ name = "pickel"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1447,7 +1439,7 @@ name = "pikachu"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1458,7 +1450,7 @@ name = "pikmin"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1469,7 +1461,7 @@ name = "pit"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1480,7 +1472,7 @@ name = "pitb"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1491,7 +1483,7 @@ name = "plizardon"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1499,9 +1491,12 @@ dependencies = [
 
 [[package]]
 name = "ppv-lite86"
-version = "0.2.17"
+version = "0.2.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5b40af805b3121feab8a3c29f04d8ad262fa8e0561883e7653e024ae4479e6de"
+checksum = "77957b295656769bb8ad2b6a6b09d897d94f05c41b069aede1fcdaa675eaea04"
+dependencies = [
+ "zerocopy",
+]
 
 [[package]]
 name = "prc-rs"
@@ -1563,9 +1558,9 @@ dependencies = [
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.81"
+version = "1.0.89"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3d1597b0c024618f09a9c3b8655b7e430397a36d23fdafec26d6965e9eec3eba"
+checksum = "f139b0662de085916d1fb67d2b4169d1addddda1919e696f3252b740b629986e"
 dependencies = [
  "unicode-ident",
 ]
@@ -1587,7 +1582,7 @@ name = "purin"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1598,7 +1593,7 @@ name = "pzenigame"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1615,9 +1610,9 @@ dependencies = [
 
 [[package]]
 name = "quote"
-version = "1.0.36"
+version = "1.0.37"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0fa76aaf39101c457836aec0ce2316dbdc3ab723cdda1c6bd4e6ad4208acaca7"
+checksum = "b5b9d34b8991d19d98081b46eacdd8eb58c6f2b201139f7c5f643cc155a633af"
 dependencies = [
  "proc-macro2",
 ]
@@ -1711,11 +1706,11 @@ dependencies = [
 
 [[package]]
 name = "redox_syscall"
-version = "0.4.1"
+version = "0.5.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4722d768eff46b75989dd134e5c353f0d6296e5aaa3132e776cbdb56be7731aa"
+checksum = "9b6dfecf2c74bce2466cabf93f6664d6998a69eb21e39f4207930065b27b771f"
 dependencies = [
- "bitflags 1.3.2",
+ "bitflags 2.6.0",
 ]
 
 [[package]]
@@ -1723,7 +1718,7 @@ name = "reflet"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1740,7 +1735,7 @@ name = "richter"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1751,7 +1746,7 @@ name = "ridley"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1762,7 +1757,7 @@ name = "robot"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1773,7 +1768,7 @@ name = "rockman"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash",
  "smash_script",
@@ -1785,7 +1780,7 @@ name = "rosetta"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1796,7 +1791,7 @@ name = "roy"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1805,15 +1800,15 @@ dependencies = [
 [[package]]
 name = "runtime-motion-patcher"
 version = "0.1.0"
-source = "git+https://github.com/blu-dev/runtime-motion-patcher#8169cc2003a8b19352d3e005ff4643add6238d15"
+source = "git+https://github.com/blu-dev/runtime-motion-patcher#05fdbe9a81d4983c2ecef952c35af8f90c7ca7aa"
 dependencies = [
  "hash40 1.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "motion-patch",
  "motion_list_rs",
  "once_cell",
- "parking_lot 0.12.1",
+ "parking_lot 0.12.3",
  "serde_yaml",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "walkdir",
 ]
 
@@ -1832,7 +1827,7 @@ name = "ryu"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1840,9 +1835,9 @@ dependencies = [
 
 [[package]]
 name = "ryu"
-version = "1.0.17"
+version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e86697c916019a8588c99b5fac3cead74ec0b4b819707a682fd4d23fa0ce1ba1"
+checksum = "f3cb5ba0dc43242ce17de99c180e96db90b235b8a9fdc9543c96d2209116bd9f"
 
 [[package]]
 name = "same-file"
@@ -1858,7 +1853,7 @@ name = "samus"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1869,7 +1864,7 @@ name = "samusd"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1895,40 +1890,41 @@ dependencies = [
 
 [[package]]
 name = "serde"
-version = "1.0.198"
+version = "1.0.214"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9846a40c979031340571da2545a4e5b7c4163bdae79b301d5f86d03979451fcc"
+checksum = "f55c3193aca71c12ad7890f1785d2b73e1b9f63a0bbc353c08ef26fe03fc56b5"
 dependencies = [
  "serde_derive",
 ]
 
 [[package]]
 name = "serde_derive"
-version = "1.0.198"
+version = "1.0.214"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e88edab869b01783ba905e7d0153f9fc1a6505a96e4ad3018011eedb838566d9"
+checksum = "de523f781f095e28fa605cdce0f8307e451cc0fd14e2eb4cd2e98a355b147766"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.60",
+ "syn 2.0.86",
 ]
 
 [[package]]
 name = "serde_json"
-version = "1.0.116"
+version = "1.0.132"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3e17db7126d17feb94eb3fad46bf1a96b034e8aacbc2e775fe81505f8b0b2813"
+checksum = "d726bfaff4b320266d395898905d0eba0345aae23b54aee3a737e260fd46db03"
 dependencies = [
  "itoa",
- "ryu 1.0.17",
+ "memchr",
+ "ryu 1.0.18",
  "serde",
 ]
 
 [[package]]
 name = "serde_spanned"
-version = "0.6.5"
+version = "0.6.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eb3622f419d1296904700073ea6cc23ad690adbd66f13ea683df73298736f0c1"
+checksum = "87607cb1398ed59d48732e575a4c28a7a8ebf2454b964fe3f224f2afc07909e1"
 dependencies = [
  "serde",
 ]
@@ -1939,9 +1935,9 @@ version = "0.9.34+deprecated"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6a8b1a1a2ebf674015cc02edccce75287f1a0130d394307b36743c2f5d504b47"
 dependencies = [
- "indexmap 2.2.6",
+ "indexmap 2.6.0",
  "itoa",
- "ryu 1.0.17",
+ "ryu 1.0.18",
  "serde",
  "unsafe-libyaml",
 ]
@@ -1951,7 +1947,7 @@ name = "sheik"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1962,7 +1958,7 @@ name = "shizue"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1973,7 +1969,7 @@ name = "shulk"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1984,7 +1980,7 @@ name = "simon"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -1999,30 +1995,29 @@ checksum = "38b58827f4464d87d377d175e90bf58eb00fd8716ff0a62f80356b5e61555d0d"
 [[package]]
 name = "skyline"
 version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9950fc129490cff3f4755aa523df16aeeb80130699abfc59cc7c6df8fc5802ad"
+source = "git+https://github.com/Raytwo/skyline-rs?branch=preview#3ce8983f65b649e58f20184bec176520846d4b2b"
 dependencies = [
  "libc-nnsdk 0.2.0",
- "nnsdk 0.2.0",
- "skyline_macro 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nnsdk",
+ "skyline_macro 0.2.0 (git+https://github.com/Raytwo/skyline-rs?branch=preview)",
 ]
 
 [[package]]
 name = "skyline"
 version = "0.2.1"
-source = "git+https://github.com/ultimate-research/skyline-rs#01a55d6a72d30b36b3e4b478161ebb4e513ea909"
+source = "git+https://github.com/ultimate-research/skyline-rs#ba4706a6faa1a705b37cc962826b0426d72bf604"
 dependencies = [
  "libc-nnsdk 0.2.0",
- "nnsdk 0.3.0",
+ "nnsdk",
  "skyline_macro 0.2.0 (git+https://github.com/ultimate-research/skyline-rs)",
 ]
 
 [[package]]
 name = "skyline-web"
 version = "0.2.0"
-source = "git+https://github.com/skyline-rs/skyline-web#14ade94d3d73a30099647fb66bae3c055a4a0235"
+source = "git+https://github.com/skyline-rs/skyline-web#9b711a6ac641e31d668efe0f10bc631c3151c937"
 dependencies = [
- "nnsdk 0.3.0",
+ "nnsdk",
  "ramhorns",
  "serde",
  "serde_json",
@@ -2032,8 +2027,7 @@ dependencies = [
 [[package]]
 name = "skyline_macro"
 version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9194b20ee17c1de2ed299cfd9b8b56160a35b5579b3273c416ab4e5c058844dc"
+source = "git+https://github.com/Raytwo/skyline-rs?branch=preview#3ce8983f65b649e58f20184bec176520846d4b2b"
 dependencies = [
  "lazy_static",
  "proc-macro2",
@@ -2044,7 +2038,7 @@ dependencies = [
 [[package]]
 name = "skyline_macro"
 version = "0.2.0"
-source = "git+https://github.com/ultimate-research/skyline-rs#01a55d6a72d30b36b3e4b478161ebb4e513ea909"
+source = "git+https://github.com/ultimate-research/skyline-rs#ba4706a6faa1a705b37cc962826b0426d72bf604"
 dependencies = [
  "lazy_static",
  "proc-macro2",
@@ -2055,14 +2049,14 @@ dependencies = [
 [[package]]
 name = "skyline_smash"
 version = "0.1.0"
-source = "git+https://github.com/blu-dev/skyline-smash#742efe1059c7d28a8f0e00f1f0f8faf29a8b2171"
+source = "git+https://github.com/blu-dev/skyline-smash#56892e72f5e2dc64667a5afeae97f2a654220bbb"
 dependencies = [
  "compile-time-lua-bind-hash",
  "lazy_static",
  "libc-nnsdk 0.2.0",
- "nnsdk 0.2.0",
+ "nnsdk",
  "paste",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
 ]
 
 [[package]]
@@ -2074,14 +2068,14 @@ checksum = "3c5e1a9a646d36c3599cd173a41282daf47c44583ad367b8e6837255952e5c67"
 [[package]]
 name = "smash"
 version = "0.1.0"
-source = "git+https://github.com/blu-dev/smash-rs#d065af1e1d10daa7d3cd355011ee7d3921e387fa"
+source = "git+https://github.com/blu-dev/smash-rs#b3cbf418207d30949aef56183498a617f6d75b63"
 dependencies = [
  "bitflags 1.3.2",
  "hash40 1.3.1 (git+https://github.com/BenHall-7/hash40-rs)",
  "memoffset",
  "num_enum",
  "sealed",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "smash_macro",
  "thiserror",
 ]
@@ -2105,7 +2099,7 @@ dependencies = [
 [[package]]
 name = "smash_macro"
 version = "0.1.0"
-source = "git+https://github.com/blu-dev/smash-rs#d065af1e1d10daa7d3cd355011ee7d3921e387fa"
+source = "git+https://github.com/blu-dev/smash-rs#b3cbf418207d30949aef56183498a617f6d75b63"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2115,20 +2109,20 @@ dependencies = [
 [[package]]
 name = "smash_script"
 version = "0.1.0"
-source = "git+https://github.com/blu-dev/smash-script?branch=development#6567589f0eb25546d15382e1ca94ca2e54838c21"
+source = "git+https://github.com/blu-dev/smash-script?branch=development#2fb2a2fccba9915da7f6d5772d86ef9ee74e796b"
 dependencies = [
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
 ]
 
 [[package]]
 name = "smashline"
 version = "0.1.0"
-source = "git+https://github.com/HDR-Development/smashline#3c6ab6d3786284b59596142a000eda193afb2fdc"
+source = "git+https://github.com/HDR-Development/smashline#4916a30090d4f7a8f10f2f51c2ec1f589d7c1de9"
 dependencies = [
  "acmd-engine",
  "locks",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smashline-macro",
 ]
@@ -2136,7 +2130,7 @@ dependencies = [
 [[package]]
 name = "smashline-macro"
 version = "0.1.0"
-source = "git+https://github.com/HDR-Development/smashline#3c6ab6d3786284b59596142a000eda193afb2fdc"
+source = "git+https://github.com/HDR-Development/smashline#4916a30090d4f7a8f10f2f51c2ec1f589d7c1de9"
 dependencies = [
  "proc-macro-crate",
  "proc-macro-error",
@@ -2151,7 +2145,7 @@ name = "snake"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -2162,7 +2156,7 @@ name = "sonic"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -2187,9 +2181,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "2.0.60"
+version = "2.0.86"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "909518bc7b1c9b779f1bbf07f2929d35af9f0f37e47c6e9ef7f9dddc1e1821f3"
+checksum = "e89275301d38033efb81a6e60e3497e734dfcc62571f2854bf4b16690398824c"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2201,7 +2195,7 @@ name = "szerosuit"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -2212,7 +2206,7 @@ name = "tantan"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -2220,22 +2214,22 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
-version = "1.0.59"
+version = "1.0.66"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f0126ad08bff79f29fc3ae6a55cc72352056dfff61e3ff8bb7129476d44b23aa"
+checksum = "5d171f59dbaa811dbbb1aee1e73db92ec2b122911a48e1390dfe327a821ddede"
 dependencies = [
  "thiserror-impl",
 ]
 
 [[package]]
 name = "thiserror-impl"
-version = "1.0.59"
+version = "1.0.66"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d1cd413b5d558b4c5bf3680e324a6fa5014e7b7c067a51e69dbdf47eb7148b66"
+checksum = "b08be0f17bd307950653ce45db00cd31200d82b624b36e181337d9c7d92765b5"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.60",
+ "syn 2.0.86",
 ]
 
 [[package]]
@@ -2261,9 +2255,9 @@ dependencies = [
 
 [[package]]
 name = "toml_datetime"
-version = "0.6.5"
+version = "0.6.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3550f4e9685620ac18a50ed434eb3aec30db8ba93b0287467bca5826ea25baf1"
+checksum = "0dd7358ecb8fc2f8d014bf86f6f638ce72ba252a2c3a2572f2a795f1d23efb41"
 dependencies = [
  "serde",
 ]
@@ -2274,7 +2268,7 @@ version = "0.19.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1b5bb770da30e5cbfde35a2d7b9b8a2c4b8ef89548a7a6aeab5c9a576e3e7421"
 dependencies = [
- "indexmap 2.2.6",
+ "indexmap 2.6.0",
  "serde",
  "serde_spanned",
  "toml_datetime",
@@ -2286,7 +2280,7 @@ name = "toonlink"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -2297,7 +2291,7 @@ name = "trail"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -2309,36 +2303,33 @@ version = "1.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "97fee6b57c6a41524a810daee9286c02d7752c4253064d0b05472833a438f675"
 dependencies = [
- "cfg-if 0.1.10",
+ "cfg-if 1.0.0",
  "static_assertions",
 ]
 
 [[package]]
 name = "unicase"
-version = "2.7.0"
+version = "2.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f7d2d4dafb69621809a81864c9c1b864479e1235c0dd4e199924b9742439ed89"
-dependencies = [
- "version_check",
-]
+checksum = "7e51b68083f157f853b6379db119d1c1be0e6e4dec98101079dec41f6f5cf6df"
 
 [[package]]
 name = "unicode-ident"
-version = "1.0.12"
+version = "1.0.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
+checksum = "e91b56cd4cadaeb79bbf1a5645f6b4f8dc5bde8834ad5894a8db35fda9efa1fe"
 
 [[package]]
 name = "unicode-segmentation"
-version = "1.11.0"
+version = "1.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d4c87d22b6e3f4a18d4d40ef354e97c90fcb14dd91d7dc0aa9d8a1172ebf7202"
+checksum = "f6ccf251212114b54433ec949fd6a7841275f9ada20dddd2f29e9ceea4501493"
 
 [[package]]
 name = "unicode-width"
-version = "0.1.11"
+version = "0.1.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e51733f11c9c4f72aa0c160008246859e340b00807569a0da0e7a1079b27ba85"
+checksum = "7dd6e30e90baa6f72411720665d41d89b9a3d039dc45b8faea1ddd07f617f6af"
 
 [[package]]
 name = "unsafe-libyaml"
@@ -2357,9 +2348,11 @@ name = "utils"
 version = "0.1.0"
 dependencies = [
  "arcropolis-api",
+ "bitflags 2.6.0",
  "colorgrad",
  "dynamic",
  "hdr-macros",
+ "interpolation",
  "lazy_static",
  "ninput",
  "once_cell",
@@ -2367,7 +2360,7 @@ dependencies = [
  "prc-rs",
  "serde",
  "serde_json",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline-web",
  "skyline_smash",
  "smash_script",
@@ -2375,18 +2368,18 @@ dependencies = [
 
 [[package]]
 name = "uuid"
-version = "1.8.0"
+version = "1.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a183cf7feeba97b4dd1c0d46788634f6221d87fa961b305bed08c851829efcc0"
+checksum = "f8c5f0a0af699448548ad1a2fbf920fb4bee257eae39953ba95cb84891a0446a"
 dependencies = [
- "getrandom 0.2.14",
+ "getrandom 0.2.15",
 ]
 
 [[package]]
 name = "version_check"
-version = "0.9.4"
+version = "0.9.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
+checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 
 [[package]]
 name = "walkdir"
@@ -2403,7 +2396,7 @@ name = "wario"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -2427,7 +2420,7 @@ version = "0.1.0"
 dependencies = [
  "dynamic",
  "interpolation",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -2451,9 +2444,9 @@ checksum = "ac3b87c63620426dd9b991e5ce0329eff545bccbbb34f3be09ff6fb6ab51b7b6"
 
 [[package]]
 name = "winapi-util"
-version = "0.1.7"
+version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "134306a13c5647ad6453e8deaec55d3a44d6021970129e6188735e74bf546697"
+checksum = "cf221c93e13a30d793f7645a0e7762c55d169dbb0a49671918a2319d289b10bb"
 dependencies = [
  "windows-sys",
 ]
@@ -2466,133 +2459,76 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
 
 [[package]]
 name = "windows-sys"
-version = "0.52.0"
+version = "0.59.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "282be5f36a8ce781fad8c8ae18fa3f9beff57ec1b52cb3de0789201425d9a33d"
+checksum = "1e38bc4d79ed67fd075bcc251a1c39b32a1776bbe92e5bef1f0bf1f8c531853b"
 dependencies = [
- "windows-targets 0.52.5",
+ "windows-targets",
 ]
 
 [[package]]
 name = "windows-targets"
-version = "0.48.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a2fa6e2155d7247be68c096456083145c183cbbbc2764150dda45a87197940c"
+checksum = "9b724f72796e036ab90c1021d4780d4d3d648aca59e491e6b98e725b84e99973"
 dependencies = [
- "windows_aarch64_gnullvm 0.48.5",
- "windows_aarch64_msvc 0.48.5",
- "windows_i686_gnu 0.48.5",
- "windows_i686_msvc 0.48.5",
- "windows_x86_64_gnu 0.48.5",
- "windows_x86_64_gnullvm 0.48.5",
- "windows_x86_64_msvc 0.48.5",
-]
-
-[[package]]
-name = "windows-targets"
-version = "0.52.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6f0713a46559409d202e70e28227288446bf7841d3211583a4b53e3f6d96e7eb"
-dependencies = [
- "windows_aarch64_gnullvm 0.52.5",
- "windows_aarch64_msvc 0.52.5",
- "windows_i686_gnu 0.52.5",
+ "windows_aarch64_gnullvm",
+ "windows_aarch64_msvc",
+ "windows_i686_gnu",
  "windows_i686_gnullvm",
- "windows_i686_msvc 0.52.5",
- "windows_x86_64_gnu 0.52.5",
- "windows_x86_64_gnullvm 0.52.5",
- "windows_x86_64_msvc 0.52.5",
+ "windows_i686_msvc",
+ "windows_x86_64_gnu",
+ "windows_x86_64_gnullvm",
+ "windows_x86_64_msvc",
 ]
 
 [[package]]
 name = "windows_aarch64_gnullvm"
-version = "0.48.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2b38e32f0abccf9987a4e3079dfb67dcd799fb61361e53e2882c3cbaf0d905d8"
-
-[[package]]
-name = "windows_aarch64_gnullvm"
-version = "0.52.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7088eed71e8b8dda258ecc8bac5fb1153c5cffaf2578fc8ff5d61e23578d3263"
+checksum = "32a4622180e7a0ec044bb555404c800bc9fd9ec262ec147edd5989ccd0c02cd3"
 
 [[package]]
 name = "windows_aarch64_msvc"
-version = "0.48.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dc35310971f3b2dbbf3f0690a219f40e2d9afcf64f9ab7cc1be722937c26b4bc"
-
-[[package]]
-name = "windows_aarch64_msvc"
-version = "0.52.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9985fd1504e250c615ca5f281c3f7a6da76213ebd5ccc9561496568a2752afb6"
+checksum = "09ec2a7bb152e2252b53fa7803150007879548bc709c039df7627cabbd05d469"
 
 [[package]]
 name = "windows_i686_gnu"
-version = "0.48.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a75915e7def60c94dcef72200b9a8e58e5091744960da64ec734a6c6e9b3743e"
-
-[[package]]
-name = "windows_i686_gnu"
-version = "0.52.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "88ba073cf16d5372720ec942a8ccbf61626074c6d4dd2e745299726ce8b89670"
+checksum = "8e9b5ad5ab802e97eb8e295ac6720e509ee4c243f69d781394014ebfe8bbfa0b"
 
 [[package]]
 name = "windows_i686_gnullvm"
-version = "0.52.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "87f4261229030a858f36b459e748ae97545d6f1ec60e5e0d6a3d32e0dc232ee9"
+checksum = "0eee52d38c090b3caa76c563b86c3a4bd71ef1a819287c19d586d7334ae8ed66"
 
 [[package]]
 name = "windows_i686_msvc"
-version = "0.48.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8f55c233f70c4b27f66c523580f78f1004e8b5a8b659e05a4eb49d4166cca406"
-
-[[package]]
-name = "windows_i686_msvc"
-version = "0.52.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "db3c2bf3d13d5b658be73463284eaf12830ac9a26a90c717b7f771dfe97487bf"
+checksum = "240948bc05c5e7c6dabba28bf89d89ffce3e303022809e73deaefe4f6ec56c66"
 
 [[package]]
 name = "windows_x86_64_gnu"
-version = "0.48.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "53d40abd2583d23e4718fddf1ebec84dbff8381c07cae67ff7768bbf19c6718e"
-
-[[package]]
-name = "windows_x86_64_gnu"
-version = "0.52.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4e4246f76bdeff09eb48875a0fd3e2af6aada79d409d33011886d3e1581517d9"
+checksum = "147a5c80aabfbf0c7d901cb5895d1de30ef2907eb21fbbab29ca94c5b08b1a78"
 
 [[package]]
 name = "windows_x86_64_gnullvm"
-version = "0.48.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0b7b52767868a23d5bab768e390dc5f5c55825b6d30b86c844ff2dc7414044cc"
-
-[[package]]
-name = "windows_x86_64_gnullvm"
-version = "0.52.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "852298e482cd67c356ddd9570386e2862b5673c85bd5f88df9ab6802b334c596"
+checksum = "24d5b23dc417412679681396f2b49f3de8c1473deb516bd34410872eff51ed0d"
 
 [[package]]
 name = "windows_x86_64_msvc"
-version = "0.48.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ed94fce61571a4006852b7389a063ab983c02eb1bb37b47f8272ce92d06d9538"
-
-[[package]]
-name = "windows_x86_64_msvc"
-version = "0.52.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bec47e5bfd1bff0eeaf6d8b485cc1074891a197ab4225d504cb7a1ab88b02bf0"
+checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
 
 [[package]]
 name = "winnow"
@@ -2608,7 +2544,7 @@ name = "wolf"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash",
  "smash_script",
@@ -2620,7 +2556,7 @@ name = "yoshi"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -2631,7 +2567,7 @@ name = "younglink"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
@@ -2642,8 +2578,29 @@ name = "zelda"
 version = "0.1.0"
 dependencies = [
  "dynamic",
- "skyline 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "skyline 0.2.1 (git+https://github.com/ultimate-research/skyline-rs)",
  "skyline_smash",
  "smash_script",
  "smashline",
+]
+
+[[package]]
+name = "zerocopy"
+version = "0.7.35"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1b9b4fd18abc82b8136838da5d50bae7bdea537c574d8dc1a34ed098d6c166f0"
+dependencies = [
+ "byteorder",
+ "zerocopy-derive",
+]
+
+[[package]]
+name = "zerocopy-derive"
+version = "0.7.35"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fa4f8080344d4671fb4e831a13ad1e68092748387dfc4f55e356242fae12ce3e"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.86",
 ]

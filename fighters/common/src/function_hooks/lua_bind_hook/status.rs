@@ -247,10 +247,11 @@ unsafe fn change_status_request_from_script_hook(boma: &mut BattleObjectModuleAc
             }
         }
         // Clears buffer when sliding off an edge in a damaged state, to prevent accidental buffered aerials/airdodges (common on missed techs)
-        else if [*FIGHTER_STATUS_KIND_DOWN,
+        else if ( [*FIGHTER_STATUS_KIND_DOWN,
             *FIGHTER_STATUS_KIND_DOWN_WAIT,
             *FIGHTER_STATUS_KIND_SLIP_WAIT,
             *FIGHTER_STATUS_KIND_DAMAGE].contains(&StatusModule::status_kind(boma))
+            || (boma.is_prev_status(*FIGHTER_STATUS_KIND_DAMAGE_AIR) && boma.is_status(*FIGHTER_STATUS_KIND_LANDING)) )
         && next_status == *FIGHTER_STATUS_KIND_FALL {
             clear_buffer = true;
         }
@@ -282,9 +283,9 @@ unsafe fn change_status_request_from_script_hook(boma: &mut BattleObjectModuleAc
         else if boma.kind() == *FIGHTER_KIND_TRAIL {
             if StatusModule::status_kind(boma) == *FIGHTER_TRAIL_STATUS_KIND_SPECIAL_S_SEARCH
             && next_status == *FIGHTER_TRAIL_STATUS_KIND_SPECIAL_S_TURN
-            && ((!VarModule::is_flag(boma.object(), vars::trail::status::IS_SIDE_SPECIAL_INPUT)
+            && ((!VarModule::is_flag(boma.object(), vars::trail::status::SPECIAL_S_INPUT_CHECK)
             && !(ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) || ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL_RAW)))
-                || VarModule::is_flag(boma.object(), vars::trail::status::STOP_SIDE_SPECIAL)) { 
+                || VarModule::is_flag(boma.object(), vars::trail::status::SPECIAL_S_STOP)) { 
                 next_status = *FIGHTER_TRAIL_STATUS_KIND_SPECIAL_S_END;
             }
             // prevent sora from immediately acting out of the down smash bounce 
@@ -303,58 +304,34 @@ unsafe fn change_status_request_from_script_hook(boma: &mut BattleObjectModuleAc
         else if boma.kind() == *FIGHTER_KIND_REFLET
         && StatusModule::status_kind(boma) == *FIGHTER_STATUS_KIND_SPECIAL_HI
         && next_status == *FIGHTER_STATUS_KIND_FALL_SPECIAL
-        && !VarModule::is_flag(boma.object(), vars::reflet::instance::UP_SPECIAL_FREEFALL) {
+        && !VarModule::is_flag(boma.object(), vars::reflet::instance::SPECIAL_HI_ENABLE_FREEFALL) {
             next_status = *FIGHTER_STATUS_KIND_FALL;
         }
         else if boma.kind() == *FIGHTER_KIND_MEWTWO 
         && StatusModule::status_kind(boma) == *FIGHTER_MEWTWO_STATUS_KIND_SPECIAL_HI_3
         && next_status == *FIGHTER_STATUS_KIND_FALL_SPECIAL
         && VarModule::is_flag(boma.object(), vars::common::instance::UP_SPECIAL_CANCEL)
-        && !VarModule::is_flag(boma.object(), vars::mewtwo::instance::UP_SPECIAL_FREEFALL) {
+        && !VarModule::is_flag(boma.object(), vars::mewtwo::instance::SPECIAL_HI_ENABLE_FREEFALL) {
             next_status = *FIGHTER_STATUS_KIND_FALL;
         }
         else if boma.kind() == *FIGHTER_KIND_PALUTENA 
         && StatusModule::status_kind(boma) == *FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_HI_3
         && next_status == *FIGHTER_STATUS_KIND_FALL_SPECIAL
         && VarModule::is_flag(boma.object(), vars::common::instance::UP_SPECIAL_CANCEL)
-        && !VarModule::is_flag(boma.object(), vars::palutena::instance::UP_SPECIAL_FREEFALL) {
+        && !VarModule::is_flag(boma.object(), vars::palutena::instance::SPECIAL_HI_ENABLE_FREEFALL) {
             next_status = *FIGHTER_STATUS_KIND_FALL;
         }
-        // Transition into regular fall when attempting to jump off of Wario bike when out of jumps
-        else if boma.kind() == *FIGHTER_KIND_WARIO
-        && StatusModule::status_kind(boma) == *FIGHTER_WARIO_STATUS_KIND_SPECIAL_S_ESCAPE_START
-        && next_status == *FIGHTER_WARIO_STATUS_KIND_SPECIAL_S_ESCAPE
-        && boma.get_num_used_jumps() >= boma.get_jump_count_max() {
-            next_status = *FIGHTER_STATUS_KIND_DAMAGE_FALL;
-            clear_buffer = true;
-        }
         else if boma.kind() == *FIGHTER_KIND_KOOPAJR {
-            // Prevent jumping out of Clown Kart Dash when out of jumps
-            if boma.is_status_one_of(&[*FIGHTER_KOOPAJR_STATUS_KIND_SPECIAL_S_DASH, *FIGHTER_KOOPAJR_STATUS_KIND_SPECIAL_S_SPIN_TURN])
-            && next_status == *FIGHTER_KOOPAJR_STATUS_KIND_SPECIAL_S_JUMP
-            && boma.get_num_used_jumps() >= boma.get_jump_count_max() {
+            // Prevent airdodging out of upB
+            if next_status == *FIGHTER_KOOPAJR_STATUS_KIND_SPECIAL_HI_ESCAPE {
                 return 0;
             }
-            // Prevent airdodging out of upB for first 10 frames
-            if boma.is_status(*FIGHTER_KOOPAJR_STATUS_KIND_SPECIAL_HI_SHOOT)
-            && next_status == *FIGHTER_KOOPAJR_STATUS_KIND_SPECIAL_HI_ESCAPE
-            && boma.status_frame() < 10 {
-                return 0;
-            }
-        }
-        // Prevent jumping out of Splat Roller when out of jumps
-        else if boma.kind() == *FIGHTER_KIND_INKLING
-        && boma.is_status_one_of(&[*FIGHTER_INKLING_STATUS_KIND_SPECIAL_S_RUN, *FIGHTER_INKLING_STATUS_KIND_SPECIAL_S_WALK])
-        && next_status == *FIGHTER_INKLING_STATUS_KIND_SPECIAL_S_JUMP_END
-        && boma.get_num_used_jumps() >= boma.get_jump_count_max() {
-            WorkModule::off_flag(boma, *FIGHTER_INKLING_STATUS_SPECIAL_S_FLAG_JUMP_END);
-            return 0;
         }
         else if boma.kind() == *FIGHTER_KIND_DAISY {
             // Prevents Daisy from floating out of upB
             if StatusModule::status_kind(boma) == *FIGHTER_STATUS_KIND_SPECIAL_HI
             && next_status == *FIGHTER_PEACH_STATUS_KIND_SPECIAL_HI_FALL {
-                next_status = *FIGHTER_PEACH_STATUS_KIND_SPECIAL_HI_AIR_END;
+                next_status = *FIGHTER_STATUS_KIND_FALL_SPECIAL;
             }
             // Prevents Daisy from being able to use both aerial jumps immediately after one another
             else if boma.is_status(*FIGHTER_STATUS_KIND_JUMP_AERIAL)
@@ -365,12 +342,6 @@ unsafe fn change_status_request_from_script_hook(boma: &mut BattleObjectModuleAc
             } {
                 return 0;
             }
-        }
-        // Prevent jumping out of Minecart when out of jumps
-        else if boma.kind() == *FIGHTER_KIND_PICKEL
-        && next_status == *FIGHTER_PICKEL_STATUS_KIND_SPECIAL_S_JUMP
-        && boma.get_num_used_jumps() >= boma.get_jump_count_max() {
-            return 0;
         }
         // Stubs vanilla Popgun cancel behavior
         else if boma.kind() == *FIGHTER_KIND_DIDDY

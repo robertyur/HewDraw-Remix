@@ -5,8 +5,9 @@ use smash_script::macros::{ EFFECT_FOLLOW, EFFECT_FOLLOW_FLIP };
 
 #[skyline::hook(replace = L2CFighterCommon_sub_status_guard_off_main_common_cancel)]
 unsafe fn sub_status_guard_off_main_common_cancel(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let guard_off_parry_faf = ParamModule::get_int(fighter.object(), ParamType::Common, "guard_off_parry_faf");
     if VarModule::is_flag(fighter.object(), vars::common::instance::IS_PARRY_FOR_GUARD_OFF)
-    && fighter.status_frame() <= 30 {
+    && fighter.status_frame() <= guard_off_parry_faf {
         return (0).into();
     }
 
@@ -53,6 +54,7 @@ unsafe fn sub_status_guard_off_main_common_cancel(fighter: &mut L2CFighterCommon
 unsafe fn sub_status_guard_off_main_common_air(fighter: &mut L2CFighterCommon) -> L2CValue {
     if fighter.global_table[SITUATION_KIND] == SITUATION_KIND_AIR {
         fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+        ControlModule::clear_command(fighter.module_accessor, true);
         return true.into();
     }
     return false.into();
@@ -108,8 +110,9 @@ unsafe fn sub_guard_off_uniq(fighter: &mut L2CFighterCommon, arg: L2CValue) -> L
                 // ModelModule::disable_gold_eye(boma);
                 // EffectModule::remove_common(boma, Hash40::new("just_shield"));
                 let end_frame = MotionModule::end_frame_from_hash(boma, Hash40::new("guard_off"));
-                let rate = (end_frame * 0.75) / (30.0 - (fighter.status_frame() as f32));
-                MotionModule::change_motion(boma, Hash40::new("guard_off"), end_frame * 0.25, rate, false, 0.0, false, false);
+                let guard_off_parry_faf = ParamModule::get_int(fighter.object(), ParamType::Common, "guard_off_parry_faf") as f32;
+                let rate = (end_frame * 0.8) / (guard_off_parry_faf - (fighter.status_frame() as f32));
+                MotionModule::change_motion(boma, Hash40::new("guard_off"), end_frame * 0.2, rate, false, 0.0, false, false);
             }
         } else if just_frame == 0 {
             SoundModule::stop_se(boma, Hash40::new("se_common_guardoff"), 0);
@@ -143,7 +146,7 @@ unsafe fn status_GuardOff_Common(fighter: &mut L2CFighterCommon) -> L2CValue {
     let lifetime = (fighter.get_command_life(CatHdr::Parry) as i32);
     let buffer = (ControlModule::get_command_life_count_max(fighter.module_accessor) as i32);
     let shield_just_frame = (fighter.get_param_int("common", "shield_just_frame"));
-    let just_frame = ((shield_just_frame + lifetime + 1 - buffer).clamp(3, shield_just_frame));
+    let just_frame = ((shield_just_frame + lifetime + 1 - buffer).clamp(2, shield_just_frame));
     fighter.set_int(just_frame, *FIGHTER_STATUS_GUARD_ON_WORK_INT_JUST_FRAME);
 
     let guard_off_cancel_frame = fighter.get_param_int("common", "guard_off_cancel_frame");

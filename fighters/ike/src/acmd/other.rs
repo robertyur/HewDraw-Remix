@@ -89,7 +89,7 @@ unsafe extern "C" fn sound_appeallwl(agent: &mut L2CAgentBase) {
     }
     wait(lua_state, 4.0);
     if is_excute(agent) {
-        if VarModule::is_flag(boma.object(), vars::ike::status::IS_QUICK_DRAW_INSTAKILL){
+        if VarModule::is_flag(boma.object(), vars::ike::status::SPECIAL_S_INSTAKILL){
             let costume_type = WorkModule::get_int(boma, *FIGHTER_INSTANCE_WORK_ID_INT_COLOR) % 2;
             // Path of Radiance voiceline
             if costume_type == 0 {
@@ -104,7 +104,7 @@ unsafe extern "C" fn sound_appeallwl(agent: &mut L2CAgentBase) {
     }
     wait(lua_state, 27.0);
     if is_excute(agent) {
-        if VarModule::is_flag(boma.object(), vars::ike::status::IS_QUICK_DRAW_INSTAKILL){
+        if VarModule::is_flag(boma.object(), vars::ike::status::SPECIAL_S_INSTAKILL){
             //PLAY_SE(fighter, Hash40::new("vc_ike_win01"));
         }
         else{
@@ -127,7 +127,7 @@ unsafe extern "C" fn sound_appeallwr(agent: &mut L2CAgentBase) {
     }
     wait(lua_state, 4.0);
     if is_excute(agent) {
-        if VarModule::is_flag(boma.object(), vars::ike::status::IS_QUICK_DRAW_INSTAKILL){
+        if VarModule::is_flag(boma.object(), vars::ike::status::SPECIAL_S_INSTAKILL){
             let costume_type = WorkModule::get_int(boma, *FIGHTER_INSTANCE_WORK_ID_INT_COLOR) % 2;
             // Path of Radiance voiceline
             if costume_type == 0 {
@@ -142,7 +142,7 @@ unsafe extern "C" fn sound_appeallwr(agent: &mut L2CAgentBase) {
     }
     wait(lua_state, 27.0);
     if is_excute(agent) {
-        if VarModule::is_flag(boma.object(), vars::ike::status::IS_QUICK_DRAW_INSTAKILL){
+        if VarModule::is_flag(boma.object(), vars::ike::status::SPECIAL_S_INSTAKILL){
             //PLAY_SE(fighter, Hash40::new("vc_ike_win01"));
         }
         else{
@@ -159,15 +159,10 @@ unsafe extern "C" fn sound_appeallwr(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn game_appeallw(agent: &mut L2CAgentBase) {
     let lua_state = agent.lua_state_agent;
     let boma = agent.boma();
-    FT_MOTION_RATE(agent, 17.0/13.0);
     if is_excute(agent) {
         KineticModule::set_consider_ground_friction(boma, false, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         ArticleModule::generate_article(boma, *FIGHTER_IKE_GENERATE_ARTICLE_SWORD, false, 0);
         ArticleModule::change_motion(boma, *FIGHTER_IKE_GENERATE_ARTICLE_SWORD, Hash40::new("appeal_lw"), false, 0.0);
-    }
-    frame(lua_state, 13.0);
-    if is_excute(agent) {
-        FT_MOTION_RATE(agent, 1.0);
     }
 }
 

@@ -32,9 +32,6 @@ unsafe fn horizontal_cutter(fighter: &mut L2CFighterCommon) {
 }
 
 unsafe fn dash_attack_jump_cancels(boma: &mut BattleObjectModuleAccessor) {
-    if StatusModule::is_changing(boma) {
-        return;
-    }
     if boma.is_status(*FIGHTER_STATUS_KIND_ATTACK_DASH)
     && boma.is_situation(*SITUATION_KIND_AIR) {
         if MotionModule::frame(boma) >= 43.0 {
@@ -43,31 +40,17 @@ unsafe fn dash_attack_jump_cancels(boma: &mut BattleObjectModuleAccessor) {
     }
 }
 
-// unsafe fn disable_dash_attack_slideoff(fighter: &mut L2CFighterCommon) {
-//     if fighter.is_status(*FIGHTER_STATUS_KIND_ATTACK_DASH) && AttackModule::is_infliction_status(fighter.module_accessor, *COLLISION_KIND_MASK_SHIELD) {
-//         VarModule::off_flag(fighter.battle_object, vars::common::status::ATTACK_DASH_ENABLE_AIR_FALL);
-//         VarModule::off_flag(fighter.battle_object, vars::common::status::ATTACK_DASH_ENABLE_AIR_CONTINUE);
-//     }
-// }
-
-// unsafe fn stone_control(fighter: &mut L2CFighterCommon) {
-//     if fighter.is_status(*FIGHTER_STATUS_KIND_SPECIAL_LW) && fighter.status_frame() <= 30 {
-//         fighter.clear_lua_stack();
-//         lua_args!(fighter, FIGHTER_KINETIC_ENERGY_ID_CONTROL, 1.0, 0.0);
-//         app::sv_kinetic_energy::set_limit_speed(fighter.lua_state_agent);
-//         fighter.clear_lua_stack();
-//     }
-// }
-
-unsafe fn hammer_swing_drift_landcancel(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
+unsafe fn hammer_swing_drift_landcancel(fighter: &mut smash::lua2cpp::L2CFighterCommon, boma: &mut BattleObjectModuleAccessor) {
     if fighter.is_status(*FIGHTER_KIRBY_STATUS_KIND_SPECIAL_S_ATTACK) {
         if fighter.is_situation(*SITUATION_KIND_GROUND) && fighter.is_prev_situation(*SITUATION_KIND_AIR) {
             AttackModule::clear_all(fighter.module_accessor);
             MotionModule::change_motion_force_inherit_frame(fighter.module_accessor, Hash40::new("special_s"), 33.0, 1.0, 1.0);
             MotionModule::set_rate(fighter.module_accessor, (55.0 - 33.0)/25.0);    // equates to 17F landing lag
         }
+    }
+    if fighter.is_status_one_of(&[*FIGHTER_STATUS_KIND_SPECIAL_S, *FIGHTER_KIRBY_STATUS_KIND_SPECIAL_S_ATTACK]) {
         if fighter.is_situation(*SITUATION_KIND_AIR) {
-            if KineticModule::get_sum_speed_y(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY) <= 0.0 {
+            if KineticModule::get_kinetic_type(boma) != *FIGHTER_KINETIC_TYPE_FALL {
                 KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_FALL);
             }
         }
@@ -139,9 +122,7 @@ pub unsafe fn moveset(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectMod
     final_cutter_landing_bugfix(fighter);
     horizontal_cutter(fighter);
     dash_attack_jump_cancels(boma);
-    //disable_dash_attack_slideoff(fighter);
-    //stone_control(fighter);
-    hammer_swing_drift_landcancel(fighter);
+    hammer_swing_drift_landcancel(fighter, boma);
     fastfall_specials(fighter);
     cutter_size(boma, status_kind);
 

@@ -9,10 +9,11 @@ pub mod transition;
 pub mod djcancel;
 pub mod momentum_transfer;
 pub mod hitstun;
+pub mod iceclimber;
 pub mod controls;
 pub mod misc;
 pub mod jumps;
-pub mod killscreen;
+pub mod knockback;
 pub mod stage_hazards;
 pub mod set_fighter_status_data;
 pub mod attack;
@@ -24,6 +25,7 @@ mod lua_bind_hook;
 mod fighterspecializer;
 mod fighter_util;
 mod vtables;
+mod item;
 
 #[repr(C)]
 pub struct TempModule {
@@ -394,7 +396,7 @@ unsafe fn before_collision(object: *mut BattleObject) {
 
             }
             else if (*boma).is_weapon() {
-                let func_addr = (skyline::hooks::getRegionAddress(skyline::hooks::Region::Text) as *mut u8).add(0x33a6140);
+                let func_addr = (skyline::hooks::getRegionAddress(skyline::hooks::Region::Text) as *mut u8).add(0x33a6160);
                 let battle_object__update_movement: extern "C" fn(*mut app::Weapon, bool) = std::mem::transmute(func_addr);
                 battle_object__update_movement(object as *mut app::Weapon, !is_receiver_in_hitlag);
             }
@@ -434,7 +436,7 @@ unsafe fn before_collision(object: *mut BattleObject) {
 
             }
             else if (*boma).is_weapon() {
-                let func_addr = (skyline::hooks::getRegionAddress(skyline::hooks::Region::Text) as *mut u8).add(0x33A6140);
+                let func_addr = (skyline::hooks::getRegionAddress(skyline::hooks::Region::Text) as *mut u8).add(0x33A6160);
                 let battle_object__update_movement: extern "C" fn(*mut app::Weapon, bool) = std::mem::transmute(func_addr);
                 battle_object__update_movement(object as *mut app::Weapon, !is_receiver_in_hitlag);
             }
@@ -477,7 +479,7 @@ unsafe fn before_collision(object: *mut BattleObject) {
 
         }
         else if (*boma).is_weapon() {
-            let func_addr = (skyline::hooks::getRegionAddress(skyline::hooks::Region::Text) as *mut u8).add(0x33A6140);
+            let func_addr = (skyline::hooks::getRegionAddress(skyline::hooks::Region::Text) as *mut u8).add(0x33A6160);
             let battle_object__update_movement: extern "C" fn(*mut app::Weapon, bool) = std::mem::transmute(func_addr);
             battle_object__update_movement(object as *mut app::Weapon, false);
         }
@@ -740,13 +742,14 @@ pub fn install() {
     transition::install();
     djcancel::install();
     hitstun::install();
+    iceclimber::install();
     controls::install();
     momentum_transfer::install();
     misc::install();
     jumps::install();
-    killscreen::install();
+    knockback::install();
     stage_hazards::install();
-    set_fighter_status_data::install();
+    //set_fighter_status_data::install();
     attack::install();
     collision::install();
     camera::install();
@@ -756,6 +759,7 @@ pub fn install() {
     fighterspecializer::install();
     fighter_util::install();
     vtables::install();
+    item::install();
 
     unsafe {
         // Handles getting rid of the kill zoom
@@ -768,10 +772,6 @@ pub fn install() {
         // removes phantoms
         skyline::patching::Patch::in_text(0x3e6d08).data(0x14000012u32);
 
-        // Resets projectile lifetime on parry, rather than using remaining lifetime
-        skyline::patching::Patch::in_text(0x33bdfd8).nop();
-        skyline::patching::Patch::in_text(0x33bdfdc).data(0x2a0a03e1);
-
         // The following handles disabling the "Weapon Catch" animation for those who have it.
         // You will only enter the weapon catch animation if you are completely idle.
         // Link, Young Link, Toon Link
@@ -781,6 +781,9 @@ pub fn install() {
         // Krool and Pyra are in their respective modules.
         // Gives attacker less clank hitlag than defender
         skyline::patching::Patch::in_text(0x3e0b48).data(0x1E204160);
+
+        // Disables airdodge refresh on hit
+        skyline::patching::Patch::in_text(0x632530).nop();
     }
     skyline::install_hooks!(
         before_collision,

@@ -3,6 +3,7 @@ on:
   pull_request:
     branches:
       - dev
+      - pre-release
     types: [opened, reopened, synchronize, ready_for_review]
 
 jobs:
@@ -11,12 +12,12 @@ jobs:
       PLUGIN_NAME: hdr
     runs-on: ubuntu-20.04
     container: 
-      image: hewdrawremix/hewdraw-builder:latest
+      image: wuboyth/skyline-plugin-builder:latest
     steps:
-    - name: setup python
-      uses: actions/setup-python@v5.1.0
-      with:
-        python-version: '3.9' 
+    # - name: setup python
+    #   uses: actions/setup-python@v5.1.0
+    #   with:
+    #     python-version: '3.9' 
     
     - name: checkout version
       uses: actions/checkout@v4.1.4
@@ -45,8 +46,3 @@ jobs:
       with:
         name: hdr-switch
         path: build/hdr-switch
-    - name: Upload hdr-ryujinx
-      uses: actions/upload-artifact@v4.3.3
-      with:
-        name: hdr-ryujinx
-        path: build/hdr-ryujinx
