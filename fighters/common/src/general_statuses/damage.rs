@@ -463,6 +463,16 @@ unsafe fn calc_damage_motion_rate_hook(fighter: &mut L2CFighterCommon, motion_ki
 
 #[skyline::hook(replace = L2CFighterCommon_sub_DamageFlyCommon)]
 unsafe fn sub_DamageFlyCommon_hook(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let hitlag_frames_remaining = FighterStopModuleImpl::get_damage_stop_frame(fighter.module_accessor);
+
+    // Reset tech lockout on hit
+    if hitlag_frames_remaining == 1
+    || (fighter.is_prev_status(*FIGHTER_STATUS_KIND_THROWN)
+        && fighter.global_table[CURRENT_FRAME] == 2)
+    {
+        ControlModule::reset_trigger(fighter.module_accessor);
+    }
+    
     if fighter.sub_AirChkPassiveWallJump().get_bool()
     || fighter.sub_AirChkPassiveWall().get_bool()
     || fighter.sub_AirChkPassiveCeil().get_bool()
@@ -503,14 +513,8 @@ unsafe fn sub_DamageFlyCommon_hook(fighter: &mut L2CFighterCommon) -> L2CValue {
     }
     else {
         if !fighter.global_table[IS_STOPPING].get_bool()
-        {
-            if fighter.sub_DamageFlyChkUniq().get_bool() {
-                return true.into();
-            }
-            if fighter.global_table[CURRENT_FRAME].get_i32() > 1 && !VarModule::is_flag(fighter.battle_object, vars::common::status::DAMAGE_FLY_RESET_TRIGGER) {
-                ControlModule::reset_trigger(fighter.module_accessor);
-                VarModule::on_flag(fighter.battle_object, vars::common::status::DAMAGE_FLY_RESET_TRIGGER);
-            }
+        && fighter.sub_DamageFlyChkUniq().get_bool() {
+            return true.into();
         }
         return false.into();
     }
