@@ -50,6 +50,7 @@ pub unsafe fn moveset(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectMod
     disable_special_cancels_on_parry(fighter);
     extra_special_cancels(fighter, boma, status_kind, situation_kind, motion_kind, frame);
     metered_cancels(fighter, boma, frame);
+    hit_cancel_timer(fighter, boma);
     target_combos(boma);
     turn_run_back_status(fighter, boma, status_kind);
     ryu_ex_shoryu(fighter, boma, cat, status_kind, situation_kind, motion_kind, frame);
@@ -409,7 +410,9 @@ unsafe fn target_combos(boma: &mut BattleObjectModuleAccessor) {
     && !boma.is_cat_flag(Cat1::AttackS3)
     && !boma.is_cat_flag(Cat1::AttackLw3)
     && !StopModule::is_stop(boma) {
-        WorkModule::off_flag(boma, *FIGHTER_RYU_STATUS_ATTACK_FLAG_HIT_CANCEL);
+        boma.off_flag(*FIGHTER_RYU_STATUS_ATTACK_FLAG_HIT_CANCEL);
+        boma.off_flag(*FIGHTER_RYU_INSTANCE_WORK_ID_FLAG_FINAL_HIT_CANCEL);
+        VarModule::set_int(boma.object(), vars::shotos::status::HIT_CANCEL_TIMER, 0);
         MotionModule::change_motion(boma, Hash40::new("attack_12_s"), 0.0, 1.0, false, 0.0, false, false);
     }
 }
@@ -557,4 +560,17 @@ unsafe fn aerial_cancels(boma: &mut BattleObjectModuleAccessor) {
     //         boma.change_status_req(*FIGHTER_STATUS_KIND_ATTACK_AIR, false);
     //     }
     // }
+}
+
+unsafe fn hit_cancel_timer(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectModuleAccessor) {
+    let hit_cancel_timer = VarModule::get_int(fighter.battle_object, vars::shotos::status::HIT_CANCEL_TIMER);
+    if hit_cancel_timer > 0
+    && AttackModule::is_infliction_status(boma, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_SHIELD)
+    && !fighter.is_in_hitlag() {
+        VarModule::dec_int(fighter.battle_object, vars::shotos::status::HIT_CANCEL_TIMER);
+        if hit_cancel_timer - 1 == 0 {
+            fighter.off_flag(*FIGHTER_RYU_STATUS_ATTACK_FLAG_HIT_CANCEL);
+            fighter.off_flag(*FIGHTER_RYU_INSTANCE_WORK_ID_FLAG_FINAL_HIT_CANCEL);
+        }
+    }
 }

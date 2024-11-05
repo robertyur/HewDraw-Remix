@@ -177,7 +177,6 @@ unsafe extern "C" fn game_attackhi3s(agent: &mut L2CAgentBase) {
         HIT_NODE(agent, Hash40::new("kneer"), *HIT_STATUS_XLU);
         HIT_NODE(agent, Hash40::new("footr"), *HIT_STATUS_XLU);
         boma.on_flag(*FIGHTER_RYU_INSTANCE_WORK_ID_FLAG_FINAL_HIT_CANCEL);
-        VarModule::set_int(agent.battle_object, vars::shotos::status::HIT_CANCEL_TIMER, 12);
         MeterModule::watch_damage(agent.battle_object, true);
         // GROUND
         ATTACK(agent, 0, 0, Hash40::new("legr"), 3.0 * dmg, 80, 120, 30, 0, 4.0, 0.0, 0.0, 0.0, None, None, None, 1.25, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, attr, *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KEN_KICK, *ATTACK_REGION_KICK);
@@ -197,6 +196,7 @@ unsafe extern "C" fn game_attackhi3s(agent: &mut L2CAgentBase) {
     frame(lua_state, 15.0);
     if is_excute(agent) {
         MeterModule::watch_damage(agent.battle_object, true);
+        VarModule::set_int(agent.battle_object, vars::shotos::status::HIT_CANCEL_TIMER, 12);
         ATTACK(agent, 0, 0, Hash40::new("legr"), 4.0 * dmg, 90, 82, 0, 59, 4.0, 0.0, 0.0, 0.0, None, None, None, 1.25, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, attr, *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KEN_KICK, *ATTACK_REGION_KICK);
         ATTACK(agent, 1, 0, Hash40::new("kneer"), 4.0 * dmg, 90, 82, 0, 59, 4.0, 0.0, 0.0, 0.0, None, None, None, 1.25, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, attr, *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KEN_KICK, *ATTACK_REGION_KICK);
         ATTACK(agent, 2, 0, Hash40::new("footr"), 4.0 * dmg, 90, 82, 0, 59, 4.0, 0.0, 0.0, 0.0, None, None, None, 1.25, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, attr, *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KEN_KICK, *ATTACK_REGION_KICK);
