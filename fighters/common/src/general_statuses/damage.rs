@@ -20,8 +20,11 @@ fn nro_hook(info: &skyline::nro::NroInfo) {
             exec_damage_elec_hit_stop_hook,
             FighterStatusDamage__is_enable_damage_fly_effect_hook,
             sub_update_damage_fly_effect,
+            ftStatusUniqProcessDamage_init,
             status_Damage_Main,
-            status_DamageAir_Main
+            ftStatusUniqProcessDamageAir_init,
+            status_DamageAir_Main,
+            sub_damage_uniq_process_exit
         );
     }
 }
@@ -671,30 +674,98 @@ pub unsafe fn sub_update_damage_fly_effect(fighter: &mut L2CFighterCommon, arg2:
     handle
 }
 
+
+#[skyline::hook(replace = L2CFighterCommon_ftStatusUniqProcessDamage_init)]
+unsafe fn ftStatusUniqProcessDamage_init(fighter: &mut L2CFighterCommon, arg2: L2CValue) {
+    original!()(fighter, arg2);
+
+    fighter.clear_lua_stack();
+    lua_args!(fighter, hash40("level"));
+    sv_information::damage_log_value(fighter.lua_state_agent);
+    let level = fighter.pop_lua_stack(1).get_i32();
+
+    let precede = WorkModule::get_param_int(fighter.module_accessor, hash40("common"), hash40("precede"));
+
+    // Reduce buffer during non-tumble kb
+    if level == *DAMAGE_LEVEL_2 {
+        let damage_level2_precede = ParamModule::get_int(fighter.battle_object, ParamType::Common, "damage_level2_precede");
+        let dif = precede - damage_level2_precede;
+        ControlModule::set_command_life_extend(fighter.module_accessor, u8::MAX - dif as u8);
+    }
+    else if level == *DAMAGE_LEVEL_3 {
+        let damage_level3_precede = ParamModule::get_int(fighter.battle_object, ParamType::Common, "damage_level3_precede");
+        let dif = precede - damage_level3_precede;
+        ControlModule::set_command_life_extend(fighter.module_accessor, u8::MAX - dif as u8);
+    }
+}
+
 #[skyline::hook(replace = L2CFighterCommon_status_Damage_Main)]
 unsafe fn status_Damage_Main(fighter: &mut L2CFighterCommon) -> L2CValue {
     let motion_kind = MotionModule::motion_kind(fighter.module_accessor);
     let cancel_frame = FighterMotionModuleImpl::get_cancel_frame(fighter.module_accessor, Hash40::new_raw(motion_kind), true);
 
-    if MotionModule::frame(fighter.module_accessor) + 0.0001 >= cancel_frame - 1.0
+    fighter.clear_lua_stack();
+    lua_args!(fighter, hash40("level"));
+    sv_information::damage_log_value(fighter.lua_state_agent);
+    let level = fighter.pop_lua_stack(1).get_i32();
+
+    if level == *DAMAGE_LEVEL_1
+    && MotionModule::frame(fighter.module_accessor) + 0.0001 >= cancel_frame - 1.0
     && MotionModule::prev_frame(fighter.module_accessor) + 0.0001 < cancel_frame - 1.0 {
-        // Prevent buffering out of non-tumble kb
+        // Prevent buffering out of very low non-tumble kb
         ControlModule::clear_command(fighter.module_accessor, false);
     }
 
     original!()(fighter)
 }
 
+#[skyline::hook(replace = L2CFighterCommon_ftStatusUniqProcessDamageAir_init)]
+unsafe fn ftStatusUniqProcessDamageAir_init(fighter: &mut L2CFighterCommon, arg2: L2CValue) {
+    original!()(fighter, arg2);
+
+    fighter.clear_lua_stack();
+    lua_args!(fighter, hash40("level"));
+    sv_information::damage_log_value(fighter.lua_state_agent);
+    let level = fighter.pop_lua_stack(1).get_i32();
+
+    let precede = WorkModule::get_param_int(fighter.module_accessor, hash40("common"), hash40("precede"));
+
+    // Reduce buffer during non-tumble kb
+    if level == *DAMAGE_LEVEL_2 {
+        let damage_level2_precede = ParamModule::get_int(fighter.battle_object, ParamType::Common, "damage_level2_precede");
+        let dif = precede - damage_level2_precede;
+        ControlModule::set_command_life_extend(fighter.module_accessor, u8::MAX - dif as u8);
+    }
+    else if level == *DAMAGE_LEVEL_3 {
+        let damage_level3_precede = ParamModule::get_int(fighter.battle_object, ParamType::Common, "damage_level3_precede");
+        let dif = precede - damage_level3_precede;
+        ControlModule::set_command_life_extend(fighter.module_accessor, u8::MAX - dif as u8);
+    }
+}
+
 #[skyline::hook(replace = L2CFighterCommon_status_DamageAir_Main)]
 unsafe fn status_DamageAir_Main(fighter: &mut L2CFighterCommon) -> L2CValue {
     let motion_kind = MotionModule::motion_kind(fighter.module_accessor);
     let cancel_frame = FighterMotionModuleImpl::get_cancel_frame(fighter.module_accessor, Hash40::new_raw(motion_kind), true);
+    
+    fighter.clear_lua_stack();
+    lua_args!(fighter, hash40("level"));
+    sv_information::damage_log_value(fighter.lua_state_agent);
+    let level = fighter.pop_lua_stack(1).get_i32();
 
-    if MotionModule::frame(fighter.module_accessor) + 0.0001 >= cancel_frame - 1.0
+    if level == *DAMAGE_LEVEL_1
+    && MotionModule::frame(fighter.module_accessor) + 0.0001 >= cancel_frame - 1.0
     && MotionModule::prev_frame(fighter.module_accessor) + 0.0001 < cancel_frame - 1.0 {
-        // Prevent buffering out of non-tumble kb
+        // Prevent buffering out of very low non-tumble kb
         ControlModule::clear_command(fighter.module_accessor, false);
     }
+
+    original!()(fighter)
+}
+
+#[skyline::hook(replace = L2CFighterCommon_sub_damage_uniq_process_exit)]
+unsafe fn sub_damage_uniq_process_exit(fighter: &mut L2CFighterCommon) -> L2CValue {
+    ControlModule::set_command_life_extend(fighter.module_accessor, 0);
 
     original!()(fighter)
 }
