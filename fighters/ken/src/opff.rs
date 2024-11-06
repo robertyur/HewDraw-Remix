@@ -380,7 +380,7 @@ unsafe fn metered_cancels(fighter: &mut L2CFighterCommon, boma: &mut BattleObjec
             *FIGHTER_STATUS_KIND_SPECIAL_N,
             *FIGHTER_RYU_STATUS_KIND_SPECIAL_N_COMMAND,
             *FIGHTER_RYU_STATUS_KIND_SPECIAL_N2_COMMAND
-        ]) && frame > 13.0
+        ]) && boma.is_flag(*FIGHTER_RYU_INSTANCE_WORK_ID_FLAG_FINAL_HIT_CANCEL)
     );
 
     let is_uspecial_cancel = (
@@ -391,7 +391,7 @@ unsafe fn metered_cancels(fighter: &mut L2CFighterCommon, boma: &mut BattleObjec
         ]) 
         && AttackModule::is_infliction_status(boma, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_SHIELD)
         && !AttackModule::is_infliction_status(boma, *COLLISION_KIND_MASK_PARRY)
-        && (boma.get_int(*FIGHTER_RYU_STATUS_WORK_ID_SPECIAL_HI_INT_START_SITUATION) == *SITUATION_KIND_GROUND ||  boma.is_flag(*FIGHTER_RYU_INSTANCE_WORK_ID_FLAG_FINAL_HIT_CANCEL))
+        && (boma.get_int(*FIGHTER_RYU_STATUS_WORK_ID_SPECIAL_HI_INT_START_SITUATION) == *SITUATION_KIND_GROUND || boma.is_flag(*FIGHTER_RYU_INSTANCE_WORK_ID_FLAG_FINAL_HIT_CANCEL))
     );
 
     let is_other_special_cancel = (
@@ -403,9 +403,11 @@ unsafe fn metered_cancels(fighter: &mut L2CFighterCommon, boma: &mut BattleObjec
             *FIGHTER_RYU_STATUS_KIND_ATTACK_COMMAND1,
             *FIGHTER_RYU_STATUS_KIND_ATTACK_COMMAND2,
             statuses::ken::ATTACK_COMMAND_4
-        ]) 
-        && AttackModule::is_infliction_status(boma, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_SHIELD)
-        && !AttackModule::is_infliction_status(boma, *COLLISION_KIND_MASK_PARRY)
+        ]) && (
+            AttackModule::is_infliction_status(boma, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_SHIELD)
+            && !AttackModule::is_infliction_status(fighter.module_accessor, *COLLISION_KIND_MASK_PARRY)
+            && boma.is_flag(*FIGHTER_RYU_INSTANCE_WORK_ID_FLAG_FINAL_HIT_CANCEL)
+        ) || VarModule::is_flag(boma.object(), vars::shotos::instance::SPECIAL_LW_ENABLE_FADC)
     );
 
     if !is_nspecial_cancel && !is_uspecial_cancel && !is_other_special_cancel {
