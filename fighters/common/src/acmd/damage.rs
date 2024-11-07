@@ -1,6 +1,6 @@
 use super::*;
 
-const DAMAGE_STATUSES: [smash::lib::LuaConst ; 8] = [
+const DAMAGE_STATUSES: [smash::lib::LuaConst ; 12] = [
     FIGHTER_STATUS_KIND_DAMAGE,
     FIGHTER_STATUS_KIND_DAMAGE_AIR,
     FIGHTER_STATUS_KIND_DAMAGE_FLY,
@@ -9,6 +9,33 @@ const DAMAGE_STATUSES: [smash::lib::LuaConst ; 8] = [
     FIGHTER_STATUS_KIND_DAMAGE_FLY_REFLECT_LR,
     FIGHTER_STATUS_KIND_DAMAGE_FLY_REFLECT_U,
     FIGHTER_STATUS_KIND_DAMAGE_FLY_REFLECT_D,
+    FIGHTER_STATUS_KIND_DOWN_DAMAGE,
+    FIGHTER_STATUS_KIND_SAVING_DAMAGE,
+    FIGHTER_STATUS_KIND_SAVING_DAMAGE_AIR,
+    FIGHTER_STATUS_KIND_SAVING_DAMAGE_FLY
+];
+
+const DAMAGE_STATUSES_OTHER: [smash::lib::LuaConst ; 20] = [
+    FIGHTER_STATUS_KIND_SLIP_DAMAGE,
+    FIGHTER_STATUS_KIND_STABBED_DAMAGE,
+    FIGHTER_STATUS_KIND_CAPTURE_PULLED,
+    FIGHTER_STATUS_KIND_CAPTURE_WAIT,
+    FIGHTER_STATUS_KIND_CAPTURE_DAMAGE,
+    FIGHTER_STATUS_KIND_THROWN,
+    FIGHTER_STATUS_KIND_MEWTWO_THROWN,
+    FIGHTER_STATUS_KIND_CLUNG_THROWN_DIDDY,
+    FIGHTER_STATUS_KIND_SWING_GAOGAEN_THROWN,
+    FIGHTER_STATUS_KIND_MIIFIGHTER_SUPLEX_THROWN,
+    FIGHTER_STATUS_KIND_SHOULDERED_DONKEY_THROWN,
+    FIGHTER_STATUS_KIND_MIIFIGHTER_COUNTER_THROWN,
+    FIGHTER_STATUS_KIND_CATCHED_GANON,
+    FIGHTER_STATUS_KIND_CATCHED_AIR_GANON,
+    FIGHTER_STATUS_KIND_CATCHED_AIR_FALL_GANON,
+    FIGHTER_STATUS_KIND_CATCHED_AIR_END_GANON,
+    FIGHTER_STATUS_KIND_CATCHED_REFLET,
+    FIGHTER_STATUS_KIND_CATCHED_RIDLEY,
+    FIGHTER_STATUS_KIND_CAPTURE_JACK_WIRE,
+    FIGHTER_STATUS_KIND_CAPTURE_MASTER_SWORD
 ];
 
 
@@ -26,8 +53,9 @@ pub unsafe fn effect_FireHitF(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
 
     for _ in 0..3 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -37,8 +65,9 @@ pub unsafe fn effect_FireHitF(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
         fighter.effect_FireHitEff();
     }
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -47,8 +76,9 @@ pub unsafe fn effect_FireHitF(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
     }
     fighter.effect_FireHitEff();
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -58,8 +88,9 @@ pub unsafe fn effect_FireHitF(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
     fighter.effect_FireHitEff();
     fighter.effect_FireHitEff();
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -69,8 +100,9 @@ pub unsafe fn effect_FireHitF(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
     fighter.effect_FireHitEff();
     fighter.effect_FireHitEff();
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -80,8 +112,9 @@ pub unsafe fn effect_FireHitF(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
     fighter.effect_FireHitEff();
     fighter.effect_FireHitEff();
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -92,8 +125,9 @@ pub unsafe fn effect_FireHitF(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
     fighter.effect_FireHitEff();
     for _ in 0..5 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -120,8 +154,9 @@ pub unsafe fn effect_FireHitF_L(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
 
     for _ in 0..3 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -131,8 +166,9 @@ pub unsafe fn effect_FireHitF_L(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
         fighter.effect_FireHitEff();
     }
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -141,8 +177,9 @@ pub unsafe fn effect_FireHitF_L(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
     }
     for _ in 0..9 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -153,8 +190,9 @@ pub unsafe fn effect_FireHitF_L(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
     }
     for _ in 0..5 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -180,8 +218,9 @@ pub unsafe fn effect_FireHitS(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
     };
 
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -190,8 +229,9 @@ pub unsafe fn effect_FireHitS(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
     }
     fighter.effect_FireHitEff();
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -200,8 +240,9 @@ pub unsafe fn effect_FireHitS(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
     }
     fighter.effect_FireHitEff();
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -231,8 +272,9 @@ pub unsafe fn effect_FireHitS_L(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
 
     for _ in 0..2 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -267,8 +309,9 @@ pub unsafe fn effect_FireHitM(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
 
     for _ in 0..4 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -299,8 +342,9 @@ pub unsafe fn effect_FireHitM_L(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
 
     for _ in 0..4 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -310,8 +354,9 @@ pub unsafe fn effect_FireHitM_L(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
         fighter.effect_FireHitEff();
     }
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -340,8 +385,9 @@ pub unsafe fn effect_FireHitL(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
 
     for _ in 0..8 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -378,8 +424,9 @@ pub unsafe fn effect_FireHitL_L(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
 
     for _ in 0..8 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -389,8 +436,9 @@ pub unsafe fn effect_FireHitL_L(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
         fighter.effect_FireHitEff();
     }
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -425,8 +473,9 @@ pub unsafe fn effect_FireHitEff(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
     };
 
     if excute {
-        if DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        || DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             agent.clear_lua_stack();
             lua_args!(agent, 2, 0.15, 0.02, 0.95);
             BURN_COLOR(agent.lua_state_agent);
@@ -436,8 +485,9 @@ pub unsafe fn effect_FireHitEff(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
     if excute {
         agent.clear_lua_stack();
         BURN_COLOR_NORMAL(agent.lua_state_agent);
-        if DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        || DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             agent.clear_lua_stack();
             lua_args!(agent, 0.3, 0.01, 0, 0.5);
             FLASH(agent.lua_state_agent);
@@ -464,8 +514,9 @@ pub unsafe fn effect_FireHitEff2(fighter: &mut L2CFighterAnimcmdEffectCommon) ->
     };
 
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 1.into();
         }
         agent.clear_lua_stack();
@@ -477,8 +528,9 @@ pub unsafe fn effect_FireHitEff2(fighter: &mut L2CFighterAnimcmdEffectCommon) ->
     }
     wait(lua_state, 1.0);
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 1.into();
         }
         agent.clear_lua_stack();
@@ -515,8 +567,9 @@ pub unsafe fn effect_PurpleFireHitF(fighter: &mut L2CFighterAnimcmdEffectCommon)
 
     for _ in 0..12 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -558,8 +611,9 @@ pub unsafe fn effect_PurpleFireHitS(fighter: &mut L2CFighterAnimcmdEffectCommon)
     };
 
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -568,8 +622,9 @@ pub unsafe fn effect_PurpleFireHitS(fighter: &mut L2CFighterAnimcmdEffectCommon)
     }
     fighter.effect_PurpleFireHitEff();
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -596,8 +651,9 @@ pub unsafe fn effect_PurpleFireHitM(fighter: &mut L2CFighterAnimcmdEffectCommon)
 
     for _ in 0..4 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -628,8 +684,9 @@ pub unsafe fn effect_PurpleFireHitL(fighter: &mut L2CFighterAnimcmdEffectCommon)
 
     for _ in 0..8 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -666,8 +723,9 @@ pub unsafe fn effect_PurpleFireHitEff(fighter: &mut L2CFighterAnimcmdEffectCommo
     };
 
     if excute {
-        if DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        || DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             agent.clear_lua_stack();
             lua_args!(agent, 0.8, 0.4, 2, 0.2);
             FLASH(agent.lua_state_agent);
@@ -678,8 +736,9 @@ pub unsafe fn effect_PurpleFireHitEff(fighter: &mut L2CFighterAnimcmdEffectCommo
     }
     wait(lua_state, 1.0);
     if excute {
-        if DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        || DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             agent.clear_lua_stack();
             lua_args!(agent, 2, 0.8, 0.4, 2, 0);
             FLASH_FRM(agent.lua_state_agent);
@@ -691,8 +750,9 @@ pub unsafe fn effect_PurpleFireHitEff(fighter: &mut L2CFighterAnimcmdEffectCommo
         BURN_COLOR_NORMAL(agent.lua_state_agent);
         agent.clear_lua_stack();
         COL_NORMAL(agent.lua_state_agent);
-        if DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        || DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             agent.clear_lua_stack();
             lua_args!(agent, 0.2, 0, 1, 0.3);
             FLASH(agent.lua_state_agent);
@@ -700,8 +760,9 @@ pub unsafe fn effect_PurpleFireHitEff(fighter: &mut L2CFighterAnimcmdEffectCommo
     }
     wait(lua_state, 1.0);
     if excute {
-        if DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        || DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             agent.clear_lua_stack();
             lua_args!(agent, 2, 0.2, 0, 1, 0);
             FLASH_FRM(agent.lua_state_agent);
@@ -729,8 +790,9 @@ pub unsafe fn effect_PurpleFireHitEff2(fighter: &mut L2CFighterAnimcmdEffectComm
     };
 
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 1.into();
         }
         agent.clear_lua_stack();
@@ -739,8 +801,9 @@ pub unsafe fn effect_PurpleFireHitEff2(fighter: &mut L2CFighterAnimcmdEffectComm
     }
     wait(lua_state, 2.0);
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 1.into();
         }
         agent.clear_lua_stack();
@@ -772,8 +835,9 @@ pub unsafe fn effect_ElecHitF(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
 
     for _ in 0..15 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -784,8 +848,9 @@ pub unsafe fn effect_ElecHitF(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
         fighter.effect_ElecHitEff();
     }
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -809,8 +874,9 @@ pub unsafe fn effect_ElecHitS(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
 
     for _ in 0..4 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -821,8 +887,9 @@ pub unsafe fn effect_ElecHitS(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
         fighter.effect_ElecHitEff();
     }
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -846,8 +913,9 @@ pub unsafe fn effect_ElecHitM(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
 
     for _ in 0..7 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -858,8 +926,9 @@ pub unsafe fn effect_ElecHitM(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
         fighter.effect_ElecHitEff();
     }
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -883,8 +952,9 @@ pub unsafe fn effect_ElecHitL(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
 
     for _ in 0..10 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -895,8 +965,9 @@ pub unsafe fn effect_ElecHitL(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
         fighter.effect_ElecHitEff();
     }
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -920,8 +991,9 @@ pub unsafe fn effect_ElecHitEff(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
     };
 
     if excute {
-        if DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        || DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             agent.clear_lua_stack();
             lua_args!(agent, 0.8, 0.8, 2, 0.2);
             FLASH(agent.lua_state_agent);
@@ -932,8 +1004,9 @@ pub unsafe fn effect_ElecHitEff(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
     }
     wait(lua_state, 1.0);
     if excute {
-        if DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        || DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             agent.clear_lua_stack();
             lua_args!(agent, 2, 0.6, 0.6, 2, 0);
             FLASH_FRM(agent.lua_state_agent);
@@ -945,8 +1018,9 @@ pub unsafe fn effect_ElecHitEff(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
         BURN_COLOR_NORMAL(agent.lua_state_agent);
         agent.clear_lua_stack();
         COL_NORMAL(agent.lua_state_agent);
-        if DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        || DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             agent.clear_lua_stack();
             lua_args!(agent, 0, 0, 0.1, 0.8);
             FLASH(agent.lua_state_agent);
@@ -954,8 +1028,9 @@ pub unsafe fn effect_ElecHitEff(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
     }
     wait(lua_state, 1.0);
     if excute {
-        if DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        || DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             agent.clear_lua_stack();
             lua_args!(agent, 2, 0, 0, 0.1, 0);
             FLASH_FRM(agent.lua_state_agent);
@@ -986,8 +1061,9 @@ pub unsafe fn effect_AuraHitF(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
 
     for _ in 0..12 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -1029,8 +1105,9 @@ pub unsafe fn effect_AuraHitS(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
     };
 
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -1039,8 +1116,9 @@ pub unsafe fn effect_AuraHitS(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
     }
     fighter.effect_AuraHitEff();
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 0.into();
         }
         agent.clear_lua_stack();
@@ -1067,8 +1145,9 @@ pub unsafe fn effect_AuraHitM(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
 
     for _ in 0..4 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -1099,8 +1178,9 @@ pub unsafe fn effect_AuraHitL(fighter: &mut L2CFighterAnimcmdEffectCommon) -> L2
 
     for _ in 0..8 {
         if excute {
-            if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+            if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+                || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+            && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
                 return 0.into();
             }
             agent.clear_lua_stack();
@@ -1137,8 +1217,9 @@ pub unsafe fn effect_AuraHitEff(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
     };
 
     if excute {
-        if DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        || DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             agent.clear_lua_stack();
             lua_args!(agent, 0.502, 0.627, 1, 0.314);
             FLASH(agent.lua_state_agent);
@@ -1146,8 +1227,9 @@ pub unsafe fn effect_AuraHitEff(fighter: &mut L2CFighterAnimcmdEffectCommon) -> 
     }
     wait(lua_state, 1.0);
     if excute {
-        if DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            && !boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        || DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             agent.clear_lua_stack();
             lua_args!(agent, 4, 0, 0, 0.235, 0.039);
             FLASH_FRM(agent.lua_state_agent);
@@ -1175,8 +1257,9 @@ pub unsafe fn effect_AuraHitEff2(fighter: &mut L2CFighterAnimcmdEffectCommon) ->
     };
 
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 1.into();
         }
         agent.clear_lua_stack();
@@ -1185,8 +1268,9 @@ pub unsafe fn effect_AuraHitEff2(fighter: &mut L2CFighterAnimcmdEffectCommon) ->
     }
     wait(lua_state, 2.0);
     if excute {
-        if !DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma) )
-        || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION) {
+        if (!DAMAGE_STATUSES.iter().any(|x| **x == StatusModule::status_kind(boma))
+            || boma.is_flag(*FIGHTER_STATUS_DAMAGE_FLAG_END_REACTION))
+        && !DAMAGE_STATUSES_OTHER.iter().any(|x| **x == StatusModule::status_kind(boma)) {
             return 1.into();
         }
         agent.clear_lua_stack();
