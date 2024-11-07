@@ -195,6 +195,7 @@ pub unsafe fn status_Landing_MainSub(fighter: &mut L2CFighterCommon) -> L2CValue
         let cancel_frame = WorkModule::get_float(fighter.module_accessor, *FIGHTER_STATUS_LANDING_WORK_FLOAT_STIFFNESS_FRAME);
         if !VarModule::is_flag(fighter.battle_object, vars::common::instance::IS_CC_NON_TUMBLE)
         && MotionModule::frame(fighter.module_accessor) >= cancel_frame - 1.0 {
+            // Prevent buffering out of non-CCd non-tumble hitstun landing
             ControlModule::clear_command(fighter.module_accessor, false);
         }
     }
