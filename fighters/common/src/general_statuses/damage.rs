@@ -466,7 +466,7 @@ unsafe fn calc_damage_motion_rate_hook(fighter: &mut L2CFighterCommon, motion_ki
 }
 
 #[skyline::hook(replace = L2CFighterCommon_sub_DamageFlyCommon)]
-unsafe fn sub_DamageFlyCommon_hook(fighter: &mut L2CFighterCommon) -> L2CValue {   
+unsafe fn sub_DamageFlyCommon_hook(fighter: &mut L2CFighterCommon) -> L2CValue {
     if fighter.sub_AirChkPassiveWallJump().get_bool()
     || fighter.sub_AirChkPassiveWall().get_bool()
     || fighter.sub_AirChkPassiveCeil().get_bool()
