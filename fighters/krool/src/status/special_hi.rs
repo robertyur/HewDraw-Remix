@@ -63,17 +63,17 @@ unsafe extern "C" fn special_hi_start_main_loop(fighter: &mut L2CFighterCommon) 
         fighter.change_status(FIGHTER_KROOL_STATUS_KIND_SPECIAL_HI.into(), false.into());
     }
     else {
-        let cancel_min_frame = ParamModule::get_int(fighter.battle_object, ParamType::Agent, "param_special_hi.cancel_min_frame");
-        if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD)
-        && fighter.status_frame() >= cancel_min_frame {
-            let start_cancel_speed_x = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_special_hi.start_cancel_speed_x");
-            let start_cancel_speed_y = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_special_hi.start_cancel_speed_y");
-            let facing = PostureModule::lr(fighter.module_accessor);
-            sv_kinetic_energy!(set_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_STOP, start_cancel_speed_x * facing, start_cancel_speed_y);
-            KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-            EFFECT(fighter, Hash40::new("sys_landing_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.75, 0, 0, 0, 0, 0, 0, false);
-            fighter.change_status(FIGHTER_KROOL_STATUS_KIND_SPECIAL_HI_AIR_END.into(), false.into());
-        }
+        // let cancel_min_frame = ParamModule::get_int(fighter.battle_object, ParamType::Agent, "param_special_hi.cancel_min_frame");
+        // if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD)
+        // && fighter.status_frame() >= cancel_min_frame {
+        //     let start_cancel_speed_x = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_special_hi.start_cancel_speed_x");
+        //     let start_cancel_speed_y = ParamModule::get_float(fighter.battle_object, ParamType::Agent, "param_special_hi.start_cancel_speed_y");
+        //     let facing = PostureModule::lr(fighter.module_accessor);
+        //     sv_kinetic_energy!(set_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_STOP, start_cancel_speed_x * facing, start_cancel_speed_y);
+        //     KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+        //     EFFECT(fighter, Hash40::new("sys_landing_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.75, 0, 0, 0, 0, 0, 0, false);
+        //     fighter.change_status(FIGHTER_KROOL_STATUS_KIND_SPECIAL_HI_AIR_END.into(), false.into());
+        // }
         if fighter.status_frame() > rise_min_frame {
             if fighter.is_situation(*SITUATION_KIND_GROUND) && (fighter.status_frame() + rise_min_frame) % 15 == 0 {
                 EFFECT_FLIP(fighter, Hash40::new("sys_whirlwind_l"), Hash40::new("sys_whirlwind_r"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true, *EF_FLIP_ZX);
@@ -136,8 +136,7 @@ unsafe extern "C" fn special_hi_main_loop(fighter: &mut L2CFighterCommon) -> L2C
     }
     let param_brake_after_frame = WorkModule::get_param_int(fighter.module_accessor, hash40("param_special_hi"), hash40("special_hi_fly_brake_after_frame"));
     let brake_after_frame = WorkModule::get_int(fighter.module_accessor, *FIGHTER_KROOL_STATUS_SPECIAL_HI_INT_BRAKE_AFTER_FRAME);
-    if brake_after_frame > param_brake_after_frame
-    || ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD) {
+    if brake_after_frame > param_brake_after_frame {
         fighter.change_status(FIGHTER_KROOL_STATUS_KIND_SPECIAL_HI_AIR_END.into(), false.into());
         return 0.into()
     }
