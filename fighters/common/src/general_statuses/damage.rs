@@ -21,7 +21,8 @@ fn nro_hook(info: &skyline::nro::NroInfo) {
             FighterStatusDamage__is_enable_damage_fly_effect_hook,
             sub_update_damage_fly_effect,
             status_Damage_Main,
-            status_DamageAir_Main
+            status_DamageAir_Main,
+            sub_thrown_uniq_process_init
         );
     }
 }
@@ -296,6 +297,9 @@ unsafe fn ftstatusuniqprocessdamage_init_common(fighter: &mut L2CFighterCommon) 
     ].contains(&attr) {
         let invalid_paralyze_frame = WorkModule::get_param_float(fighter.module_accessor, hash40("common"), hash40("invalid_paralyze_frame"));
         WorkModule::set_float(fighter.module_accessor, invalid_paralyze_frame, *FIGHTER_INSTANCE_WORK_ID_INT_INVALID_PARALYZE_FRAME);
+    }
+    if FighterStopModuleImpl::is_damage_stop(fighter.module_accessor) {
+        ControlModule::reset_trigger(fighter.module_accessor);
     }
 }
 
@@ -695,6 +699,13 @@ unsafe fn status_DamageAir_Main(fighter: &mut L2CFighterCommon) -> L2CValue {
         // Prevent buffering out of non-tumble kb
         ControlModule::clear_command(fighter.module_accessor, false);
     }
+
+    original!()(fighter)
+}
+
+#[skyline::hook(replace = L2CFighterCommon_sub_thrown_uniq_process_init)]
+unsafe fn sub_thrown_uniq_process_init(fighter: &mut L2CFighterCommon) -> L2CValue {
+    ControlModule::reset_trigger(fighter.module_accessor);
 
     original!()(fighter)
 }
