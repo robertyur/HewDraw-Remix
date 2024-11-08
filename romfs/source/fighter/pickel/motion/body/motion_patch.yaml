@@ -9,11 +9,17 @@ fall:
 fall_aerial:
   blend_frames: 0
 fall_special:
-  blend_frames: 5
+  blend_frames: 3
 guard_off:
   blend_frames: 4
   extra:
     cancel_frame: 12
+appeal_s_r:
+  extra:
+    cancel_frame: 0
+appeal_s_l:
+  extra:
+    cancel_frame: 0
 attack_dash:
   extra:
     cancel_frame: 31
@@ -119,3 +125,5 @@ air_catch_landing:
     xlu_end: 0
     cancel_frame: 15
     no_stop_intp: false
+cliff_wait:
+  blend_frames: 2

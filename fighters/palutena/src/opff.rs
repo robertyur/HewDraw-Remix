@@ -113,10 +113,12 @@ pub unsafe fn palutena_teleport_wall_ride(fighter: &mut smash::lua2cpp::L2CFight
     if boma.is_status(*FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_HI_2) {
         let init_speed_x = VarModule::get_float(boma.object(), vars::common::status::TELEPORT_INITIAL_SPEED_X);
         let init_speed_y = VarModule::get_float(boma.object(), vars::common::status::TELEPORT_INITIAL_SPEED_Y);
-        if GroundModule::is_wall_touch_line(boma, *GROUND_TOUCH_FLAG_SIDE as u32) {
+        if !GroundModule::is_wall_touch_line(boma, *GROUND_TOUCH_ID_NONE as u32) {
             if !VarModule::is_flag(boma.object(), vars::common::status::IS_TELEPORT_WALL_RIDE) {
                 VarModule::on_flag(boma.object(), vars::common::status::IS_TELEPORT_WALL_RIDE);
             }
+        }
+        if GroundModule::is_wall_touch_line(boma, *GROUND_TOUCH_FLAG_SIDE as u32) {
             if init_speed_y > 0.0 {
                 fighter.clear_lua_stack();
                 lua_args!(fighter, FIGHTER_KINETIC_ENERGY_ID_STOP, 0.0, init_speed_y);
@@ -149,7 +151,6 @@ extern "Rust" {
 unsafe fn var_reset(fighter: &mut L2CFighterCommon, id: usize, status_kind: i32) {
     if [*FIGHTER_STATUS_KIND_DEAD,
         *FIGHTER_STATUS_KIND_REBIRTH].contains(&status_kind) {
-        MeterModule::drain_direct(fighter.object(), 999.0);
         VarModule::on_flag(fighter.object(), vars::palutena::instance::SPECIAL_N_FLUSH_BOARD);
     }
 
@@ -157,7 +158,6 @@ unsafe fn var_reset(fighter: &mut L2CFighterCommon, id: usize, status_kind: i32)
         *FIGHTER_STATUS_KIND_LOSE,
         *FIGHTER_STATUS_KIND_ENTRY].contains(&status_kind) || !sv_information::is_ready_go() {
         VarModule::on_flag(fighter.object(), vars::palutena::instance::SPECIAL_N_FLUSH_BOARD);
-        MeterModule::reset(fighter.object());
     }
 }
 
@@ -216,7 +216,6 @@ unsafe fn power_board(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectMod
         // set slot 2 to old slot 1, slot 1 becomes new color; fill up 1 stock if possible
         VarModule::set_int(fighter.object(), vars::palutena::instance::POWER_BOARD_SLOT_2, VarModule::get_int(fighter.object(), vars::palutena::instance::POWER_BOARD_SLOT_1));
         VarModule::set_int(fighter.object(), vars::palutena::instance::POWER_BOARD_SLOT_1, VarModule::get_int(fighter.object(), vars::palutena::instance::SPECIAL_N_GAINED_COLOR));
-        MeterModule::add(fighter.object(), 50.0);
         VarModule::set_int(boma.object(), vars::palutena::instance::SPECIAL_N_GAINED_COLOR, 0);
         utils::ui::UiManager::change_power_board_color(
             fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as u32,
@@ -236,6 +235,8 @@ unsafe fn power_board(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectMod
             VarModule::get_int(fighter.object(), vars::palutena::instance::POWER_BOARD_SLOT_1),
             VarModule::get_int(fighter.object(), vars::palutena::instance::POWER_BOARD_SLOT_2)
         );
+
+        VarModule::on_flag(fighter.object(), vars::palutena::status::POWER_BOARD_FLUSHED);
     }
     
     utils::ui::UiManager::change_power_board_color(
@@ -251,14 +252,9 @@ pub extern "C" fn palu_power_board(fighter: &mut smash::lua2cpp::L2CFighterCommo
         if !sv_information::is_ready_go() && fighter.status_frame() < 1 {
             return;
         }
-        MeterModule::update(fighter.object(), false);
-        MeterModule::set_meter_cap(fighter.object(), 2);
         utils::ui::UiManager::set_power_board_enable(fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as u32, true);
         utils::ui::UiManager::set_power_board_info(
             fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as u32,
-            MeterModule::meter(fighter.object()),
-            (MeterModule::meter_cap(fighter.object()) as f32 * MeterModule::meter_per_level(fighter.object())),
-            MeterModule::meter_per_level(fighter.object()),
             VarModule::get_int(fighter.object(), vars::palutena::instance::POWER_BOARD_SLOT_1),
             VarModule::get_int(fighter.object(), vars::palutena::instance::POWER_BOARD_SLOT_2)
         );

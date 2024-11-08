@@ -138,16 +138,8 @@ unsafe extern "C" fn calc_hitlag_mul(boma: &mut BattleObjectModuleAccessor, kb: 
     let kb_end = 250.0;
 
     let ratio = ((kb - kb_start) / (kb_end - kb_start));
-    if ratio <= 0.0 {
-        return min;
-    }
-    if ratio >= 1.0 {
-        return max;
-    }
-
-    let scalar = max - min;
-    let hitlag_mul = ratio.powf(power) * scalar + min;
-    return hitlag_mul.clamp(min, max);
+    let hitlag_mul = util::nlerp(min, max, power, ratio);
+    return hitlag_mul;
 }
 
 // This runs directly after knockback is calculated
@@ -194,7 +186,7 @@ unsafe fn handle_on_attack_event(ctx: &mut skyline::hooks::InlineCtx) {
 }
 
 // This runs immediately before hitlag is set for attacking articles
-#[skyline::hook(offset = 0x33a9d90, inline)]
+#[skyline::hook(offset = 0x33a9db0, inline)]
 unsafe fn set_weapon_hitlag(ctx: &mut skyline::hooks::InlineCtx) {
     let opponent_boma = &mut *(*ctx.registers[24].x.as_ref() as *mut BattleObjectModuleAccessor);
     if !opponent_boma.is_item() {
@@ -277,6 +269,17 @@ unsafe fn notify_log_event_collision_hit(fighter_manager: u64, attacker_object_i
 	original!()(fighter_manager, attacker_object_id, defender_object_id, move_type, arg5, move_type_again)
 }
 
+// Disables pushback when your attack is parried
+#[skyline::hook(offset = 0x62864c, inline)]
+unsafe fn disable_attacker_parry_pushback(ctx: &mut skyline::hooks::InlineCtx) {
+    let fighter = *ctx.registers[19].x.as_ref() as *mut Fighter;
+    let object = (*fighter).battle_object;
+    
+    if AttackModule::is_infliction(object.module_accessor, *COLLISION_KIND_MASK_PARRY) {
+        asm!("fmov s0, wzr")
+    }
+}
+
 pub fn install() {
     skyline::patching::Patch::in_text(0x641d84).nop();
     skyline::install_hooks!(
@@ -290,6 +293,7 @@ pub fn install() {
         handle_on_attack_event,
         set_parry_hitlag,
         x03df93c,
-        notify_log_event_collision_hit
+        notify_log_event_collision_hit,
+        disable_attacker_parry_pushback
     );
 }

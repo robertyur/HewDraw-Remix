@@ -1,5 +1,4 @@
 use super::*;
-use energy::Vec3;
 use utils::ext::*;
 use std::arch::asm;
 
@@ -81,15 +80,16 @@ impl KnockbackCalcContext {
 #[repr(simd)]
 #[derive(Debug)]
 struct Rect {
-    left: f32,
-    right: f32,
-    top: f32,
-    bottom: f32,
+    // left: f32,
+    // right: f32,
+    // top: f32,
+    // bottom: f32,
+    vec: [f32; 4]
 }
 
 impl Rect {
     fn contains(&self, x: f32, y: f32) -> bool {
-        (self.left <= x && x <= self.right) && (self.bottom <= y && y <= self.top)
+        (self.vec[0] <= x && x <= self.vec[1]) && (self.vec[3] <= y && y <= self.vec[2])
     }
 }
 
@@ -545,7 +545,8 @@ pub unsafe extern "C" fn call_finishing_hit_effects(defender_boma: &mut BattleOb
             PostureModule::pos_y(defender_boma) + 10.0,     
             PostureModule::pos_z(defender_boma) + 10.0
         );
-        let handle = EffectModule::req(defender_boma, Hash40::new("sys_dead_ripple"), &pos, &Vector3f::new(0.0, 0.0, 0.0), 0.75, 0, 0, false, 0);
+        let handle = EffectModule::req(defender_boma, Hash40::new("sys_dead_ripple"), &pos, &Vector3f::new(0.0, 0.0, 0.0), 0.5625, 0, 0, false, 0);
+        EffectModule::set_alpha(defender_boma, handle as u32, 0.9);
         EffectModule::set_billboard(defender_boma, handle as u32, true);
         EffectModule::set_disable_render_offset_last(defender_boma);
         EffectModule::set_rate_last(defender_boma, 2.5);

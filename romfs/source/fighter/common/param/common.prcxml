@@ -60,6 +60,10 @@
   <float hash="hit_stop_delay_flick_mul">5.25</float>
   <int hash="hit_stop_delay_flick_frame">3</int>
   <int hash="hit_stop_delay_flick_max_count">7</int>
+  <int hash="0x256ea4745d">-1</int>
+  <float hash="0x2373146726">1</float>
+  <int hash="0x29dae31932">-1</int>
+  <int hash="0x339a45c8eb">999</int>
   <float hash="hit_stop_delay_auto_mul">2.5</float>
   <float hash="damage_reaction_mul_max">1</float>
   <list hash="pattern_power_mul">
@@ -98,7 +102,7 @@
   <int hash="cliff_catch_move_frame">0</int>
   <float hash="cliff_next_stick">0.2</float>
   <int hash="cliff_no_catch_frame">25</int>
-  <int hash="damage_cliff_no_catch_frame">25</int>
+  <int hash="damage_cliff_no_catch_frame">10</int>
   <int hash="cliff_wait_air_xlu_max_frame">0</int>
   <int hash="cliff_wait_damage_xlu_max_frame">0</int>
   <int hash="cliff_wait_xlu_min_frame">29</int>
@@ -114,14 +118,14 @@
   <float hash="stand_stick_y">0.2</float>
   <float hash="stand_fb_stick_x">0.2</float>
   <list hash="cliff_catch_motion_rate">
-    <float index="0">1</float>
-    <float index="1">1</float>
-    <float index="2">1</float>
-    <float index="3">1</float>
-    <float index="4">1</float>
-    <float index="5">1</float>
-    <float index="6">1</float>
-    <float index="7">1</float>
+    <float index="0">1.5</float>
+    <float index="1">1.5</float>
+    <float index="2">1.5</float>
+    <float index="3">1.5</float>
+    <float index="4">1.5</float>
+    <float index="5">1.5</float>
+    <float index="6">1.5</float>
+    <float index="7">1.5</float>
   </list>
   <list hash="0x1dff572177">
     <float index="0">1</float>
@@ -156,6 +160,7 @@
   <float hash="dead_down_damage_speed">999</float>
   <float hash="furafura_frame">150</float>
   <float hash="furafura_clatter_frame">0</float>
+  <float hash="damage_song_frame_bonus_damage">0.5</float>
   <float hash="bury_jump_y_speed_mul">1.15</float>
   <float hash="mewtwo_thrown_reaction_frame_mul">1</float>
   <int hash="mewtwo_thrown_reaction_frame_max">15</int>

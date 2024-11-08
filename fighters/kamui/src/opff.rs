@@ -4,9 +4,6 @@ use super::*;
 use globals::*;
 
 unsafe fn pin_drop_waveland(boma: &mut BattleObjectModuleAccessor) {
-    if StatusModule::is_changing(boma) {
-        return;
-    }
     if boma.is_status(*FIGHTER_KAMUI_STATUS_KIND_SPECIAL_S_WALL_END)
     && !boma.is_in_hitlag() && boma.status_frame() >= 13 {
         boma.check_airdodge_cancel();
@@ -60,7 +57,7 @@ unsafe fn chain_hit(fighter: &mut L2CFighterCommon) {
         }
         if VarModule::get_int(fighter.object(), vars::common::instance::LAST_ATTACK_HITBOX_ID) == 1
         || VarModule::get_int(fighter.object(), vars::common::instance::LAST_ATTACK_HITBOX_ID) == 3 {
-            ATTACK(fighter, 5, 1, Hash40::new("haver"), 2.0, 367, 0, 0, 0, 4.5, 0.0, 5.7, 0.0, Some(0.0), Some(6.0), Some(0.0), 0.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
+            ATTACK(fighter, 5, 1, Hash40::new("haver"), 2.0, 367, 0, 0, 0, 4.5, 0.0, 5.7, -1.5, Some(0.0), Some(6.0), Some(-1.5), 0.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
             VarModule::set_int(fighter.object(), vars::common::instance::LAST_ATTACK_HITBOX_ID, -1);
         }
     }

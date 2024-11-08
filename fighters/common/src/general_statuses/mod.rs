@@ -76,7 +76,7 @@ pub unsafe fn status_pre_DamageAir(fighter: &mut L2CFighterCommon) -> L2CValue {
     if VarModule::is_flag(fighter.battle_object, vars::common::instance::IS_KNOCKDOWN_THROW)
     || (degrees >= meteor_vector_min && degrees <= meteor_vector_max && DamageModule::reaction(fighter.module_accessor, 0) >= 65.0) {
         //println!("forced tumble");
-        StatusModule::set_status_kind_interrupt(fighter.module_accessor, *FIGHTER_STATUS_KIND_DAMAGE_FLY_METEOR);
+        fighter.set_status_kind_interrupt(*FIGHTER_STATUS_KIND_DAMAGE_FLY);
         return 1.into();
     }
 
@@ -195,6 +195,7 @@ pub unsafe fn status_Landing_MainSub(fighter: &mut L2CFighterCommon) -> L2CValue
         let cancel_frame = WorkModule::get_float(fighter.module_accessor, *FIGHTER_STATUS_LANDING_WORK_FLOAT_STIFFNESS_FRAME);
         if !VarModule::is_flag(fighter.battle_object, vars::common::instance::IS_CC_NON_TUMBLE)
         && MotionModule::frame(fighter.module_accessor) >= cancel_frame - 1.0 {
+            // Prevent buffering out of non-CCd non-tumble hitstun landing
             ControlModule::clear_command(fighter.module_accessor, false);
         }
     }
@@ -526,7 +527,7 @@ pub unsafe fn super_jump_punch_main_hook(fighter: &mut L2CFighterCommon) {
         if WorkModule::is_flag(fighter.module_accessor, *FIGHTER_STATUS_SUPER_JUMP_PUNCH_FLAG_MOVE_TRANS) {
             if fighter.global_table[PREV_SITUATION_KIND] == SITUATION_KIND_AIR
             && fighter.global_table[SITUATION_KIND] == SITUATION_KIND_GROUND
-            && MotionModule::trans_move_speed(fighter.module_accessor).y < 0.0
+            && MotionModule::trans_move_speed(fighter.module_accessor).value[1] < 0.0
             {
                 fighter.change_status(FIGHTER_STATUS_KIND_LANDING_FALL_SPECIAL.into(), false.into());
             }

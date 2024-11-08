@@ -75,13 +75,14 @@ unsafe extern "C" fn ken_meter(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
         }
         MeterModule::update(fighter.battle_object, false);
         MeterModule::set_meter_cap(fighter.object(), 6);
-        MeterModule::set_meter_per_level(fighter.object(), 30.0);
-        utils::ui::UiManager::set_ex_meter_enable(fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as u32, true);
-        utils::ui::UiManager::set_ex_meter_info(
+        MeterModule::set_meter_per_level(fighter.object(), 35.0);
+        utils::ui::UiManager::set_vtrigger_meter_enable(fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as u32, true);
+        utils::ui::UiManager::set_vtrigger_meter_info(
             fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as u32,
             MeterModule::meter(fighter.object()),
-            (MeterModule::meter_cap(fighter.object()) as f32 * MeterModule::meter_per_level(fighter.object())),
-            MeterModule::meter_per_level(fighter.object())
+            MeterModule::meter_cap(fighter.object()),
+            MeterModule::meter_per_level(fighter.object()),
+            VarModule::is_flag(fighter.object(), vars::shotos::instance::MAGIC_SERIES_CANCEL)
         );
     }
 }
@@ -373,15 +374,31 @@ unsafe fn metered_cancels(fighter: &mut L2CFighterCommon, boma: &mut BattleObjec
         return;
     }
 
+    let is_nspecial_cancel = (
+        boma.is_status_one_of(&[
+            *FIGHTER_STATUS_KIND_SPECIAL_N,
+            *FIGHTER_RYU_STATUS_KIND_SPECIAL_N_COMMAND,
+            *FIGHTER_RYU_STATUS_KIND_SPECIAL_N2_COMMAND
+        ]) && frame > 13.0
+    );
+
+    let is_uspecial_cancel = (
+        boma.is_status_one_of(&[
+            *FIGHTER_STATUS_KIND_SPECIAL_HI,
+            *FIGHTER_RYU_STATUS_KIND_SPECIAL_HI_COMMAND,
+            *FIGHTER_RYU_STATUS_KIND_SPECIAL_HI_JUMP,
+        ]) 
+        && AttackModule::is_infliction_status(boma, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_SHIELD)
+        && !AttackModule::is_infliction_status(boma, *COLLISION_KIND_MASK_PARRY)
+        && (boma.get_int(*FIGHTER_RYU_STATUS_WORK_ID_SPECIAL_HI_INT_START_SITUATION) == *SITUATION_KIND_GROUND ||  boma.is_flag(*FIGHTER_RYU_INSTANCE_WORK_ID_FLAG_FINAL_HIT_CANCEL))
+    );
+
     let is_other_special_cancel = (
         boma.is_status_one_of(&[
             *FIGHTER_STATUS_KIND_SPECIAL_S,
             *FIGHTER_RYU_STATUS_KIND_SPECIAL_S_COMMAND,
             *FIGHTER_RYU_STATUS_KIND_SPECIAL_S_END,
             *FIGHTER_RYU_STATUS_KIND_SPECIAL_S_LOOP,
-            *FIGHTER_STATUS_KIND_SPECIAL_HI,
-            *FIGHTER_RYU_STATUS_KIND_SPECIAL_HI_COMMAND,
-            *FIGHTER_RYU_STATUS_KIND_SPECIAL_HI_JUMP,
             *FIGHTER_RYU_STATUS_KIND_ATTACK_COMMAND1,
             *FIGHTER_RYU_STATUS_KIND_ATTACK_COMMAND2,
             statuses::ken::ATTACK_COMMAND_4
@@ -390,14 +407,7 @@ unsafe fn metered_cancels(fighter: &mut L2CFighterCommon, boma: &mut BattleObjec
         && !AttackModule::is_infliction_status(boma, *COLLISION_KIND_MASK_PARRY)
     );
 
-    let is_nspecial_cancel = (boma.is_status_one_of(&[
-        *FIGHTER_STATUS_KIND_SPECIAL_N,
-        *FIGHTER_RYU_STATUS_KIND_SPECIAL_N_COMMAND,
-        *FIGHTER_RYU_STATUS_KIND_SPECIAL_N2_COMMAND
-        ]) && frame > 13.0
-    );
-
-    if !is_nspecial_cancel && !is_other_special_cancel {
+    if !is_nspecial_cancel && !is_uspecial_cancel && !is_other_special_cancel {
         return;
     }
 
