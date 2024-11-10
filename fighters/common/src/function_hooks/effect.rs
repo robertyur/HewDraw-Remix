@@ -283,7 +283,10 @@ unsafe fn req_on_joint_hook(effect_module: u64, effHash: smash::phx::Hash40, bon
             new_eff_hash = Hash40::new("sys_nopassive");
         }
 
-        eff_size = size * effect_size_mul;
+        if VarModule::has_var_module((*boma).object())
+        && !VarModule::is_flag((*boma).object(), vars::common::instance::ACMD_EFFECT) {
+            eff_size = size * effect_size_mul;
+        }
     }
 
     if SMOKE_FX.contains(&effHash.hash)
