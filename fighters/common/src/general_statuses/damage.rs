@@ -329,7 +329,7 @@ unsafe extern "C" fn fighterstatusdamage_init_damage_speed_up_by_speed(
     let angle_threshold = 29.358;
     let speed_start_horizontal = 4.65; // the start of scaling at angles below the angle_threshold
     let speed_start_vertical = 5.63; // the start of scaling at completely vertical angles
-    let speed_end = 7.5; // the end of scaling
+    let speed_end = 7.2; // the end of scaling
 
     // calculate true speed_start using angle
     let angle_factor = get_angle_factor(angle_threshold, angle); // the actual angle factor
@@ -347,10 +347,16 @@ unsafe extern "C" fn fighterstatusdamage_init_damage_speed_up_by_speed(
 
     // calculate speed_up_mul
     let min_mul = 1.0;
-    let max_mul = 1.8;
-    let power = 1.2;
+    let max_mul = 1.65;
+    let power = 1.0;
     let ratio = ((speed - speed_start) / (speed_end - speed_start));
-    let speed_up_mul = util::nlerp(min_mul, max_mul, power, ratio);
+    let speed_up_mul = if speed <= speed_end {
+        util::nlerp(min_mul, max_mul, power, ratio)
+    } else {
+        let dif = (speed_end * max_mul) - speed_end;
+        let new_speed = speed + dif;
+        new_speed / speed
+    };
 
     WorkModule::on_flag(fighter.module_accessor, *FIGHTER_INSTANCE_WORK_ID_FLAG_DAMAGE_SPEED_UP);
     WorkModule::set_float(fighter.module_accessor, speed_up_mul, *FIGHTER_INSTANCE_WORK_ID_FLOAT_DAMAGE_SPEED_UP_MAX_MAG);
