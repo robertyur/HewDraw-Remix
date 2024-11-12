@@ -32,11 +32,20 @@ unsafe fn occupy_ledge(boma: &mut BattleObjectModuleAccessor, status_kind: i32, 
         *FIGHTER_STATUS_KIND_CLIFF_ATTACK,
         *FIGHTER_STATUS_KIND_CLIFF_CLIMB,
         *FIGHTER_STATUS_KIND_CLIFF_ESCAPE,
-        *FIGHTER_STATUS_KIND_CLIFF_JUMP1,
-        *FIGHTER_STATUS_KIND_CLIFF_JUMP2,
-        *FIGHTER_STATUS_KIND_CLIFF_JUMP3])
-    && MotionModule::frame(boma) > (FighterMotionModuleImpl::get_cancel_frame(boma, Hash40::new_raw(MotionModule::motion_kind(boma)), true) * 0.9) {
-        VarModule::set_int(boma.object(), vars::common::instance::LEDGE_ID, -1);
+        *FIGHTER_STATUS_KIND_CLIFF_JUMP1])
+    {
+        let cancel_frame = FighterMotionModuleImpl::get_cancel_frame(boma, Hash40::new_raw(MotionModule::motion_kind(boma)), true);
+        
+        if cancel_frame > 0.0 {
+            if MotionModule::frame(boma) > (cancel_frame * 0.9) {
+                VarModule::set_int(boma.object(), vars::common::instance::LEDGE_ID, -1);
+            }
+        }
+        else {
+            if MotionModule::frame(boma) > (MotionModule::end_frame(boma) * 0.9) {
+                VarModule::set_int(boma.object(), vars::common::instance::LEDGE_ID, -1);
+            }
+        }
     }
 }
 

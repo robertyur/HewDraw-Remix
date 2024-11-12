@@ -899,6 +899,7 @@ pub mod vars {
             // ints
             pub const SPECIAL_S_ROT_ANGLE: i32 = 0x1100;
             pub const SPECIAL_HI_MARKER_EFFECT_HANDLE: i32 = 0x1103;
+            pub const HIT_CANCEL_TIMER: i32 = 0x1104;
 
             // floats
             pub const SPECIAL_N_ANGLE: i32 = 0x1100;
@@ -1543,6 +1544,9 @@ pub mod vars {
             // flags
             pub const SCALE_COMBO_DAMAGE: i32 = 0x1100;
             pub const MAGIC_SERIES_CANCEL_ENABLED: i32 = 0x1101;
+
+            // ints
+            pub const HIT_CANCEL_TIMER: i32 = 0x1104;
         }
     }
 
