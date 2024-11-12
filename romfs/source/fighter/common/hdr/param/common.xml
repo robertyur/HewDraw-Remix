@@ -46,4 +46,5 @@
     <int hash="guard_damage_precede">2</int>
     <int hash="damage_level2_precede">1</int>
     <int hash="damage_level3_precede">2</int>
+    <float hash="attack_air_cliff_catch_frame_after_cancel_frame">5</float>
 </struct>
