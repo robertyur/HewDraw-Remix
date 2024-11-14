@@ -93,7 +93,7 @@ unsafe fn sub_ftStatusUniqProcessGuardDamage_initStatus_Inner(fighter: &mut L2CF
     //     setoff_speed_mul
     // };
 
-    let mut setoff_speed = shield_power * setoff_speed_mul;
+    let mut setoff_speed = (shield_power * setoff_speed_mul) + 0.014181;
 
     if fighter.is_flag(*FIGHTER_STATUS_GUARD_ON_WORK_FLAG_JUST_SHIELD) {
         setoff_speed *= fighter.get_param_float( "common", "just_shield_speed_rate");
