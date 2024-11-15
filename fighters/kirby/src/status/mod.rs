@@ -173,23 +173,56 @@ pub unsafe extern "C" fn throw_kirby_map_correction(fighter: &mut L2CFighterComm
     0.into()
 }
 
-/// Prevents side b from being used again in air when it has been disabled by up-b fall
-unsafe extern "C" fn ganon_should_use_special_n_callback(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if WorkModule::get_int(fighter.module_accessor, *FIGHTER_KIRBY_INSTANCE_WORK_ID_INT_COPY_CHARA) == *FIGHTER_KIND_GANON
-    && fighter.is_situation(*SITUATION_KIND_AIR) && VarModule::is_flag(fighter.battle_object, vars::ganon::instance::DISABLE_SPECIAL_N) {
-        false.into()
-    } else {
-        true.into()
+unsafe extern "C" fn should_use_special_n_callback(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if !WorkModule::is_flag(fighter.module_accessor, *FIGHTER_KIRBY_INSTANCE_WORK_ID_FLAG_COPY) {
+        return 1.into();
     }
-}
-
-unsafe extern "C" fn trail_should_use_special_n_callback(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if WorkModule::get_int(fighter.module_accessor, *FIGHTER_KIRBY_INSTANCE_WORK_ID_INT_COPY_CHARA) == *FIGHTER_KIND_TRAIL
-    && VarModule::is_flag(fighter.battle_object, vars::trail::instance::DISABLE_SPECIAL_N) {
-        false.into()
-    } else {
-        true.into()
+    else {
+        let copy_kind = WorkModule::get_int(fighter.module_accessor, *FIGHTER_KIRBY_INSTANCE_WORK_ID_INT_COPY_CHARA);
+        if copy_kind == *FIGHTER_KIND_ROSETTA {
+            let rosetta_interval = WorkModule::get_int(fighter.module_accessor, *FIGHTER_KIRBY_INSTANCE_WORK_ID_INT_ROSETTA_SPECIAL_N_INTERVAL);
+            if rosetta_interval <= 0 {
+                return 1.into();
+            }
+            else {
+                return 0.into();
+            }
+        }
+        if copy_kind == *FIGHTER_KIND_GANON {
+            if fighter.is_situation(*SITUATION_KIND_AIR) && VarModule::is_flag(fighter.battle_object, vars::ganon::instance::DISABLE_SPECIAL_N) {
+                return 1.into();
+            }
+            else {
+                return 0.into();
+            }
+        }
+        if copy_kind == *FIGHTER_KIND_TRAIL {
+            if VarModule::is_flag(fighter.battle_object, vars::trail::instance::DISABLE_SPECIAL_N) {
+                return 1.into();
+            }
+            else {
+                return 0.into();
+            }
+        }
+        if copy_kind != *FIGHTER_KIND_PIT {
+            if copy_kind != *FIGHTER_KIND_PITB {
+                if copy_kind == *FIGHTER_KIND_INKLING {
+                    let inkling_ink = WorkModule::get_float(fighter.module_accessor, *FIGHTER_KIRBY_INSTANCE_WORK_ID_FLOAT_INKLING_SPECIAL_N_INK);
+                    if inkling_ink > 0.0 {
+                        return 1.into();
+                    }
+                    else {
+                        return 0.into();
+                    }
+                }
+                return 1.into();
+            }
+        }
+        if !WorkModule::is_flag(fighter.module_accessor, *FIGHTER_KIRBY_INSTANCE_WORK_ID_FLAG_COPY_STRANS_OFF) {
+            return 1.into();
+        }
     }
+    0.into()
 }
 
 // FIGHTER_STATUS_KIND_SPECIAL_N //
@@ -231,9 +264,8 @@ unsafe extern "C" fn on_start(fighter: &mut L2CFighterCommon) {
     // set the callbacks on fighter init
     fighter.global_table[globals::USE_SPECIAL_HI_CALLBACK].assign(&L2CValue::Ptr(should_use_special_hi_callback as *const () as _));
     fighter.global_table[globals::STATUS_CHANGE_CALLBACK].assign(&L2CValue::Ptr(change_status_callback as *const () as _));
-    fighter.global_table[globals::USE_SPECIAL_N_CALLBACK].assign(&L2CValue::Ptr(ganon_should_use_special_n_callback as *const () as _));
+    fighter.global_table[globals::USE_SPECIAL_N_CALLBACK].assign(&L2CValue::Ptr(should_use_special_n_callback as *const () as _));
     fighter.global_table[globals::CHECK_SPECIAL_COMMAND].assign(&L2CValue::Ptr(shoto_check_special_command as *const () as _));
-    fighter.global_table[globals::USE_SPECIAL_N_CALLBACK].assign(&L2CValue::Ptr(trail_should_use_special_n_callback as *const () as _));
 
 
     if is_training_mode() {
