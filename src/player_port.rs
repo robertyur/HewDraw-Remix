@@ -1,38 +1,58 @@
 use ninput::*;
 use dynamic::{consts::*, *};
 
-pub const CONTROLLER_ID: [u32; 9] = [0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x20]; // 0x20 is the id for handheld
+pub const CONTROLLER_ID: [u32; 9] = [0x20, 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7]; // 0x20 is the id for handheld
 
 static mut ENABLE_SWAPPING: bool = false;
 static mut LOCAL_WIRELESS: bool = false;
 
 static mut ACTIVE_CONTROLLER: Option<u32> = None;
-static mut PORT_ACTIVE: [bool; 8] = [true, false, false, false, false, false, false, false];
+static mut PORT_ACTIVE: [bool; 8] = [false; 8];
 static mut NEXT_PORT: [i32; 9] = [1; 9];
 
-static mut CONTROLLER_PORT: [u32; 9] = [1, 0, 0, 0, 0, 0, 0, 0, 1]; // used to keep track of what port a controller has
-static mut PORT_CONTROLLER: [u32;8] = [0; 8];   // used to keep track of what controller a port has
+static mut CONTROLLER_PORT: [u32; 9] = [0; 9]; // used to keep track of what port a controller has
+static mut PORT_CONTROLLER: [u32; 8] = [0; 8];   // used to keep track of what controller a port has
 
 // stores the raw argument data for the 8 player panes, to pass around different functions
 static mut PORT_DATA: [Option<u64>; 8] = [None; 8];
 
-static mut X_PRESSED: bool = false; // makes sure we only run related code once per button press
+static mut SWAP_TRIGGERED: bool = false; // makes sure we only run related code once per button press
 static mut ACTION: &str = "right";
 
 // returns true/false depending on if the specified controller is performing the defined button macro
 unsafe fn check_swap_macro(controller_id: u32) -> bool {
     if let Some(controller) = Controller::get_from_id(controller_id) {
-        if controller.buttons.contains(Buttons::R) 
-        && controller.pressed_buttons.contains(Buttons::X) {
+        if !controller.is_supported_controller() { return false };
+
+        let left_button = match controller.controller_style {
+            ControllerStyle::LeftJoycon => Buttons::LEFT_SL,
+            ControllerStyle::RightJoycon => Buttons::RIGHT_SL,
+            _ => Buttons::L
+        };
+
+        let right_button = match controller.controller_style {
+            ControllerStyle::LeftJoycon => Buttons::LEFT_SR,
+            ControllerStyle::RightJoycon => Buttons::RIGHT_SR,
+            _ => Buttons::R
+        };
+
+        let swap_button = match controller.controller_style {
+            ControllerStyle::LeftJoycon => Buttons::RIGHT,
+            ControllerStyle::RightJoycon => Buttons::Y,
+            _ => Buttons::X
+        };
+
+        if controller.buttons.contains(right_button) 
+        && controller.pressed_buttons.contains(swap_button) {
             ACTION = "right"; // port will swap forwards
             return true;
         }
-        else if controller.buttons.contains(Buttons::L) 
-        && controller.pressed_buttons.contains(Buttons::X) {
+        else if controller.buttons.contains(left_button) 
+        && controller.pressed_buttons.contains(swap_button) {
             ACTION = "left"; // port will swap backwards
             return true;
         }
-        else if controller.pressed_buttons.contains(Buttons::X) {
+        else if controller.pressed_buttons.contains(swap_button) {
             ACTION = "out"; // port will disconnect without rejoining
             return true;
         }
@@ -89,10 +109,10 @@ unsafe fn reset_css_session(pane: u64, arg2: u64) {
     // println!("pane: {:#x}", pane);
     if [BACK_BUTTON, WIRELESS_EXIT].contains(&pane) {
         // println!("resetting for next css session, disabling swap");
-        PORT_ACTIVE = [true, false, false, false, false, false, false, false];
+        PORT_ACTIVE = [false; 8];
         PORT_DATA = [None; 8];
         NEXT_PORT = [1; 9];
-        CONTROLLER_PORT = [1, 0, 0, 0, 0, 0, 0, 0, 1];
+        CONTROLLER_PORT = [0; 9];
         PORT_CONTROLLER = [0; 8];
         ENABLE_SWAPPING = false;
         LOCAL_WIRELESS = false;
@@ -132,7 +152,7 @@ unsafe fn css_main_loop(arg: u64) {
         return original!()(arg);
     }
 
-    if ACTIVE_CONTROLLER == None && PORT_DATA[0] != None && !X_PRESSED {
+    if ACTIVE_CONTROLLER == None && PORT_DATA[0] != None && !SWAP_TRIGGERED {
         // check each controller to see if they are performing the macro, and set it to "active" if so
         for controller in 0..9 {
             let id = CONTROLLER_ID[controller as usize];
@@ -158,13 +178,16 @@ unsafe fn css_main_loop(arg: u64) {
                     }
                 }
 
-                X_PRESSED = true;
+                SWAP_TRIGGERED = true;
             }
         }
     }
 
-    if !ninput::any::is_press(ninput::Buttons::X) && X_PRESSED {
-        X_PRESSED = false;
+    if !ninput::any::is_press(ninput::Buttons::X)
+    && !ninput::any::is_press(ninput::Buttons::Y)
+    && !ninput::any::is_press(ninput::Buttons::RIGHT)
+    && SWAP_TRIGGERED {
+        SWAP_TRIGGERED = false;
     }
 
     original!()(arg)

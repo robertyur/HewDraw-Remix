@@ -17,10 +17,10 @@
     <struct index="0">
       <list hash="speed_y_table">
         <float index="0">2.50</float>
-        <float index="1">2.25</float>
-        <float index="2">2.03</float>
-        <float index="3">1.82</float>
-        <float index="4">1.64</float>
+        <float index="1">2.27</float>
+        <float index="2">2.06</float>
+        <float index="3">1.87</float>
+        <float index="4">1.70</float>
       </list>
     </struct>
   </list>

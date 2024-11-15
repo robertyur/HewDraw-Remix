@@ -283,7 +283,10 @@ unsafe fn req_on_joint_hook(effect_module: u64, effHash: smash::phx::Hash40, bon
             new_eff_hash = Hash40::new("sys_nopassive");
         }
 
-        eff_size = size * effect_size_mul;
+        if VarModule::has_var_module((*boma).object())
+        && !VarModule::is_flag((*boma).object(), vars::common::instance::ACMD_EFFECT) {
+            eff_size = size * effect_size_mul;
+        }
     }
 
     if SMOKE_FX.contains(&effHash.hash)
@@ -334,15 +337,18 @@ unsafe fn req_follow(effect_module: u64, effHash: smash::phx::Hash40, boneHash: 
 
     // Knockback smoke opacity scaling
     if is_kb_smoke {
-        let fighter = util::get_fighter_common_from_accessor(&mut *boma);
-        fighter.clear_lua_stack();
-        lua_args!(fighter, FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
-        let speed = app::sv_kinetic_energy::get_speed_length(fighter.lua_state_agent);
+        let speed = sv_math::vec2_length(
+            KineticModule::get_sum_speed_x(boma, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN)
+                + KineticModule::get_sum_speed_x(boma, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_DAMAGE),
+
+            KineticModule::get_sum_speed_y(boma, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN)
+                + KineticModule::get_sum_speed_y(boma, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_DAMAGE)
+        );
 
         let min_alpha = 0.0;
         let max_alpha = 1.0;
 
-        let alpha = (min_alpha + ((speed - 3.5) / 2.0)).clamp(min_alpha, max_alpha);
+        let alpha = (min_alpha + ((speed - 2.5) / 1.5)).clamp(min_alpha, max_alpha);
         EffectModule::set_alpha(boma, handle as u32, alpha);
     }
 
@@ -366,7 +372,7 @@ unsafe fn preset_lifetime_rate_partial_hook(boma: &mut BattleObjectModuleAccesso
         *FIGHTER_STATUS_KIND_DAMAGE_FLY_REFLECT_U,
         *FIGHTER_STATUS_KIND_DAMAGE_FLY_REFLECT_LR])
     {
-        rate = 0.35;
+        rate = 0.4;
     }
     original!()(boma, rate)
 }
