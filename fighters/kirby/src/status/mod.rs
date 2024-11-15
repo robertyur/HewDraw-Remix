@@ -175,7 +175,17 @@ pub unsafe extern "C" fn throw_kirby_map_correction(fighter: &mut L2CFighterComm
 
 /// Prevents side b from being used again in air when it has been disabled by up-b fall
 unsafe extern "C" fn ganon_should_use_special_n_callback(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if fighter.is_situation(*SITUATION_KIND_AIR) && VarModule::is_flag(fighter.battle_object, vars::ganon::instance::DISABLE_SPECIAL_N) {
+    if WorkModule::get_int(fighter.module_accessor, *FIGHTER_KIRBY_INSTANCE_WORK_ID_INT_COPY_CHARA) == *FIGHTER_KIND_GANON
+    && fighter.is_situation(*SITUATION_KIND_AIR) && VarModule::is_flag(fighter.battle_object, vars::ganon::instance::DISABLE_SPECIAL_N) {
+        false.into()
+    } else {
+        true.into()
+    }
+}
+
+unsafe extern "C" fn trail_should_use_special_n_callback(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if WorkModule::get_int(fighter.module_accessor, *FIGHTER_KIRBY_INSTANCE_WORK_ID_INT_COPY_CHARA) == *FIGHTER_KIND_TRAIL
+    && VarModule::is_flag(fighter.battle_object, vars::trail::instance::DISABLE_SPECIAL_N) {
         false.into()
     } else {
         true.into()
@@ -208,6 +218,9 @@ unsafe extern "C" fn special_n_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
             fighter.set_status_kind_interrupt(*FIGHTER_KIRBY_STATUS_KIND_TRAIL_SPECIAL_N3); 
         }
     
+        // disables use of neutral special until the following cooldown timer runs its course
+        VarModule::on_flag(fighter.battle_object, vars::trail::instance::DISABLE_SPECIAL_N);
+
         return 1.into();
     } else {
         return smashline::original_status(Pre, fighter, *FIGHTER_STATUS_KIND_SPECIAL_N)(fighter);
@@ -220,6 +233,8 @@ unsafe extern "C" fn on_start(fighter: &mut L2CFighterCommon) {
     fighter.global_table[globals::STATUS_CHANGE_CALLBACK].assign(&L2CValue::Ptr(change_status_callback as *const () as _));
     fighter.global_table[globals::USE_SPECIAL_N_CALLBACK].assign(&L2CValue::Ptr(ganon_should_use_special_n_callback as *const () as _));
     fighter.global_table[globals::CHECK_SPECIAL_COMMAND].assign(&L2CValue::Ptr(shoto_check_special_command as *const () as _));
+    fighter.global_table[globals::USE_SPECIAL_N_CALLBACK].assign(&L2CValue::Ptr(trail_should_use_special_n_callback as *const () as _));
+
 
     if is_training_mode() {
         VarModule::set_int(fighter.battle_object, vars::koopa::instance::SPECIAL_N_FIREBALL_COOLDOWN,0);
