@@ -236,7 +236,7 @@ unsafe extern "C" fn special_s_hit_end(fighter: &mut L2CFighterCommon) -> L2CVal
 
     if sv_battle_object::category(caught_id as u32) == *BATTLE_OBJECT_CATEGORY_FIGHTER {
         let caught_boma = sv_battle_object::module_accessor(caught_id as u32);
-        GroundModule::set_collidable(caught_boma, true);
+        GroundModule::set_passable_check(caught_boma, false);
     }
 
     smashline::original_status(End, fighter, *FIGHTER_SHIZUE_STATUS_KIND_SPECIAL_S_HIT)(fighter)
