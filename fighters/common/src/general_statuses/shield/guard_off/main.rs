@@ -28,7 +28,7 @@ unsafe fn sub_status_guard_off_main_common_cancel(fighter: &mut L2CFighterCommon
     // check parry
     if fighter.is_cat_flag(CatHdr::Parry) {
         VarModule::on_flag(fighter.object(), vars::common::instance::IS_PARRY_FOR_GUARD_OFF);
-        fighter.change_status(FIGHTER_STATUS_KIND_GUARD_OFF.into(), true.into());
+        fighter.change_status(FIGHTER_STATUS_KIND_GUARD_OFF.into(), false.into());
         return true.into();
     }
 
@@ -142,12 +142,6 @@ unsafe fn status_GuardOff_Common(fighter: &mut L2CFighterCommon) -> L2CValue {
             *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_CATCH,
         ]);
     }
-
-    let lifetime = (fighter.get_command_life(CatHdr::Parry) as i32);
-    let buffer = (ControlModule::get_command_life_count_max(fighter.module_accessor) as i32);
-    let shield_just_frame = (fighter.get_param_int("common", "shield_just_frame"));
-    let just_frame = ((shield_just_frame + lifetime + 1 - buffer).clamp(2, shield_just_frame));
-    fighter.set_int(just_frame, *FIGHTER_STATUS_GUARD_ON_WORK_INT_JUST_FRAME);
 
     let guard_off_cancel_frame = fighter.get_param_int("common", "guard_off_cancel_frame");
     fighter.set_int(guard_off_cancel_frame, *FIGHTER_STATUS_GUARD_OFF_WORK_INT_CANCEL_FRAME);

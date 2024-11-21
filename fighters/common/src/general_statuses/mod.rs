@@ -394,7 +394,7 @@ unsafe fn sub_transition_group_check_ground_guard(fighter: &mut L2CFighterCommon
     if WorkModule::is_enable_transition_term(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_GUARD_ON) {
         if fighter.sub_check_command_parry().get_bool() {
             VarModule::on_flag(fighter.object(), vars::common::instance::IS_PARRY_FOR_GUARD_OFF);
-            fighter.change_status(FIGHTER_STATUS_KIND_GUARD_OFF.into(), true.into());
+            fighter.change_status(FIGHTER_STATUS_KIND_GUARD_OFF.into(), false.into());
             return true.into();
         }
         if fighter.sub_check_command_guard().get_bool() {
