@@ -270,7 +270,8 @@ unsafe fn sub_transition_group_check_air_wall_jump(fighter: &mut L2CFighterCommo
     // basic validity checks
     if fighter.global_table[SITUATION_KIND].get_i32() != *SITUATION_KIND_AIR
     || fighter.is_status(*FIGHTER_STATUS_KIND_WALL_JUMP)
-    || fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_WALL_JUMP_COUNT) >= ParamModule::get_int(fighter.battle_object, ParamType::Common, "wall_jump_count_airtime") {
+    || fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_WALL_JUMP_COUNT) >= ParamModule::get_int(fighter.battle_object, ParamType::Common, "wall_jump_count_airtime")
+    || fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_DISABLE_WALL_JUMP_FRAME) > 0 {
         return false.into();
     }
 
@@ -286,12 +287,6 @@ unsafe fn sub_transition_group_check_air_wall_jump(fighter: &mut L2CFighterCommo
     if (wall_jump_type == *FIGHTER_WALL_JUMP_TYPE_NORMAL
     || VarModule::is_flag(fighter.battle_object, vars::common::status::ENABLE_SPECIAL_WALLJUMP))
     && fighter.sub_fighter_general_term_is_can_wall_jump().get_bool() {
-        // restores a double jump if canceled into walljump in the first two frames
-        if fighter.is_status(*FIGHTER_STATUS_KIND_JUMP_AERIAL) 
-        && fighter.status_frame() < 2
-        && fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_JUMP_COUNT) > 0 {
-            fighter.dec_int(*FIGHTER_INSTANCE_WORK_ID_INT_JUMP_COUNT);
-        }
         fighter.change_status(FIGHTER_STATUS_KIND_WALL_JUMP.into(), true.into());
         return true.into();
     }
