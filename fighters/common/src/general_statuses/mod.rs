@@ -270,8 +270,7 @@ unsafe fn sub_transition_group_check_air_wall_jump(fighter: &mut L2CFighterCommo
     // basic validity checks
     if fighter.global_table[SITUATION_KIND].get_i32() != *SITUATION_KIND_AIR
     || fighter.is_status(*FIGHTER_STATUS_KIND_WALL_JUMP)
-    || fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_WALL_JUMP_COUNT) >= ParamModule::get_int(fighter.battle_object, ParamType::Common, "wall_jump_count_airtime")
-    || fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_DISABLE_WALL_JUMP_FRAME) > 0 {
+    || fighter.get_int(*FIGHTER_INSTANCE_WORK_ID_INT_WALL_JUMP_COUNT) >= 2 {
         return false.into();
     }
 

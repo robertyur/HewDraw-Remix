@@ -140,9 +140,8 @@
   <float hash="wall_jump_stick_x">0.7957</float>
   <float hash="wall_jump_speed_dec">0.75</float>
   <float hash="wall_jump_x_speed_dec">0.7</float>
-  <int hash="wall_jump_disable_frame">6</int>
+  <int hash="wall_jump_disable_frame">1</int>
   <int hash="wall_jump_interval_frame">1</int>
-  <int hash="cliff_release_disable_wall_jump_frame">6</int>
   <int hash="attach_wall_disable_frame">999</int>
   <float hash="damage_ground_mul">1</float>
   <float hash="damage_air_brake">0.051</float>
