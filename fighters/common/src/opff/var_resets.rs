@@ -89,14 +89,6 @@ unsafe fn var_resets(boma: &mut BattleObjectModuleAccessor) {
     || boma.is_status_one_of(death_statuses) {
         VarModule::set_int(boma.object(), vars::common::instance::AGT_USED_COUNTER, 0);
     }
-
-    // Wall Jump Reset
-    if !boma.is_situation(*SITUATION_KIND_AIR)
-    || AttackModule::is_infliction(boma, *COLLISION_KIND_MASK_HIT)
-    || boma.is_status_one_of(death_statuses) 
-    || boma.is_status_one_of(damage_statuses) {
-        boma.set_int(0, *FIGHTER_INSTANCE_WORK_ID_INT_WALL_JUMP_COUNT);
-    }
 }
 
 pub unsafe fn run(boma: &mut BattleObjectModuleAccessor, cat: [i32 ; 4], status_kind: i32, situation_kind: i32, fighter_kind: i32, stick_x: f32, stick_y: f32, facing: f32) {
