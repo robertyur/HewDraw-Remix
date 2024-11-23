@@ -180,39 +180,12 @@ unsafe fn status_guard_damage_main_common(fighter: &mut L2CFighterCommon) -> L2C
 
     if fighter.is_flag(*FIGHTER_STATUS_GUARD_ON_WORK_FLAG_JUST_SHIELD) {
     
-        // check OOP options (subset of OOS options)
-
-        // shorthop aerial
-        if fighter.sub_transition_group_check_ground_jump_mini_attack().get_bool() {
-            return true.into();
-        }
-    
-        // USpecial/USmash
-        if fighter.check_guard_attack_special_hi(false.into()).get_bool() {
-            return true.into();
-        }
-        
         // parry, force instant transition even during hitstop for chained parries
         if (fighter.is_button_trigger(Buttons::Parry) || fighter.is_button_trigger(Buttons::ParryManual))
         && fighter.is_cat_flag(CatHdr::Parry) {
             VarModule::on_flag(fighter.object(), vars::common::instance::IS_PARRY_FOR_GUARD_OFF);
             StopModule::cancel_hit_stop(fighter.module_accessor);
             StatusModule::change_status_force(fighter.module_accessor, *FIGHTER_STATUS_KIND_GUARD_OFF, false);
-            return true.into();
-        }
-    
-        // jump
-        if fighter.sub_check_button_jump().get_bool() || fighter.sub_check_button_frick().get_bool() {
-            fighter.change_status(FIGHTER_STATUS_KIND_JUMP_SQUAT.into(), true.into());
-            return true.into();
-        }
-    
-        // item toss/grab
-        if ItemModule::is_have_item(fighter.module_accessor, 0) {
-            if misc::check_item_oos(fighter).get_bool() {
-                return true.into();
-            }
-        } else if misc::check_grab_oos(fighter).get_bool() {
             return true.into();
         }
 
