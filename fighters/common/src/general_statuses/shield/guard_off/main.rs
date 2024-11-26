@@ -211,7 +211,6 @@ unsafe fn status_GuardOff(fighter: &mut L2CFighterCommon) -> L2CValue {
         );
         EffectModule::set_rate_last(boma, 1.2);
         // EffectModule::set_alpha_last(boma, 0.4);
-        EffectModule::req_common(boma, Hash40::new("just_shield"), 0.0);
         // let shield_se = app::FighterUtil::get_just_shield_se(fighter.global_table[0x2].get_i32());
         let sfx_handle = SoundModule::play_se(boma, Hash40::new("se_item_backshield_guard01"), true, false, false, false, app::enSEType(0));
         SoundModule::set_se_vol(boma, sfx_handle as i32, 0.9, 0);
