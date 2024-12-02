@@ -190,18 +190,18 @@ unsafe extern "C" fn should_use_special_n_callback(fighter: &mut L2CFighterCommo
         }
         if copy_kind == *FIGHTER_KIND_GANON {
             if fighter.is_situation(*SITUATION_KIND_AIR) && VarModule::is_flag(fighter.battle_object, vars::ganon::instance::DISABLE_SPECIAL_N) {
-                return 1.into();
+                return 0.into();
             }
             else {
-                return 0.into();
+                return 1.into();
             }
         }
         if copy_kind == *FIGHTER_KIND_TRAIL {
             if VarModule::is_flag(fighter.battle_object, vars::trail::instance::DISABLE_SPECIAL_N) {
-                return 1.into();
+                return 0.into();
             }
             else {
-                return 0.into();
+                return 1.into();
             }
         }
         if copy_kind != *FIGHTER_KIND_PIT {
