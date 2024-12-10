@@ -61,7 +61,10 @@ pub struct KineticEnergy {
     pub speed: PaddedVec2,
     pub rot_speed: PaddedVec2,
     pub enable: bool,
-    pub unk2: [u8; 0xF], // probably padding 
+    pub unk2: [u8; 0x3], // probably padding
+    pub x34: f32,
+    pub x38: f32,
+    pub x3c: f32,
     pub accel: PaddedVec2,
     pub speed_max: PaddedVec2,
     pub speed_brake: PaddedVec2,

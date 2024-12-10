@@ -13,6 +13,7 @@ mod rockman;
 mod krool;
 mod brave;
 
+mod murabito_clayrocket;
 mod ryu_shinkuhadoken;
 
 mod weapon;
@@ -31,6 +32,7 @@ pub fn install() {
     krool::install();
     brave::install();
 
+    murabito_clayrocket::install();
     ryu_shinkuhadoken::install();
 
     weapon::install();

@@ -6,7 +6,23 @@
       <float hash="p2_y">7</float>
     </struct>
   </list>
-    <list hash="param_special_hi">
+  <list hash="param_clayrocket">
+    <struct index="0">
+      <float hash="fly_accel">0.02</float>
+      <float hash="fly_limit_speed_air">0.9</float>
+	  <float hash="ride_init_speed">0.15</float>
+      <float hash="ride_accel">0.02</float>
+	  <float hash="ride_limit_speed_mul">1</float>
+	  <float hash="ride_limit_speed_mul_positive">1.1</float>
+	  <float hash="ride_limit_speed_mul_negative">0.5</float>
+	  <float hash="ride_frame_mul">1</float>
+      <float hash="fly_limit_speed_ground">0.9</float>
+    </struct>
+    <hash40 index="1">dummy</hash40>
+    <hash40 index="2">dummy</hash40>
+    <hash40 index="3">dummy</hash40>
+  </list>
+  <list hash="param_special_hi">
     <struct index="0">
       <float hash="limit_speed_y_2">1.2</float>
       <float hash="limit_frame">190</float>
