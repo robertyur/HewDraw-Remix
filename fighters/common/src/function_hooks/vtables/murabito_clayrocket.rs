@@ -33,7 +33,7 @@ unsafe extern "C" fn murabito_clayrocket_kinetic_type_handler(
         let ride = WorkModule::is_flag(module_accessor, *WEAPON_MURABITO_CLAYROCKET_INSTANCE_WORK_ID_FLAG_RIDE);
         let kinetic_type = KineticModule::get_kinetic_type(module_accessor);
         let speed = if kinetic_type == *WEAPON_KINETIC_TYPE_MURABITO_CLAYROCKET_FLY {
-            KineticModule::get_sum_speed(module_accessor, 2)
+            KineticModule::get_sum_speed_y(module_accessor, 1)
         }
         else {
             let param = if ride {
@@ -91,9 +91,9 @@ unsafe extern "C" fn murabito_clayrocket_kinetic_type_handler(
 
         let kinetic_energy = KineticModule::get_energy(module_accessor, 2) as *mut super::energy::KineticEnergy;
 
-        (*kinetic_energy).x38 = speed_max;
+        (*kinetic_energy).x38 = limit;
         (*kinetic_energy).enable = true;
-        (*kinetic_energy).speed = PaddedVec2::new(0.0, speed);
+        (*kinetic_energy).speed = PaddedVec2::new(0.0, speed_max);
         (*kinetic_energy).x34 = accel;
     }
     else if kinetic_type == 2 {

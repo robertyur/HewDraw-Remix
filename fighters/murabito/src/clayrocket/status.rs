@@ -51,6 +51,8 @@ unsafe extern "C" fn fly_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
 
     check_notify_panic(weapon);
 
+    WorkModule::set_int(weapon.module_accessor, -1, *WEAPON_MURABITO_CLAYROCKET_INSTANCE_WORK_ID_INT_CONTROL_SPEED);
+
     let motion = if WorkModule::is_flag(weapon.module_accessor, *WEAPON_MURABITO_CLAYROCKET_INSTANCE_WORK_ID_FLAG_PANIC) {
         Hash40::new("fly_panic")
     }
